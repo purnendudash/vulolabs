@@ -143,13 +143,18 @@ if ( ! defined( 'VULOPILOT_GOOGLE_APPLICATION_ID' ) ) {
  * feature this backs — the "log in" tier every one of that hook's own 3
  * gates checks first.
  *
- * Empty by default, same "safe to ship/commit, real value lives outside
- * version control" reasoning VULOPILOT_GOOGLE_CLIENT_ID's own docblock
- * above documents — wp-config.php-only for now since there's no
- * settings-panel field for it yet.
+ * Unlike VULOPILOT_GOOGLE_CLIENT_ID above, this isn't a per-site secret —
+ * it's VuloCloud's own public API base, the same for every install of
+ * this plugin, so (unlike that constant) it's safe to default to the
+ * real production value here rather than requiring every site to define
+ * it themselves. wp-config.php can still override it (the `! defined()`
+ * guard) — local/Docker dev does exactly that, pointing this at
+ * `host.docker.internal` instead (see VULOPILOT_VULOCLOUD_PUBLIC_URL's
+ * own docblock immediately below for why dev needs a second, browser-
+ * facing override too).
  */
 if ( ! defined( 'VULOPILOT_VULOCLOUD_URL' ) ) {
-	define( 'VULOPILOT_VULOCLOUD_URL', '' );
+	define( 'VULOPILOT_VULOCLOUD_URL', 'https://vulocloud-api.vercel.app' );
 }
 
 /**
@@ -181,13 +186,14 @@ if ( ! defined( 'VULOPILOT_VULOCLOUD_PUBLIC_URL' ) ) {
  * constant, wp-config.php-only for now" shape as
  * VULOPILOT_PRO_APPLICATION_ID/VULOPILOT_GOOGLE_CLIENT_ID.
  *
- * Empty by default — the solo-site-owner choice is simply unavailable
- * (AiCreditsConnection::connect_and_claim() returns a clear error rather
- * than silently falling back to the agency path) until a real deploy sets
- * this.
+ * Defaults to VuloLabs' own real production Organization — every fresh
+ * install of this plugin can offer the "solo site owner" free-credit
+ * path out of the box, with nothing to configure. Override via
+ * wp-config.php only if this build should register solo site owners
+ * under some other Organization instead (e.g. a white-label fork).
  */
 if ( ! defined( 'VULOPILOT_VULOCLOUD_HOST_ORGANIZATION_ID' ) ) {
-	define( 'VULOPILOT_VULOCLOUD_HOST_ORGANIZATION_ID', '' );
+	define( 'VULOPILOT_VULOCLOUD_HOST_ORGANIZATION_ID', '5adfdb62-e946-4dcd-b4a3-d324b4b06dd3' );
 }
 
 /**
@@ -225,19 +231,22 @@ if ( ! defined( 'VULOPILOT_VULOCLOUD_HOST_ORGANIZATION_ID' ) ) {
  * pricing page), so it isn't fixed config the way Organization/Brand
  * are.
  *
- * Empty by default, same "safe to ship/commit" reasoning every other
- * constant in this file follows — VuloCloudConnection::get_broker_authorize_url()
- * honestly returns null (Connect button hidden) until a real deploy sets
- * both this array's own organization_id AND VULOPILOT_VULOCLOUD_URL.
+ * Defaults to VuloLabs' own real production Organization + "VuloPilot"
+ * Brand — same "works out of the box, no per-site config needed"
+ * reasoning VULOPILOT_VULOCLOUD_HOST_ORGANIZATION_ID's own docblock
+ * above gives. A fork of this plugin under a different `plugin_id`
+ * overrides the whole array via wp-config.php with its own values —
+ * the shape itself (see this constant's own doc comment above) is what's
+ * meant to be reused unchanged, not these particular values.
  */
 if ( ! defined( 'VULOPILOT_VULOCLOUD_CONFIG' ) ) {
 	define(
 		'VULOPILOT_VULOCLOUD_CONFIG',
 		array(
 			'plugin_id'       => 'vulopilot',
-			'organization_id' => '',
-			'brand_id'        => '',
-			'domain'          => '',
+			'organization_id' => '5adfdb62-e946-4dcd-b4a3-d324b4b06dd3',
+			'brand_id'        => '57395edc-3ca1-4313-840b-903303fa1bea',
+			'domain'          => 'https://store.vulolabs.com',
 		)
 	);
 }
