@@ -226,13 +226,19 @@ final class VuloPilot {
         // same shape as llms_txt_generator above.
         $this->container['crawler_traffic_logger'] = new Services\CrawlerTrafficLogger();
 
-        // Scanning → Sitemap/Robots.txt cards — both wrap WordPress core's
+        // Scanning → Sitemap/Robots.txt cards — all wrap WordPress core's
         // own native sitemap/robots.txt rather than building either from
         // scratch; self-register their own hooks, same unconditional-
-        // construction shape as the two services above. HtmlSitemapRenderer
-        // is the one genuinely new (non-core-wrapping) piece — a real
-        // `[vulopilot_html_sitemap]` shortcode.
+        // construction shape as the two services above. SitemapStylesheet
+        // restyles core's own real `/wp-sitemap.xml` browser view (brand
+        // colors + a real "Last Modified" column on the index page) —
+        // still real core data, just a real CSS/XSL restyle, not a second
+        // renderer. HtmlSitemapRenderer is the one genuinely new
+        // (non-core-wrapping) piece — a real `[vulopilot_html_sitemap]`
+        // shortcode.
         $this->container['sitemap_manager']       = new Services\SitemapManager();
+        $this->container['sitemap_stylesheet']    = new Services\SitemapStylesheet();
+        $this->container['sitemap_url_rewriter']  = new Services\SitemapUrlRewriter();
         $this->container['robots_txt_manager']    = new Services\RobotsTxtManager();
         $this->container['html_sitemap_renderer'] = new Services\HtmlSitemapRenderer();
 
@@ -265,22 +271,6 @@ final class VuloPilot {
         // admin-post.php never fires rest_api_init, so this can't be
         // lazily instantiated inside a REST controller).
         $this->container['connect_broker_callback_handler'] = new Services\ConnectBrokerCallbackHandler();
-
-        // Connections → the generic "connect to a pre-known Organization +
-        // Brand" broker redirect handler (VULOPILOT_VULOCLOUD_CONFIG) — a
-        // separate, independent connection from the AI Credits one
-        // immediately above, hence its own callback handler/admin-post
-        // action rather than reusing that one. Same unconditional-
-        // construction reasoning.
-        $this->container['vulocloud_connect_callback_handler'] = new Services\VuloCloudConnectCallbackHandler();
-
-        // Connections → real WordPress/PHP/theme/plugin telemetry for
-        // whichever of the two connections above is actually live —
-        // registers its own daily cron (self-registers-its-own-cron-hook,
-        // same reasoning) on top of the immediate, connect-time report
-        // each connection's own exchange_broker_code() already triggers
-        // directly.
-        $this->container['site_telemetry_reporter'] = new Services\SiteTelemetryReporter();
 
         // SEO & Visibility → Keywords' real rank-tracking sync (daily cron
         // + Controllers\KeywordRankings::sync()'s own "Sync now") — same
