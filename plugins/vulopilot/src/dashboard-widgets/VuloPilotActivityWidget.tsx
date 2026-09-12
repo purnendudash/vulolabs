@@ -1,8 +1,9 @@
 /* global appLocalizer */
 import React, { useEffect, useState } from 'react';
 import { __, sprintf } from '@wordpress/i18n';
-import { getApiLink, getApiResponse } from '@zyra/core';
-import { BadgeComponent, ChartComponent } from '@zyra/components';
+import { getApiLink, getApiResponse, AnalyticsComponent } from '@zyra/core';
+import { ChartComponent } from '@zyra/components';
+import { ToggleInput } from '@zyra/inputs';
 import DashboardWidget from './DashboardWidget';
 import { useApiList } from '../services/useApiList';
 import { useLastScanTime } from '../services/useLastScanTime';
@@ -18,6 +19,23 @@ interface CrawlerAnalyticsResponse {
 interface ReportRow {
 	created_at: string;
 }
+
+interface HealthSnapshot {
+	snapshot_date: string;
+	overall_score: number;
+}
+
+type PeriodDays = '7' | '30' | '90';
+
+/** Same real `key` field convention `OverviewTab.tsx`'s own identical `ToggleInput` usage already establishes — required so React's list key and each radio's real `id`/`htmlFor` pair are unique. */
+const PERIOD_OPTIONS = [
+	{ key: '7', value: '7', label: __('Last 7 days', 'vulopilot') },
+	{ key: '30', value: '30', label: __('Last 30 days', 'vulopilot') },
+	{ key: '90', value: '90', label: __('Last 90 days', 'vulopilot') },
+];
+
+/** Same real day-range options the old `BadgeComponent` toggle used, now expressed as the real `PeriodDays` string values `ToggleInput` needs. */
+const HEALTH_TIMELINE_DAY_OPTIONS: PeriodDays[] = ['7', '30', '90'];
 
 /**
  * "VuloPilot activity" — a real 5-tile activity strip. Every tile reads
@@ -85,14 +103,33 @@ const VuloPilotActivityWidget: React.FC<WidgetProps> = ({
 		useApiList<ReportRow>('reports', { per_page: 1 });
 	const { lastScanAt, isLoading: isLastScanLoading } = useLastScanTime();
 
+	// Same real `/site-health-snapshots` endpoint
+	// HealthTimelineWidget.tsx's own trend chart already uses — only
+	// registered once vulopilot-pro's AdvancedReports module is active
+	// (real, permanent 404 on a Free-only install otherwise, same reason
+	// that widget checks `active_modules` directly rather than treating
+	// "404'd" and "zero rows" as the same friendly empty state).
+	//
+	// Real "Last 7/30/90 days" toggle, now the same real `ToggleInput`
+	// shape `OverviewTab.tsx`'s own "Visibility Trend" card already uses
+	// for its identical day-range control — replacing the previous
+	// `BadgeComponent`-based toggle per direct instruction.
+	const [healthTimelineDays, setHealthTimelineDays] = useState<PeriodDays>('30');
+	const { data: healthSnapshots } = useApiList<HealthSnapshot>(
+		'site-health-snapshots',
+		{ days: Number(healthTimelineDays) }
+	);
+	const isHealthTimelineModuleActive =
+		appLocalizer.active_modules.includes('advanced-reports');
+
 	const crawlerCurrent = crawlerAnalytics?.current_total ?? 0;
 	const crawlerPrevious = crawlerAnalytics?.previous_total ?? 0;
 	const crawlerChangePercent =
 		crawlerPrevious > 0
 			? Math.round(
-					((crawlerCurrent - crawlerPrevious) / crawlerPrevious) *
-						100
-				)
+				((crawlerCurrent - crawlerPrevious) / crawlerPrevious) *
+				100
+			)
 			: null;
 	const sparklineData = (crawlerAnalytics?.daily_volume ?? []).map(
 		(day) => ({
@@ -107,164 +144,76 @@ const VuloPilotActivityWidget: React.FC<WidgetProps> = ({
 
 		return isToday
 			? sprintf(
-					/* translators: %s: real completion time, e.g. "9:26 AM". */
-					__('Today, %s', 'vulopilot'),
-					date.toLocaleTimeString(undefined, {
-						hour: 'numeric',
-						minute: '2-digit',
-					})
-				)
+				/* translators: %s: real completion time, e.g. "9:26 AM". */
+				__('Today, %s', 'vulopilot'),
+				date.toLocaleTimeString(undefined, {
+					hour: 'numeric',
+					minute: '2-digit',
+				})
+			)
 			: formatWpDate(dateString);
 	};
 
-	const tiles = [
-		{
-			key: 'crawler-visits',
-			icon: 'global-community',
-			label: __('AI crawler visits', 'vulopilot'),
-			loading: isCrawlerLoading,
-			content:
-				crawlerCurrent === 0 && crawlerPrevious === 0 ? (
-					<div className="vulopilot-activity-tile-empty">
-						{__('No visits yet', 'vulopilot')}
-					</div>
-				) : (
-					<>
-						<div className="vulopilot-activity-tile-value">
-							{crawlerCurrent}
-						</div>
-						<div className="vulopilot-activity-tile-sub">
-							{__('Last 7 days', 'vulopilot')}
-							{null !== crawlerChangePercent && (
-								<BadgeComponent
-									color={
-										crawlerChangePercent >= 0
-											? 'green'
-											: 'red'
-									}
-									icon={`arrow-${crawlerChangePercent >= 0 ? 'up' : 'down'}`}
-									text={`${Math.abs(crawlerChangePercent)}%`}
-								/>
-							)}
-						</div>
-						{sparklineData.length > 0 && (
-							<div className="vulopilot-activity-tile-sparkline">
-								<ChartComponent
-									type="area"
-									sparkline
-									height={32}
-									color="#16a34a"
-									data={sparklineData}
-								/>
-							</div>
-						)}
-					</>
-				),
-		},
-		{
-			key: 'automations',
-			icon: 'automation',
-			label: __('Automations', 'vulopilot'),
-			loading: isLoading,
-			content: (
-				<>
-					<div className="vulopilot-activity-tile-value">
-						{summary.automation_status.enabled}
-					</div>
-					<div className="vulopilot-activity-tile-sub">
-						{summary.automation_status.enabled > 0
-							? __('Running', 'vulopilot')
-							: __('None active', 'vulopilot')}
-					</div>
-				</>
-			),
-		},
-		{
-			key: 'last-audit',
-			icon: 'clock',
-			label: __('Last audit', 'vulopilot'),
-			loading: isLastScanLoading,
-			content: lastScanAt ? (
-				<>
-					<div className="vulopilot-activity-tile-value vulopilot-activity-tile-value--date">
-						{formatAuditTime(lastScanAt)}
-					</div>
-					<div className="vulopilot-activity-tile-sub">
-						{__('Last scan completed', 'vulopilot')}
-					</div>
-				</>
-			) : (
-				<div className="vulopilot-activity-tile-empty">
-					{__('No scans yet', 'vulopilot')}
-				</div>
-			),
-		},
-		{
-			key: 'pending-approvals',
-			icon: 'ai',
-			label: __('Pending approvals', 'vulopilot'),
-			loading: isLoading,
-			content: (
-				<>
-					<div className="vulopilot-activity-tile-value">
-						{summary.pending_approvals}
-					</div>
-					<div className="vulopilot-activity-tile-sub">
-						{__('AI suggested changes', 'vulopilot')}
-					</div>
-				</>
-			),
-		},
-		{
-			key: 'latest-report',
-			icon: 'report',
-			label: __('Latest report', 'vulopilot'),
-			loading: isReportsLoading,
-			content:
-				reportRows.length > 0 ? (
-					<>
-						<div className="vulopilot-activity-tile-value vulopilot-activity-tile-value--date">
-							{formatWpDate(reportRows[0].created_at)}
-						</div>
-						<a
-							href="?page=vulopilot#&tab=reports"
-							className="vulopilot-activity-tile-link"
-						>
-							{__('View report', 'vulopilot')} →
-						</a>
-					</>
-				) : (
-					<div className="vulopilot-activity-tile-empty">
-						{__('No reports yet', 'vulopilot')}
-					</div>
-				),
-		},
-	];
-
 	return (
 		<DashboardWidget
-			title={__('VuloPilot activity', 'vulopilot')}
+			title={__('Health timeline', 'vulopilot')}
 			icon="analytics"
 			isLoading={isLoading}
 			onHide={onHide}
 			isCustomizing={isCustomizing}
+			headerAction={
+				<ToggleInput
+					options={PERIOD_OPTIONS}
+					value={healthTimelineDays}
+					onChange={(value) => setHealthTimelineDays(value as PeriodDays)}
+					modules={[]}
+				/>
+			}
 		>
+
+			{isHealthTimelineModuleActive && healthSnapshots.length > 0 && (
+				<ChartComponent
+					type="dynamic-line"
+					data={healthSnapshots.map((snapshot) => ({
+						...snapshot,
+						snapshot_date: formatWpDate(snapshot.snapshot_date),
+					}))}
+					dataKey="overall_score"
+					xKey="snapshot_date"
+					height={300}
+					yDomain={[0, 100]}
+				/>
+			)}
 			<div className="vulopilot-activity-row">
-				{tiles.map((tile) => (
-					<div className="vulopilot-activity-tile" key={tile.key}>
-						<div className="vulopilot-activity-tile-label">
-							<i className={`adminfont-${tile.icon}`} />
-							{tile.label}
-						</div>
-						{tile.loading ? (
-							<div className="vulopilot-activity-tile-empty">
-								{__('Loading…', 'vulopilot')}
-							</div>
-						) : (
-							tile.content
-						)}
-					</div>
-				))}
+				<AnalyticsComponent
+					variant="small"
+					cols={3}
+					data={[
+						{
+							icon: 'global-community green',
+							number: crawlerCurrent,
+							text: __('AI crawler visits', 'vulopilot'),
+						},
+						{
+							icon: 'automation blue',
+							number: summary.automation_status.enabled,
+							text: __('Automations', 'vulopilot'),
+						},
+						{
+							icon: 'ai purple',
+							number: summary.pending_approvals,
+							text: __('Pending approvals', 'vulopilot'),
+						},
+						{
+							icon: 'report blue',
+							number:
+								reportRows.length > 0
+									? formatWpDate(reportRows[0].created_at)
+									: '—',
+							text: __('Latest report', 'vulopilot'),
+						},
+					]}
+				/>
 			</div>
 		</DashboardWidget>
 	);
