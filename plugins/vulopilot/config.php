@@ -42,7 +42,7 @@ if ( ! defined( 'VULOPILOT_GOOGLE_BROKER_URL' ) ) {
 }
 
 if ( ! defined( 'VULOPILOT_GOOGLE_APPLICATION_ID' ) ) {
-	define( 'VULOPILOT_GOOGLE_APPLICATION_ID', '506dde24-bdff-425e-a501-a7df14ed80b5' );
+	define( 'VULOPILOT_GOOGLE_APPLICATION_ID', '6bae3ccf-0c1d-4ca4-9b99-67fab0c4e0a7' );
 }
 
 if ( ! defined( 'VULOPILOT_VULOCLOUD_URL' ) ) {
@@ -61,7 +61,7 @@ if ( ! defined( 'VULOPILOT_VULOCLOUD_PUBLIC_URL' ) ) {
 }
 
 if ( ! defined( 'VULOPILOT_VULOCLOUD_HOST_ORGANIZATION_ID' ) ) {
-	define( 'VULOPILOT_VULOCLOUD_HOST_ORGANIZATION_ID', '9a1e8c91-bbb9-4f7b-b4f1-b5f1190287d3' );
+	define( 'VULOPILOT_VULOCLOUD_HOST_ORGANIZATION_ID', 'b3235308-51a9-48db-ba2b-be76b93663c8' );
 }
 
 if ( ! defined( 'VULOPILOT_VULOCLOUD_CONFIG' ) ) {
@@ -69,8 +69,8 @@ if ( ! defined( 'VULOPILOT_VULOCLOUD_CONFIG' ) ) {
 		'VULOPILOT_VULOCLOUD_CONFIG',
 		array(
 			'plugin_id'       => 'vulopilot',
-			'organization_id' => '9a1e8c91-bbb9-4f7b-b4f1-b5f1190287d3',
-			'brand_id'        => '506dde24-bdff-425e-a501-a7df14ed80b5',
+			'organization_id' => 'b3235308-51a9-48db-ba2b-be76b93663c8',
+			'brand_id'        => '6bae3ccf-0c1d-4ca4-9b99-67fab0c4e0a7',
 			'domain'          => 'https://store.vulolabs.com',
 		)
 	);
