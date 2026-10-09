@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { AnalyticsComponent, CardComponent } from '@zyra/components';
+import { AnalyticsComponent, CardComponent, ColumnComponent } from '@zyra/components';
 import DummyDataNotice from '../../components/DummyDataNotice';
 import { BlurredProContent } from '../../components/UpgradeToProOverlay';
 
