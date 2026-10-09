@@ -1,9 +1,4 @@
-/**
- * What the fix handlers (`vulopilot_finding_fix_handler`,
- * `vulopilot_finding_bulk_fix_handler`) resolve to. `message` is what happened, including why when
- * nothing could be fixed; `undo` is present only when reversible. This plugin never interprets
- * this itself; it hands it to whatever view is registered (see useFixNotice).
- */
+/** What the fix handlers resolve to - `undo` is present only when reversible (see useFixNotice). */
 export interface FixOutcome {
 	success: boolean;
 	message: string;

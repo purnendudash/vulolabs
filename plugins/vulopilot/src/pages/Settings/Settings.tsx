@@ -33,9 +33,7 @@ const Settings = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const settingsRef = useRef<Record<string, unknown>>({});
-	// Extra tabs (e.g. Licensing) get added through a filter once their script loads - which can
-	// be after this page first rendered, and the navigator keeps the tab list it mounted with - so
-	// remount it (via `key`) then, so the tab bar is never missing them.
+	// Remounts the navigator (via `key`) when a filter adds tabs after this page first rendered.
 	const [proTabsTick, setProTabsTick] = useState(0);
 
 	useEffect(() => {
