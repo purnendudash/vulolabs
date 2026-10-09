@@ -119,10 +119,16 @@ const SectionedIssuesTable = ({
 				),
 				nonceHeaders
 			),
-			getApiResponse<{ data: FindingGroup[] }>(
-				getApiLink(vulopilotAppLocalizer, 'findings/fixed-groups'),
-				nonceHeaders
-			).catch(() => null),
+			// Pro-only route (OneClickFix) - only registered once vulopilot-pro is active, so a
+			// free-only install would always 404 here. Same khali_dabba gate every other
+			// Pro-only fetch in this plugin uses (see useGeoTabData.ts) instead of firing a
+			// request that's guaranteed to fail.
+			vulopilotAppLocalizer.khali_dabba
+				? getApiResponse<{ data: FindingGroup[] }>(
+						getApiLink(vulopilotAppLocalizer, 'findings/fixed-groups'),
+						nonceHeaders
+					).catch(() => null)
+				: Promise.resolve(null),
 		])
 			.then(([open, fixed]) => {
 				setFetchedGroups(open?.data ?? []);

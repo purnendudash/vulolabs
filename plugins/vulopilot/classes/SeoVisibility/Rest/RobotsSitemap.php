@@ -21,6 +21,9 @@ class RobotsSitemap extends \WP_REST_Controller {
 
 	private const REQUEST_TIMEOUT_SECONDS = 8;
 
+	/** Bounds how many child sitemaps a single index fetch inspects/counts. */
+	private const MAX_CHILD_SITEMAPS = 50;
+
 
 	/**
 	 * @inheritDoc
@@ -316,6 +319,61 @@ class RobotsSitemap extends \WP_REST_Controller {
 				'sitemaps'       => $children,
 			)
 		);
+	}
+
+	/**
+	 * Live-fetches a single child sitemap and counts its real `<url>` entries.
+	 *
+	 * @param string $url Child sitemap's own `loc`.
+	 * @return int|null Null on fetch/parse failure (shown as a real "error" status).
+	 */
+	private function count_sitemap_urls( string $url ): ?int {
+		$response = wp_remote_get(
+			$url,
+			array(
+				'timeout'   => self::REQUEST_TIMEOUT_SECONDS,
+				'sslverify' => false,
+			)
+		);
+
+		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+			return null;
+		}
+
+		$xml = $this->parse_xml( (string) wp_remote_retrieve_body( $response ) );
+
+		if ( false === $xml ) {
+			return null;
+		}
+
+		$url_nodes = $xml->xpath( '//*[local-name()="url"]' );
+
+		return $url_nodes ? count( $url_nodes ) : 0;
+	}
+
+	/**
+	 * Real content-type guess from WP core's own `wp-sitemap-{posts|taxonomies|users}-...xml`
+	 * naming (`WP_Sitemaps_Registry`), e.g. `wp-sitemap-posts-product-1.xml` => 'product'.
+	 *
+	 * @param string $loc Child sitemap's own `loc`.
+	 * @return string
+	 */
+	private function infer_sitemap_type( string $loc ): string {
+		$path = (string) wp_parse_url( $loc, PHP_URL_PATH );
+
+		if ( preg_match( '#wp-sitemap-posts-([a-z0-9_-]+?)(?:-\d+)?\.xml$#i', $path, $matches ) ) {
+			return strtolower( $matches[1] );
+		}
+
+		if ( preg_match( '#wp-sitemap-taxonomies-([a-z0-9_-]+?)(?:-\d+)?\.xml$#i', $path, $matches ) ) {
+			return strtolower( $matches[1] );
+		}
+
+		if ( false !== strpos( $path, 'wp-sitemap-users' ) ) {
+			return 'author';
+		}
+
+		return 'other';
 	}
 
 	/**

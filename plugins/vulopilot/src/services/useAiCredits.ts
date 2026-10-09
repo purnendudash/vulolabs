@@ -35,7 +35,12 @@ export const useAiCredits = () => {
 		return getApiResponse<AiCreditsStatus>(
 			getApiLink(vulopilotAppLocalizer, 'ai-credits/status'),
 			{ headers: { 'X-WP-Nonce': vulopilotAppLocalizer.nonce } }
-		).then((response) => response && setStatus(response));
+		).then((response) => {
+			if (response) {
+				setStatus(response);
+			}
+			return response;
+		});
 	}, []);
 
 	// The live sync — the only call that actually asks VuloCloud for the real balance. A failed
@@ -56,8 +61,17 @@ export const useAiCredits = () => {
 	useEffect(() => {
 		// Paint instantly from whatever's cached, then resync for real — so opening the panel
 		// isn't blocked on a network round trip, but always ends up showing the live balance
-		// without needing the "Refresh balance" button clicked by hand.
-		loadCached().finally(() => refresh());
+		// without needing the "Refresh balance" button clicked by hand. Skipped when the site
+		// was never connected in the first place — refresh-balance always 400s
+		// (vulopilot_ai_credits_not_connected) in that case, so calling it on every mount of
+		// every AI-Credits-aware component just spams the console for nothing.
+		loadCached().then((cached) => {
+			if (cached?.connected) {
+				refresh();
+			} else {
+				setIsLoading(false);
+			}
+		});
 	}, [loadCached, refresh]);
 
 	return { status, isLoading, refresh };

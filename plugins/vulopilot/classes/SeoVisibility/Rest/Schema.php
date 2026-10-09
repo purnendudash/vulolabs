@@ -109,10 +109,16 @@ class Schema extends \WP_REST_Controller {
 	}
 
 	/**
+	 * Falls back to a fresh analyze() the first time this is called, same as the
+	 * Knowledge Graph/Entities cards - a coverage card shouldn't need a "Run scan" click
+	 * before it ever shows anything.
+	 *
 	 * @return \WP_REST_Response
 	 */
 	public function get_coverage() {
-		return rest_ensure_response( $this->analyzer->get_stored_snapshot() );
+		$snapshot = $this->analyzer->get_stored_snapshot();
+
+		return rest_ensure_response( null !== $snapshot ? $snapshot : $this->analyzer->analyze() );
 	}
 
 	/**
