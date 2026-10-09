@@ -1,0 +1,136 @@
+<?php
+/**
+ * Message class file.
+ *
+ * @package VuloMail
+ */
+
+namespace VuloMail\Email;
+
+defined( 'ABSPATH' ) || exit;
+
+/**
+ * A fully resolved email, independent of how it will be delivered.
+ *
+ * Addresses are `array{email: string, name: string}`.
+ */
+class Message {
+
+	/**
+	 * @var array<int, array{email: string, name: string}>
+	 */
+	public $to = array();
+
+	/**
+	 * @var array<int, array{email: string, name: string}>
+	 */
+	public $cc = array();
+
+	/**
+	 * @var array<int, array{email: string, name: string}>
+	 */
+	public $bcc = array();
+
+	/**
+	 * @var array<int, array{email: string, name: string}>
+	 */
+	public $reply_to = array();
+
+	/**
+	 * @var string
+	 */
+	public $from_email = '';
+
+	/**
+	 * @var string
+	 */
+	public $from_name = '';
+
+	/**
+	 * @var string
+	 */
+	public $subject = '';
+
+	/**
+	 * @var string
+	 */
+	public $body = '';
+
+	/**
+	 * 'text/plain' or 'text/html'.
+	 *
+	 * @var string
+	 */
+	public $content_type = 'text/plain';
+
+	/**
+	 * @var string
+	 */
+	public $charset = 'UTF-8';
+
+	/**
+	 * Extra headers (name => value) that aren't modelled above.
+	 *
+	 * @var array<string, string>
+	 */
+	public $headers = array();
+
+	/**
+	 * Attachments: file name => absolute path.
+	 *
+	 * @var array<string, string>
+	 */
+	public $attachments = array();
+
+	/**
+	 * Slug of the plugin or theme that sent the message, for the log.
+	 *
+	 * @var string
+	 */
+	public $source = '';
+
+	/**
+	 * @return bool
+	 */
+	public function is_html() {
+		return 'text/html' === $this->content_type;
+	}
+
+	/**
+	 * Plain-text version of the body, for providers that want both parts.
+	 *
+	 * @return string
+	 */
+	public function text_body() {
+		return $this->is_html() ? wp_strip_all_tags( $this->body ) : $this->body;
+	}
+
+	/**
+	 * Formats an address as `Name <email>`.
+	 *
+	 * @param array{email: string, name: string} $address Address.
+	 * @return string
+	 */
+	public static function format( array $address ) {
+		$name = trim( str_replace( array( '"', "\r", "\n", '<', '>' ), '', (string) $address['name'] ) );
+
+		return '' === $name ? $address['email'] : sprintf( '"%s" <%s>', $name, $address['email'] );
+	}
+
+	/**
+	 * @param array<int, array{email: string, name: string}> $addresses Addresses.
+	 * @return string Comma-separated `Name <email>` list.
+	 */
+	public static function format_list( array $addresses ) {
+		return implode( ', ', array_map( array( self::class, 'format' ), $addresses ) );
+	}
+
+	/**
+	 * Every recipient address (To, Cc and Bcc), for the log.
+	 *
+	 * @return string[]
+	 */
+	public function all_recipients() {
+		return array_column( array_merge( $this->to, $this->cc, $this->bcc ), 'email' );
+	}
+}
