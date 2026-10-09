@@ -215,36 +215,46 @@ class RobotsSitemap extends \WP_REST_Controller {
 	}
 
 	/**
-	 * Live-fetches this site's sitemap index: `/wp-sitemap.xml` first,
-	 * falling back to `/sitemap.xml`. Enumerates child `<sitemap>` entries
-	 * (or a flat `<url>` set), counting each child's URLs (bounded by
-	 * MAX_CHILD_SITEMAPS).
+	 * Live-fetches this site's real sitemap index and enumerates its child `<sitemap>` entries
+	 * (or a flat `<url>` set), counting each child's URLs (bounded by MAX_CHILD_SITEMAPS).
+	 *
+	 * Tries, in order: whatever `Sitemap:` robots.txt itself declares (the one source every SEO
+	 * plugin/manual setup actually points crawlers at - respecting it means this card shows the
+	 * same sitemap Google does, not a guess), then `/wp-sitemap.xml` (WP core's own, on by
+	 * default), then `/sitemap.xml` (a common manual/third-party convention when core's is off).
 	 *
 	 * @param \WP_REST_Request $request Full request object.
 	 * @return \WP_REST_Response
 	 */
 	public function get_sitemap( $request ) {
-		$index_url = home_url( '/wp-sitemap.xml' );
-		$response  = wp_remote_get(
-			$index_url,
-			array(
-				'timeout'   => self::REQUEST_TIMEOUT_SECONDS,
-				'sslverify' => false,
+		$candidates = array_unique(
+			array_filter(
+				array_merge(
+					$this->get_declared_sitemap_urls(),
+					array( home_url( '/wp-sitemap.xml' ), home_url( '/sitemap.xml' ) )
+				)
 			)
 		);
 
-		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-			$index_url = home_url( '/sitemap.xml' );
+		$index_url = '';
+		$response  = null;
+
+		foreach ( $candidates as $candidate_url ) {
+			$index_url = $candidate_url;
 			$response  = wp_remote_get(
-				$index_url,
+				$candidate_url,
 				array(
 					'timeout'   => self::REQUEST_TIMEOUT_SECONDS,
 					'sslverify' => false,
 				)
 			);
+
+			if ( ! is_wp_error( $response ) && 200 === wp_remote_retrieve_response_code( $response ) ) {
+				break;
+			}
 		}
 
-		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+		if ( null === $response || is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
 			return rest_ensure_response(
 				array(
 					'reachable'      => false,
@@ -322,6 +332,31 @@ class RobotsSitemap extends \WP_REST_Controller {
 	}
 
 	/**
+	 * Real `Sitemap:` directive URL(s) this site's own `/robots.txt` declares - the actual
+	 * source crawlers follow, so trying these first (ahead of guessing `/wp-sitemap.xml` or
+	 * `/sitemap.xml`) means the real sitemap always wins when one is declared.
+	 *
+	 * @return string[]
+	 */
+	private function get_declared_sitemap_urls(): array {
+		$response = wp_remote_get(
+			home_url( '/robots.txt' ),
+			array(
+				'timeout'   => self::REQUEST_TIMEOUT_SECONDS,
+				'sslverify' => false,
+			)
+		);
+
+		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+			return array();
+		}
+
+		$parsed = $this->parse_robots_txt( (string) wp_remote_retrieve_body( $response ) );
+
+		return $parsed['directives']['sitemaps'];
+	}
+
+	/**
 	 * Live-fetches a single child sitemap and counts its real `<url>` entries.
 	 *
 	 * @param string $url Child sitemap's own `loc`.
@@ -352,9 +387,6 @@ class RobotsSitemap extends \WP_REST_Controller {
 	}
 
 	/**
-	 * Real content-type guess from WP core's own `wp-sitemap-{posts|taxonomies|users}-...xml`
-	 * naming (`WP_Sitemaps_Registry`), e.g. `wp-sitemap-posts-product-1.xml` => 'product'.
-	 *
 	 * @param string $loc Child sitemap's own `loc`.
 	 * @return string
 	 */
@@ -371,6 +403,13 @@ class RobotsSitemap extends \WP_REST_Controller {
 
 		if ( false !== strpos( $path, 'wp-sitemap-users' ) ) {
 			return 'author';
+		}
+
+		// A non-core generator's common `{type}-sitemap(-n).xml` convention (e.g. Yoast's
+		// `post-sitemap.xml`/`product-sitemap1.xml`) - best-effort only, since naming isn't
+		// standardized across every third-party sitemap generator.
+		if ( preg_match( '#([a-z0-9_-]+)-sitemap(?:-?\d+)?\.xml$#i', $path, $matches ) ) {
+			return strtolower( $matches[1] );
 		}
 
 		return 'other';

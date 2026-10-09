@@ -11,8 +11,7 @@ interface AeoCitationCoverageCardProps {
 
 /**
  * "Answer Engine Coverage" - card shell only. The real "Simulated Citation
- * Check" lives in Pro (AnswerEngineOptimization/src/CitationCoveragePanel.tsx)
- * and is plugged in via the `vulopilot_aeo_citation_coverage_panel` filter;
+ * Check" is plugged in via the `vulopilot_aeo_citation_coverage_panel` filter;
  * without it, only inert placeholder numbers render.
  */
 const AeoCitationCoverageCard = ({ isActive }: AeoCitationCoverageCardProps) => {

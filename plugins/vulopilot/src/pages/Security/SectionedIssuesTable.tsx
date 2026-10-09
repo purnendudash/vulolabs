@@ -93,7 +93,7 @@ const SectionedIssuesTable = ({
 	onTabChange,
 }: SectionedIssuesTableProps) => {
 	const [fetchedGroups, setFetchedGroups] = useState<FindingGroup[]>([]);
-	// Fixed issues whose fix can still be undone, so they stay listed after a reload (empty without Pro).
+	// Fixed issues whose fix can still be undone, so they stay listed after a reload (empty when the feature isn't unlocked).
 	const [fixedGroups, setFixedGroups] = useState<FindingGroup[]>([]);
 	// Groups fixed this session: kept listed as Fixed (with Undo in the panel) after the refetch drops them.
 	const [keptGroups, setKeptGroups] = useState<FindingGroup[]>([]);
@@ -119,10 +119,7 @@ const SectionedIssuesTable = ({
 				),
 				nonceHeaders
 			),
-			// Pro-only route (OneClickFix) - only registered once vulopilot-pro is active, so a
-			// free-only install would always 404 here. Same khali_dabba gate every other
-			// Pro-only fetch in this plugin uses (see useGeoTabData.ts) instead of firing a
-			// request that's guaranteed to fail.
+			// Skip this route when the feature isn't unlocked, instead of a guaranteed 404.
 			vulopilotAppLocalizer.khali_dabba
 				? getApiResponse<{ data: FindingGroup[] }>(
 						getApiLink(vulopilotAppLocalizer, 'findings/fixed-groups'),

@@ -10,9 +10,9 @@ interface FixOutcomeViewProps {
 }
 
 /**
- * Slot for the result of a "Fix with AI" click. Fix with AI is a Pro feature, so
- * how the result looks (and the Undo button) is Pro's: Pro registers a component on
- * `vulopilot_fix_outcome_view`. Without Pro nothing is rendered.
+ * Slot for the result of a "Fix with AI" click. Fix with AI is a locked feature, so how
+ * the result looks (and the Undo button) comes from whatever component is registered on
+ * `vulopilot_fix_outcome_view`. Nothing renders until that happens.
  *
  * @param onChanged Called after an undo finishes, to refresh whatever lists the finding(s).
  * @return `show` to report an outcome, `fixNotice` - the element to render above the table, and

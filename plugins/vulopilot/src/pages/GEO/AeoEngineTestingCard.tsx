@@ -14,8 +14,7 @@ interface AeoEngineTestingCardProps {
 }
 
 /**
- * "Engine Testing" - card shell only. The real single-page citation re-test
- * lives in Pro (AnswerEngineOptimization/src/EngineTestingPanel.tsx) and is
+ * "Engine Testing" - card shell only. The real single-page citation re-test is
  * plugged in via the `vulopilot_aeo_engine_testing_panel` filter; without it,
  * only inert placeholder controls render.
  */
