@@ -51,9 +51,7 @@ class SitemapScanner extends ScannerUtil {
 	public function scan(): array {
 		$findings = array();
 
-		// Whatever robots.txt itself declares is the site's real sitemap - trust that ahead of
-		// guessing the two common conventions, so a site using neither (e.g. a third-party SEO
-		// plugin's own path) isn't wrongly flagged as having no sitemap.
+		// Trust robots.txt's own declared sitemap ahead of guessing the two common conventions.
 		$candidates = array_merge(
 			$this->get_declared_sitemap_urls(),
 			array( home_url( '/wp-sitemap.xml' ), home_url( '/sitemap.xml' ) )

@@ -215,13 +215,8 @@ class RobotsSitemap extends \WP_REST_Controller {
 	}
 
 	/**
-	 * Live-fetches this site's real sitemap index and enumerates its child `<sitemap>` entries
-	 * (or a flat `<url>` set), counting each child's URLs (bounded by MAX_CHILD_SITEMAPS).
-	 *
-	 * Tries, in order: whatever `Sitemap:` robots.txt itself declares (the one source every SEO
-	 * plugin/manual setup actually points crawlers at - respecting it means this card shows the
-	 * same sitemap Google does, not a guess), then `/wp-sitemap.xml` (WP core's own, on by
-	 * default), then `/sitemap.xml` (a common manual/third-party convention when core's is off).
+	 * Live-fetches the site's real sitemap (robots.txt's declared `Sitemap:`, then
+	 * `/wp-sitemap.xml`, then `/sitemap.xml`) and enumerates its child sitemaps/URLs.
 	 *
 	 * @param \WP_REST_Request $request Full request object.
 	 * @return \WP_REST_Response
@@ -332,9 +327,7 @@ class RobotsSitemap extends \WP_REST_Controller {
 	}
 
 	/**
-	 * Real `Sitemap:` directive URL(s) this site's own `/robots.txt` declares - the actual
-	 * source crawlers follow, so trying these first (ahead of guessing `/wp-sitemap.xml` or
-	 * `/sitemap.xml`) means the real sitemap always wins when one is declared.
+	 * Real `Sitemap:` directive URL(s) this site's own `/robots.txt` declares.
 	 *
 	 * @return string[]
 	 */
@@ -405,9 +398,7 @@ class RobotsSitemap extends \WP_REST_Controller {
 			return 'author';
 		}
 
-		// A non-core generator's common `{type}-sitemap(-n).xml` convention (e.g. Yoast's
-		// `post-sitemap.xml`/`product-sitemap1.xml`) - best-effort only, since naming isn't
-		// standardized across every third-party sitemap generator.
+		// Best-effort: a non-core generator's common `{type}-sitemap(-n).xml` convention.
 		if ( preg_match( '#([a-z0-9_-]+)-sitemap(?:-?\d+)?\.xml$#i', $path, $matches ) ) {
 			return strtolower( $matches[1] );
 		}

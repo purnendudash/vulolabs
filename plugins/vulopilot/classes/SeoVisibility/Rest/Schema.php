@@ -109,9 +109,8 @@ class Schema extends \WP_REST_Controller {
 	}
 
 	/**
-	 * Falls back to a fresh analyze() the first time this is called, same as the
-	 * Knowledge Graph/Entities cards - a coverage card shouldn't need a "Run scan" click
-	 * before it ever shows anything.
+	 * Falls back to a fresh analyze() the first time this is called, so the card never needs a
+	 * manual "Run scan" click before it shows anything.
 	 *
 	 * @return \WP_REST_Response
 	 */
