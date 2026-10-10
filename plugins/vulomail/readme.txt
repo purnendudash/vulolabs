@@ -1,12 +1,12 @@
 === VuloMail – SMTP, Email Logs & SMS Notifications ===
-Contributors: [WordPress.org username]
+Contributors: vulolabs
 Tags: smtp, email logs, sms, woocommerce, email
-Requires at least: 6.4
-Tested up to: [Latest tested WordPress version]
-Requires PHP: 7.4
-Stable tag: [Current plugin version]
-License: [Plugin license]
-License URI: [Plugin license URL]
+Requires at least: 6.7
+Tested up to: 7.1.3
+Requires PHP: 8.1
+Stable tag: 1.0.0
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 WordPress SMTP, email logs and SMS notifications for WooCommerce, with backup email connections and tools to troubleshoot sending failures.
 
