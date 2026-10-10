@@ -57,14 +57,6 @@ class Overview extends Controller {
 				'failed' => 0,
 			),
 		);
-		$series = array();
-
-		for ( $i = $days - 1; $i >= 0; $i-- ) {
-			$series[ gmdate( 'Y-m-d', time() - $i * DAY_IN_SECONDS ) ] = array(
-				'sent'   => 0,
-				'failed' => 0,
-			);
-		}
 
 		foreach ( VuloMail()->logs->daily_counts( gmdate( 'Y-m-d 00:00:00', time() - ( $days - 1 ) * DAY_IN_SECONDS ) ) as $row ) {
 			$status = 'sent' === $row['status'] ? 'sent' : 'failed';
@@ -72,16 +64,6 @@ class Overview extends Controller {
 			if ( isset( $totals[ $row['channel'] ] ) ) {
 				$totals[ $row['channel'] ][ $status ] += (int) $row['total'];
 			}
-
-			if ( isset( $series[ $row['day'] ] ) ) {
-				$series[ $row['day'] ][ $status ] += (int) $row['total'];
-			}
-		}
-
-		$chart = array();
-
-		foreach ( $series as $day => $counts ) {
-			$chart[] = array_merge( array( 'day' => $day ), $counts );
 		}
 
 		$failures = VuloMail()->logs->query(
@@ -96,7 +78,6 @@ class Overview extends Controller {
 				'days'            => $days,
 				'email'           => array_merge( $totals[ Utill::CHANNEL_EMAIL ], $this->channel_state( VuloMail()->email, 'email_enabled' ) ),
 				'sms'             => array_merge( $totals[ Utill::CHANNEL_SMS ], $this->channel_state( VuloMail()->sms, 'sms_enabled' ) ),
-				'series'          => $chart,
 				'recent_failures' => Utill::with_display_dates( $failures['data'] ),
 				'logging'         => (bool) VuloMail()->settings->get( 'log_enabled' ),
 				'sms_alerts'      => $this->sms_alerts(),

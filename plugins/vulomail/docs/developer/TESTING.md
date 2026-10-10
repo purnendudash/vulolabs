@@ -16,7 +16,7 @@ PHPUnit with Brain\Monkey. The tests run without WordPress: `tests/php/bootstrap
 | `test-connections.php` | Secrets encrypted and masked, masked value keeps the stored secret, schema validation, settings sanitization |
 | `test-email-providers.php` | Request shape, success detection and failure handling per provider; SMTP transport applied after `phpmailer_init`; no leaked credentials |
 | `test-email-dispatch.php` | Failover, logging rules, `wp_mail()` interception in every state, the public API |
-| `test-sms.php` | Phone numbers, segments, each gateway, SMS dispatch and failover |
+| `test-sms.php` | Phone numbers, each gateway, SMS dispatch and failover |
 | `test-sms-triggers.php` | Alert firing rules |
 | `test-diagnostics.php` | Diagnostics checks |
 

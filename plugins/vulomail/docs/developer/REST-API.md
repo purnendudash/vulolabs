@@ -22,7 +22,7 @@ Add your own controller with the `vulomail_rest_controllers` filter (`key => WP_
 
 | Method | Route | Parameters | Returns |
 |---|---|---|---|
-| GET | `/overview` | `days`: 7, 30 or 90 (default 7) | `days`, `email` and `sms` (each `sent`, `failed`, `enabled`, `ready`, `primary`, `backup`), `series` (one `{ day, sent, failed }` per day), `recent_failures` (up to 5 log rows with display dates), `logging`, `sms_alerts` (`enabled`, `available`) |
+| GET | `/overview` | `days`: 7, 30 or 90 (default 7) | `days`, `email` and `sms` (each `sent`, `failed`, `enabled`, `ready`, `primary`, `backup`), `recent_failures` (up to 5 log rows with display dates), `logging`, `sms_alerts` (`enabled`, `available`) |
 
 ## Settings
 
@@ -62,7 +62,7 @@ Errors: 400 `vulomail_unknown_provider`, 404 `vulomail_connection_not_found`.
 | Method | Route | Parameters / body | Returns |
 |---|---|---|---|
 | GET | `/logs` | `channel` (`email`/`sms`), `status` (`sent`/`failed`), `search`, `after`, `before` (`YYYY-MM-DD`, read in the site's timezone), `page`, `per_page` (default 10, max 100), `orderby`, `order` | `data`, `total`, `status_counts` (`sent`, `failed`). Rows carry no `body` |
-| GET | `/logs/{id}` | - | The full row plus `attempts` and `headers` (decoded), `has_body`, `can_resend`, `is_html`, `sms_segment` |
+| GET | `/logs/{id}` | - | The full row plus `attempts` and `headers` (decoded), `has_body`, `can_resend` |
 | DELETE | `/logs` | `{ "ids": [1, 2] }` or `{ "all": true }` | `{ deleted }` |
 | POST | `/logs/{id}/resend` | - | `{ success, message }`. 400 `vulomail_cannot_resend` when the body wasn't stored or the recipients were masked |
 

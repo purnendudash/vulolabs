@@ -5,7 +5,7 @@
 | Class | File | What it does |
 |---|---|---|
 | `Dispatcher` | `classes/Sms/Dispatcher.php` | Normalises the number, tries the primary gateway then the backup, logs, fires outcome actions |
-| `PhoneNumber` | `classes/Sms/PhoneNumber.php` | E.164 normalisation; segment estimate |
+| `PhoneNumber` | `classes/Sms/PhoneNumber.php` | E.164 normalisation |
 | `GatewayInterface` | `classes/Sms/GatewayInterface.php` | Contract for a gateway adapter |
 | `AbstractGateway` | `classes/Sms/AbstractGateway.php` | Shared plumbing for HTTP gateways |
 | `Gateways\Twilio`, `Vonage`, `Plivo`, `Clickatell` | `classes/Sms/Gateways/` | The adapters |
@@ -27,7 +27,6 @@
 
 `PhoneNumber::normalize( $raw, $country_code )` returns `+` and 8 to 15 digits, or `''`. A number starting with `+` or `00` is taken as international. Anything else is national: the default country code is prepended and leading zeros are dropped. With no default country code a national number is invalid.
 
-`PhoneNumber::segments()` estimates billing segments (160/153 characters for basic Latin, 70/67 otherwise).
 
 ### Adapters
 

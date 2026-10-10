@@ -1,0 +1,2263 @@
+# Copyright (c) 2026 VuloLabs Inc. All Rights Reserved.
+msgid ""
+msgstr ""
+"Project-Id-Version: VuloForm 1.0.0\n"
+"Report-Msgid-Bugs-To: https://vulolabs.com/contact/\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-10-09T23:15:39+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: vuloform\n"
+
+#. Plugin Name of the plugin
+#: vuloform.php
+#: assets/js/block/form/index.js:1
+msgid "VuloForm"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: vuloform.php
+msgid "https://vulolabs.com/vuloform/"
+msgstr ""
+
+#. Description of the plugin
+#: vuloform.php
+msgid "Every form your website needs. One simple builder. Drag-and-drop forms with conditional logic, multi-step pages, file uploads, submissions, notifications and webhooks."
+msgstr ""
+
+#. Author of the plugin
+#: vuloform.php
+msgid "VuloLabs"
+msgstr ""
+
+#. Author URI of the plugin
+#: vuloform.php
+msgid "https://vulolabs.com/"
+msgstr ""
+
+#: classes/Admin.php:38
+#: classes/Admin.php:92
+#: assets/js/index.js:1
+#: assets/js/index.js:3
+msgid "Forms"
+msgstr ""
+
+#: classes/Admin.php:39
+#: assets/js/index.js:1
+#: assets/js/index.js:3
+msgid "Submissions"
+msgstr ""
+
+#: classes/Admin.php:40
+#: assets/js/index.js:3
+msgid "Settings"
+msgstr ""
+
+#: classes/Fields/Registry.php:34
+msgid "Single line text"
+msgstr ""
+
+#: classes/Fields/Registry.php:41
+msgid "Paragraph text"
+msgstr ""
+
+#: classes/Fields/Registry.php:48
+#: classes/Forms/Templates.php:23
+#: assets/js/index.js:3
+msgid "Email"
+msgstr ""
+
+#: classes/Fields/Registry.php:55
+#: classes/Forms/Templates.php:24
+msgid "Phone"
+msgstr ""
+
+#: classes/Fields/Registry.php:62
+msgid "Number"
+msgstr ""
+
+#: classes/Fields/Registry.php:69
+msgid "Website / URL"
+msgstr ""
+
+#: classes/Fields/Registry.php:76
+msgid "Dropdown"
+msgstr ""
+
+#: classes/Fields/Registry.php:83
+msgid "Radio buttons"
+msgstr ""
+
+#: classes/Fields/Registry.php:90
+msgid "Checkboxes"
+msgstr ""
+
+#: classes/Fields/Registry.php:97
+msgid "Consent checkbox"
+msgstr ""
+
+#: classes/Fields/Registry.php:104
+msgid "Date"
+msgstr ""
+
+#: classes/Fields/Registry.php:111
+msgid "Time"
+msgstr ""
+
+#: classes/Fields/Registry.php:118
+msgid "File upload"
+msgstr ""
+
+#: classes/Fields/Registry.php:125
+msgid "Section heading"
+msgstr ""
+
+#: classes/Fields/Registry.php:132
+msgid "Text / HTML"
+msgstr ""
+
+#: classes/Fields/Registry.php:139
+msgid "Divider"
+msgstr ""
+
+#: classes/Fields/Registry.php:146
+#: classes/Forms/Templates.php:151
+msgid "Page break"
+msgstr ""
+
+#: classes/Fields/Registry.php:153
+#: classes/Forms/Templates.php:22
+#: assets/js/index.js:3
+msgid "Name"
+msgstr ""
+
+#: classes/Fields/Registry.php:160
+#: assets/js/index.js:3
+msgid "Address"
+msgstr ""
+
+#: classes/Fields/Registry.php:167
+msgid "Hidden field"
+msgstr ""
+
+#: classes/Fields/Registry.php:174
+#: assets/js/index.js:3
+msgid "Calculation"
+msgstr ""
+
+#: classes/Fields/Registry.php:241
+msgid "First name"
+msgstr ""
+
+#: classes/Fields/Registry.php:242
+msgid "Last name"
+msgstr ""
+
+#: classes/Fields/Registry.php:247
+msgid "Address line 1"
+msgstr ""
+
+#: classes/Fields/Registry.php:248
+msgid "Address line 2"
+msgstr ""
+
+#: classes/Fields/Registry.php:249
+msgid "City"
+msgstr ""
+
+#: classes/Fields/Registry.php:250
+msgid "State / Region"
+msgstr ""
+
+#: classes/Fields/Registry.php:251
+msgid "ZIP / Postal code"
+msgstr ""
+
+#: classes/Fields/Registry.php:252
+msgid "Country"
+msgstr ""
+
+#. translators: %s: form title.
+#: classes/Forms/FormRepository.php:185
+msgid "%s (copy)"
+msgstr ""
+
+#: classes/Forms/FormRepository.php:226
+msgid "Untitled form"
+msgstr ""
+
+#: classes/Forms/Schema.php:74
+msgid "Submit"
+msgstr ""
+
+#: classes/Forms/Schema.php:75
+msgid "Next"
+msgstr ""
+
+#: classes/Forms/Schema.php:76
+msgid "Back"
+msgstr ""
+
+#: classes/Forms/Schema.php:81
+msgid "Thank you. Your message has been sent."
+msgstr ""
+
+#: classes/Forms/Schema.php:85
+msgid "This field is required."
+msgstr ""
+
+#: classes/Forms/Schema.php:86
+msgid "Please check this field."
+msgstr ""
+
+#: classes/Forms/Schema.php:87
+msgid "Please correct the highlighted fields and try again."
+msgstr ""
+
+#. translators: %s: field label.
+#: classes/Forms/Schema.php:205
+msgid "\"%s\" has no choices. Add at least one."
+msgstr ""
+
+#. translators: %s: field label.
+#: classes/Forms/Schema.php:210
+msgid "The formula in \"%s\" is not valid."
+msgstr ""
+
+#: classes/Forms/Schema.php:215
+msgid "Add at least one field that visitors can fill in."
+msgstr ""
+
+#: classes/Forms/Schema.php:221
+msgid "A page break can't be the last field. Add a field after it or remove it."
+msgstr ""
+
+#. translators: %s: webhook name.
+#: classes/Forms/Schema.php:227
+msgid "The webhook \"%s\" needs an address that starts with https://."
+msgstr ""
+
+#. translators: %s: notification name.
+#: classes/Forms/Schema.php:234
+msgid "The notification \"%s\" has nobody to send to."
+msgstr ""
+
+#. translators: %s: extension id, e.g. "payments".
+#: classes/Forms/Schema.php:240
+msgid "This form relies on \"%s\", which is not active on this site. Activate it, or switch that feature off for this form."
+msgstr ""
+
+#: classes/Forms/Templates.php:25
+#: assets/js/index.js:3
+msgid "Message"
+msgstr ""
+
+#: classes/Forms/Templates.php:28
+#: classes/Forms/Templates.php:108
+#: classes/Forms/Templates.php:212
+msgid "Consent"
+msgstr ""
+
+#: classes/Forms/Templates.php:31
+#: assets/js/index.js:3
+msgid "I agree to my details being stored so you can reply to me."
+msgstr ""
+
+#: classes/Forms/Templates.php:37
+msgid "Contact form"
+msgstr ""
+
+#: classes/Forms/Templates.php:38
+msgid "Name, email and a message."
+msgstr ""
+
+#: classes/Forms/Templates.php:40
+#: assets/js/index.js:3
+msgid "Subject"
+msgstr ""
+
+#: classes/Forms/Templates.php:43
+msgid "General inquiry"
+msgstr ""
+
+#: classes/Forms/Templates.php:44
+msgid "Lets the visitor say what the question is about."
+msgstr ""
+
+#: classes/Forms/Templates.php:52
+msgid "What is your question about?"
+msgstr ""
+
+#: classes/Forms/Templates.php:55
+msgid "Sales"
+msgstr ""
+
+#: classes/Forms/Templates.php:55
+msgid "Support"
+msgstr ""
+
+#: classes/Forms/Templates.php:55
+msgid "Billing"
+msgstr ""
+
+#: classes/Forms/Templates.php:55
+msgid "Something else"
+msgstr ""
+
+#: classes/Forms/Templates.php:62
+msgid "Lead generation"
+msgstr ""
+
+#: classes/Forms/Templates.php:63
+msgid "Collects a business contact, with a company field for businesses."
+msgstr ""
+
+#: classes/Forms/Templates.php:71
+msgid "I am enquiring as"
+msgstr ""
+
+#: classes/Forms/Templates.php:75
+msgid "An individual"
+msgstr ""
+
+#: classes/Forms/Templates.php:75
+#: classes/Forms/Templates.php:90
+msgid "A business"
+msgstr ""
+
+#: classes/Forms/Templates.php:80
+msgid "Company"
+msgstr ""
+
+#: classes/Forms/Templates.php:96
+msgid "What are you looking for?"
+msgstr ""
+
+#: classes/Forms/Templates.php:101
+msgid "Newsletter signup"
+msgstr ""
+
+#: classes/Forms/Templates.php:102
+msgid "An email address and consent."
+msgstr ""
+
+#: classes/Forms/Templates.php:111
+msgid "Yes, send me the newsletter. I can unsubscribe at any time."
+msgstr ""
+
+#: classes/Forms/Templates.php:115
+msgid "Subscribe"
+msgstr ""
+
+#: classes/Forms/Templates.php:118
+msgid "Feedback form"
+msgstr ""
+
+#: classes/Forms/Templates.php:119
+msgid "A rating and a comment."
+msgstr ""
+
+#: classes/Forms/Templates.php:124
+msgid "How would you rate your experience?"
+msgstr ""
+
+#: classes/Forms/Templates.php:127
+msgid "Excellent"
+msgstr ""
+
+#: classes/Forms/Templates.php:127
+msgid "Good"
+msgstr ""
+
+#: classes/Forms/Templates.php:127
+msgid "Average"
+msgstr ""
+
+#: classes/Forms/Templates.php:127
+msgid "Poor"
+msgstr ""
+
+#: classes/Forms/Templates.php:130
+msgid "What could we do better?"
+msgstr ""
+
+#: classes/Forms/Templates.php:131
+msgid "Email (optional)"
+msgstr ""
+
+#: classes/Forms/Templates.php:131
+msgid "Only if you would like a reply."
+msgstr ""
+
+#: classes/Forms/Templates.php:133
+msgid "Send feedback"
+msgstr ""
+
+#: classes/Forms/Templates.php:136
+msgid "Survey"
+msgstr ""
+
+#: classes/Forms/Templates.php:137
+msgid "A two-step survey with multiple-choice questions."
+msgstr ""
+
+#: classes/Forms/Templates.php:140
+msgid "About you"
+msgstr ""
+
+#: classes/Forms/Templates.php:143
+msgid "How did you hear about us?"
+msgstr ""
+
+#: classes/Forms/Templates.php:144
+msgid "Search engine"
+msgstr ""
+
+#: classes/Forms/Templates.php:144
+msgid "Social media"
+msgstr ""
+
+#: classes/Forms/Templates.php:144
+msgid "A friend"
+msgstr ""
+
+#: classes/Forms/Templates.php:144
+msgid "Other"
+msgstr ""
+
+#: classes/Forms/Templates.php:148
+msgid "Which of our services have you used?"
+msgstr ""
+
+#: classes/Forms/Templates.php:149
+msgid "Service A"
+msgstr ""
+
+#: classes/Forms/Templates.php:149
+msgid "Service B"
+msgstr ""
+
+#: classes/Forms/Templates.php:149
+msgid "Service C"
+msgstr ""
+
+#: classes/Forms/Templates.php:152
+msgid "Your opinion"
+msgstr ""
+
+#: classes/Forms/Templates.php:155
+msgid "How likely are you to recommend us?"
+msgstr ""
+
+#: classes/Forms/Templates.php:158
+msgid "Very likely"
+msgstr ""
+
+#: classes/Forms/Templates.php:158
+msgid "Likely"
+msgstr ""
+
+#: classes/Forms/Templates.php:158
+msgid "Unlikely"
+msgstr ""
+
+#: classes/Forms/Templates.php:158
+msgid "Very unlikely"
+msgstr ""
+
+#: classes/Forms/Templates.php:161
+msgid "Anything else you would like to tell us?"
+msgstr ""
+
+#: classes/Forms/Templates.php:165
+msgid "Event registration"
+msgstr ""
+
+#: classes/Forms/Templates.php:166
+msgid "Attendee details, number of tickets and dietary needs."
+msgstr ""
+
+#: classes/Forms/Templates.php:174
+msgid "Number of attendees"
+msgstr ""
+
+#: classes/Forms/Templates.php:184
+msgid "Dietary requirements"
+msgstr ""
+
+#: classes/Forms/Templates.php:185
+msgid "Vegetarian"
+msgstr ""
+
+#: classes/Forms/Templates.php:185
+msgid "Vegan"
+msgstr ""
+
+#: classes/Forms/Templates.php:185
+msgid "Gluten free"
+msgstr ""
+
+#: classes/Forms/Templates.php:187
+msgid "Anything we should know?"
+msgstr ""
+
+#: classes/Forms/Templates.php:189
+msgid "Register"
+msgstr ""
+
+#: classes/Forms/Templates.php:192
+msgid "Job application"
+msgstr ""
+
+#: classes/Forms/Templates.php:193
+msgid "Applicant details with a CV upload."
+msgstr ""
+
+#: classes/Forms/Templates.php:199
+msgid "Position you are applying for"
+msgstr ""
+
+#: classes/Forms/Templates.php:202
+msgid "Your CV"
+msgstr ""
+
+#: classes/Forms/Templates.php:209
+msgid "Cover letter"
+msgstr ""
+
+#: classes/Forms/Templates.php:215
+msgid "I agree to my application being stored and reviewed."
+msgstr ""
+
+#: classes/Forms/Templates.php:219
+msgid "Apply"
+msgstr ""
+
+#: classes/Forms/Templates.php:222
+msgid "Support request"
+msgstr ""
+
+#: classes/Forms/Templates.php:223
+msgid "Priority, a description and an optional screenshot."
+msgstr ""
+
+#: classes/Forms/Templates.php:230
+msgid "Priority"
+msgstr ""
+
+#: classes/Forms/Templates.php:233
+msgid "Low"
+msgstr ""
+
+#: classes/Forms/Templates.php:233
+#: assets/js/index.js:3
+msgid "Normal"
+msgstr ""
+
+#: classes/Forms/Templates.php:233
+msgid "Urgent"
+msgstr ""
+
+#: classes/Forms/Templates.php:236
+msgid "Describe the problem"
+msgstr ""
+
+#: classes/Forms/Templates.php:239
+msgid "Screenshot (optional)"
+msgstr ""
+
+#: classes/Forms/Templates.php:248
+msgid "Order or quote inquiry"
+msgstr ""
+
+#: classes/Forms/Templates.php:249
+msgid "Quantity and unit price with a calculated estimate."
+msgstr ""
+
+#: classes/Forms/Templates.php:254
+msgid "Product or service"
+msgstr ""
+
+#: classes/Forms/Templates.php:257
+msgid "Quantity"
+msgstr ""
+
+#: classes/Forms/Templates.php:268
+msgid "Budget per item"
+msgstr ""
+
+#: classes/Forms/Templates.php:277
+msgid "Estimated total"
+msgstr ""
+
+#: classes/Forms/Templates.php:283
+msgid "Details"
+msgstr ""
+
+#: classes/Forms/Templates.php:285
+msgid "Request a quote"
+msgstr ""
+
+#: classes/Forms/Templates.php:301
+msgid "Admin notification"
+msgstr ""
+
+#: classes/Forms/Templates.php:305
+#: classes/Notifications/Notifier.php:98
+#: classes/Notifications/Notifier.php:156
+#: assets/js/index.js:3
+msgid "New submission: {form_title}"
+msgstr ""
+
+#: classes/Frontend/Frontend.php:70
+msgid "This form no longer exists."
+msgstr ""
+
+#: classes/Frontend/Renderer.php:60
+msgid "This form is a draft. Publish it in VuloForm to show it here."
+msgstr ""
+
+#: classes/Frontend/Renderer.php:150
+msgid "Leave this field empty"
+msgstr ""
+
+#: classes/Frontend/Renderer.php:224
+#: classes/Submissions/Processor.php:296
+msgid "Enter a valid email address."
+msgstr ""
+
+#: classes/Frontend/Renderer.php:225
+#: classes/Submissions/Processor.php:299
+msgid "Enter a valid web address, starting with https://."
+msgstr ""
+
+#: classes/Frontend/Renderer.php:226
+#: classes/Submissions/Processor.php:308
+msgid "Enter a number."
+msgstr ""
+
+#: classes/Frontend/Renderer.php:227
+msgid "That file is too large or not an allowed type."
+msgstr ""
+
+#: classes/Frontend/Renderer.php:228
+msgid "Something went wrong. Please check your connection and try again."
+msgstr ""
+
+#: classes/Frontend/Renderer.php:229
+msgid "Sending…"
+msgstr ""
+
+#: classes/Frontend/Renderer.php:230
+msgid "This is a preview. Nothing was sent."
+msgstr ""
+
+#. translators: 1: current step, 2: number of steps.
+#: classes/Frontend/Renderer.php:232
+#: classes/Frontend/Renderer.php:246
+msgid "Step %1$s of %2$s"
+msgstr ""
+
+#. translators: Placeholder option of a dropdown field.
+#: classes/Frontend/Renderer.php:324
+msgid "Select…"
+msgstr ""
+
+#. translators: 1: comma-separated file extensions, 2: size in megabytes.
+#: classes/Frontend/Renderer.php:417
+msgid "Allowed: %1$s. Up to %2$d MB."
+msgstr ""
+
+#: classes/Notifications/Notifier.php:90
+msgid "No valid recipient address."
+msgstr ""
+
+#: classes/Notifications/Notifier.php:129
+msgid "Cancelled by another plugin."
+msgstr ""
+
+#: classes/Notifications/Notifier.php:136
+#: classes/Notifications/Notifier.php:176
+msgid "Handed to VuloMail."
+msgstr ""
+
+#: classes/Notifications/Notifier.php:141
+msgid "Handed to WordPress mail."
+msgstr ""
+
+#: classes/Notifications/Notifier.php:142
+msgid "WordPress could not send the email."
+msgstr ""
+
+#: classes/Notifications/Notifier.php:153
+msgid "SMS needs VuloMail with an SMS connection."
+msgstr ""
+
+#: classes/Notifications/Notifier.php:173
+msgid "No phone number to send to."
+msgstr ""
+
+#. translators: %d: HTTP status code.
+#: classes/Notifications/Webhooks.php:191
+#: classes/Notifications/Webhooks.php:196
+msgid "The endpoint answered HTTP %d."
+msgstr ""
+
+#: classes/Notifications/Webhooks.php:209
+msgid "A webhook URL must start with https://."
+msgstr ""
+
+#: classes/Notifications/Webhooks.php:213
+msgid "A webhook URL can't contain a username or password."
+msgstr ""
+
+#: classes/Notifications/Webhooks.php:217
+msgid "That address is not allowed. Webhooks can only be sent to public servers."
+msgstr ""
+
+#: classes/Rest/Controller.php:25
+msgid "You are not allowed to manage VuloForm."
+msgstr ""
+
+#: classes/Rest/Controller.php:56
+msgid "That item no longer exists."
+msgstr ""
+
+#: classes/Rest/Forms.php:91
+msgid "The form could not be created."
+msgstr ""
+
+#: classes/Rest/Forms.php:223
+msgid "Please enable JavaScript to use this form."
+msgstr ""
+
+#: classes/Rest/Settings.php:82
+msgid "Settings saved."
+msgstr ""
+
+#: classes/Rest/Submissions.php:133
+#: classes/Rest/Submissions.php:147
+msgid "Choose at least one submission."
+msgstr ""
+
+#: classes/Rest/Submissions.php:179
+msgid "ID"
+msgstr ""
+
+#: classes/Rest/Submissions.php:179
+#: classes/Security/Privacy.php:77
+msgid "Submitted"
+msgstr ""
+
+#: classes/Rest/Submissions.php:179
+#: assets/js/index.js:3
+msgid "Status"
+msgstr ""
+
+#: classes/Security/Privacy.php:38
+#: classes/Security/Privacy.php:51
+msgid "VuloForm submissions"
+msgstr ""
+
+#: classes/Security/Privacy.php:93
+msgid "Form submissions"
+msgstr ""
+
+#: classes/Security/Privacy.php:132
+msgid "When you submit a form on this site, the information you enter is stored so that we can respond to you. Files you upload are stored privately. We keep submissions for as long as needed for that purpose, and you can ask us to export or delete yours at any time."
+msgstr ""
+
+#: classes/Security/Spam.php:38
+msgid "This form has expired. Please reload the page and try again."
+msgstr ""
+
+#: classes/Security/Spam.php:42
+msgid "You are sending messages too quickly. Please wait a minute and try again."
+msgstr ""
+
+#: classes/Submissions/Formatter.php:31
+msgid "Yes"
+msgstr ""
+
+#: classes/Submissions/Formatter.php:31
+msgid "No"
+msgstr ""
+
+#: classes/Submissions/Processor.php:52
+msgid "This form is not accepting submissions."
+msgstr ""
+
+#: classes/Submissions/Processor.php:58
+msgid "This form is temporarily unavailable. Please try again later."
+msgstr ""
+
+#: classes/Submissions/Processor.php:168
+msgid "Your file could not be saved. Please try again later."
+msgstr ""
+
+#: classes/Submissions/Processor.php:186
+msgid "Your message could not be saved. Please try again later."
+msgstr ""
+
+#: classes/Submissions/Processor.php:304
+msgid "Enter a valid phone number."
+msgstr ""
+
+#. translators: %s: smallest allowed number.
+#: classes/Submissions/Processor.php:313
+msgid "Enter a number of %s or more."
+msgstr ""
+
+#. translators: %s: largest allowed number.
+#: classes/Submissions/Processor.php:318
+msgid "Enter a number of %s or less."
+msgstr ""
+
+#: classes/Submissions/Processor.php:326
+msgid "Enter a valid date."
+msgstr ""
+
+#: classes/Submissions/Processor.php:329
+msgid "Enter a valid time."
+msgstr ""
+
+#. translators: %d: number of characters.
+#: classes/Submissions/Processor.php:345
+msgid "Enter at least %d character."
+msgid_plural "Enter at least %d characters."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: number of characters.
+#: classes/Submissions/Processor.php:350
+msgid "Enter no more than %d character."
+msgid_plural "Enter no more than %d characters."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: number of files.
+#: classes/Submissions/Uploads.php:47
+msgid "You can upload %d file here."
+msgid_plural "You can upload up to %d files here."
+msgstr[0] ""
+msgstr[1] ""
+
+#: classes/Submissions/Uploads.php:52
+msgid "The file could not be uploaded. Please try again."
+msgstr ""
+
+#. translators: %d: size in megabytes.
+#: classes/Submissions/Uploads.php:57
+msgid "Each file must be %d MB or smaller."
+msgstr ""
+
+#. translators: %s: comma-separated file extensions.
+#: classes/Submissions/Uploads.php:62
+msgid "That file type is not allowed. Allowed types: %s."
+msgstr ""
+
+#: assets/js/block/form/index.js:1
+msgid "Choose the form to show here."
+msgstr ""
+
+#: assets/js/block/form/index.js:1
+msgid "You have no published forms yet. Create and publish one in VuloForm first."
+msgstr ""
+
+#: assets/js/block/form/index.js:1
+#: assets/js/index.js:1
+#: assets/js/index.js:3
+msgid "Form"
+msgstr ""
+
+#: assets/js/block/form/index.js:1
+msgid "Select a form…"
+msgstr ""
+
+#: assets/js/block/form/index.js:1
+msgid "The selected form is no longer published."
+msgstr ""
+
+#: assets/js/index.js:1
+msgid "Something went wrong. Please try again."
+msgstr ""
+
+#: assets/js/index.js:1
+msgid "Every form on your site. Build one, publish it, and add it to a page."
+msgstr ""
+
+#: assets/js/index.js:1
+msgid "New form"
+msgstr ""
+
+#: assets/js/index.js:1
+msgid "Your forms"
+msgstr ""
+
+#: assets/js/index.js:1
+msgid "Could not load your forms"
+msgstr ""
+
+#: assets/js/index.js:1
+msgid "Search forms…"
+msgstr ""
+
+#: assets/js/index.js:1
+#: assets/js/index.js:3
+msgid "Published"
+msgstr ""
+
+#: assets/js/index.js:1
+#: assets/js/index.js:3
+msgid "Draft"
+msgstr ""
+
+#. translators: %s: date and time.
+#: assets/js/index.js:1
+msgid "Edited %s"
+msgstr ""
+
+#. translators: %d: number of submissions.
+#: assets/js/index.js:1
+msgid "%d submission"
+msgid_plural "%d submissions"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: number of unread submissions.
+#: assets/js/index.js:1
+msgid "%d new"
+msgstr ""
+
+#: assets/js/index.js:1
+msgid "Edit"
+msgstr ""
+
+#: assets/js/index.js:1
+msgid "Duplicate"
+msgstr ""
+
+#: assets/js/index.js:1
+msgid "Form duplicated."
+msgstr ""
+
+#: assets/js/index.js:1
+#: assets/js/index.js:3
+msgid "Delete"
+msgstr ""
+
+#: assets/js/index.js:1
+msgid "No forms match your search."
+msgstr ""
+
+#: assets/js/index.js:1
+msgid "Create your first form"
+msgstr ""
+
+#: assets/js/index.js:1
+msgid "Start from a template such as a contact form, or from a blank form."
+msgstr ""
+
+#: assets/js/index.js:1
+msgid "Start a new form"
+msgstr ""
+
+#: assets/js/index.js:1
+msgid "Blank form"
+msgstr ""
+
+#: assets/js/index.js:1
+msgid "Start with an empty canvas."
+msgstr ""
+
+#: assets/js/index.js:1
+msgid "That file is not a VuloForm export."
+msgstr ""
+
+#: assets/js/index.js:1
+msgid "Import a form (.json)"
+msgstr ""
+
+#: assets/js/index.js:1
+msgid "Delete this form?"
+msgstr ""
+
+#. translators: 1: form title, 2: number of submissions.
+#: assets/js/index.js:1
+msgid "\"%1$s\" and its %2$d submission, including any uploaded files, will be permanently deleted."
+msgid_plural "\"%1$s\" and its %2$d submissions, including any uploaded files, will be permanently deleted."
+msgstr[0] ""
+msgstr[1] ""
+
+#: assets/js/index.js:1
+msgid "Keep form"
+msgstr ""
+
+#: assets/js/index.js:1
+msgid "Delete form"
+msgstr ""
+
+#: assets/js/index.js:1
+msgid "Form deleted."
+msgstr ""
+
+#. translators: %d: option number.
+#: assets/js/index.js:3
+msgid "Option %d"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Add your text here."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Basic fields"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Layout"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Advanced fields"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Field library"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Click to add, or drag onto the form"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Your form is empty"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Drag a field here, or click one in the field library on the left."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Drag to reorder"
+msgstr ""
+
+#. translators: %d: page number.
+#: assets/js/index.js:3
+msgid "Page %d starts here"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Required"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Needs an extension that is not active"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Conditional"
+msgstr ""
+
+#. translators: %s: field label.
+#: assets/js/index.js:3
+msgid "Move %s up"
+msgstr ""
+
+#. translators: %s: field label.
+#: assets/js/index.js:3
+msgid "Move %s down"
+msgstr ""
+
+#. translators: %s: field label.
+#: assets/js/index.js:3
+msgid "Duplicate %s"
+msgstr ""
+
+#. translators: %s: field label.
+#: assets/js/index.js:3
+msgid "Delete %s"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Full"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Full width"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Two thirds"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Half"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "One third"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "is"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "is not"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "contains"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "does not contain"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "is empty"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "is filled in"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "is greater than"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "is less than"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Show this field when"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Hide this field when"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Make this field required when"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Field settings"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "No field selected"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Click a field in the form to change its label, validation and visibility rules here."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "This field was added by an extension that is not active on this site. It is kept with the form, but visitors do not see it and it collects nothing until the extension is active again."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Everything after this starts a new step. Visitors move between steps with the Next and Back buttons; change their text under Settings."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "General"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Heading text"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Label"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Content"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Text and basic HTML such as links, bold and lists. Scripts are removed."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Heading level"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Text beside the checkbox"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Links are allowed, for example to your privacy policy."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Placeholder"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Example inside the field"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Help text"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Shown under the field"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Value"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Default"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Choices"
+msgstr ""
+
+#. translators: %d: number of choices.
+#: assets/js/index.js:3
+msgid "%d choice"
+msgid_plural "%d choices"
+msgstr[0] ""
+msgstr[1] ""
+
+#: assets/js/index.js:3
+msgid "Choice"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Remove this choice"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Add a choice"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Formula"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Use numbers, + - * / and brackets, and field keys in curly brackets."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Available:"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Decimal places"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Text before"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Such as a currency symbol."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Files"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Allowed file types"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Largest file"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Number of files"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Parts to show"
+msgstr ""
+
+#. translators: 1: parts shown, 2: parts available.
+#: assets/js/index.js:3
+msgid "%1$d of %2$d"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Validation"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Limits set"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "No limits"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Smallest number"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Largest number"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Fewest characters"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Most characters"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Leave at 0 for no limit."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Appearance"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "label hidden"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Width"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Narrower fields sit side by side on wide screens."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Hide the label"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "It stays available to screen readers."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Conditional logic"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Show or hide by other answers"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Add another field to the form first; a rule needs a field to look at."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "How many rules must be true"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "All are true"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Any is true"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Remove this rule"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Add a rule"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Advanced"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Field key"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Names this answer in emails, exports and webhooks. Changing it later breaks placeholders that use the old key."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "CSS class"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "For your own styling. Leave empty if unsure."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Use the theme's colour"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Follows your theme"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Choose a colour"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Off"
+msgstr ""
+
+#. translators: %s: name of a notification or webhook.
+#: assets/js/index.js:3
+msgid "Use \"%s\""
+msgstr ""
+
+#. translators: %s: name of a notification or webhook.
+#: assets/js/index.js:3
+msgid "Remove \"%s\""
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Remove"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Notifications"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Confirmation"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Spam protection"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Webhooks"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Email to me"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Nothing happens to what people send through this form: it is not saved, and no notification or webhook is on. Switch one of them on."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Form settings"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Who hears about a new submission. Sent through VuloMail."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Who hears about a new submission. Sent with your site's email."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Add a confirmation to the visitor"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Confirmation to the visitor"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "We received your message"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Thank you for getting in touch. This is a copy of what you sent:"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Add notification"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Nobody is told when this form is submitted"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Submissions are still saved under VuloForm → Submissions. Add a notification to get an email as well."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Add a notification to get an email for each submission."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Notification"
+msgstr ""
+
+#. translators: %s: phone number or placeholder.
+#: assets/js/index.js:3
+msgid "Text message to %s"
+msgstr ""
+
+#. translators: %s: email address or placeholder.
+#: assets/js/index.js:3
+msgid "Email to %s"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Send as"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Text message"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Text messages need the VuloMail plugin with an SMS connection. Until then this notification is skipped."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "To this number"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "To"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "International format, such as +14155550123. Several: separate with commas. A phone field: its placeholder, such as {phone}."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Several addresses: separate with commas. The person who filled in the form: your email field's placeholder, such as {email}."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Add an answer:"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Every answer, one per line"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Replies go to"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Choose your email field to answer the visitor by replying to the notification."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Your site's address"
+msgstr ""
+
+#. translators: %s: field label.
+#: assets/js/index.js:3
+msgid "The address in \"%s\""
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Only you see this, in this list and on each submission."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "After submitting"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "What the visitor sees once the form is sent."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Then"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Show a message"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Go to another page"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Page address"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "The full address, starting with https://."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Replaces the form. You can include an answer with its placeholder, such as {name}."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Where what people send is kept."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Save submissions on this site"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "You read them under VuloForm → Submissions. Off: nothing is kept here, and only notifications and webhooks receive it."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Design"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "The form takes its fonts and colours from your theme. Change only what you want different."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Labels"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Above"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Beside"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Hidden"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Spacing"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Compact"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Relaxed"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Accent colour"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Buttons, focus outlines and the step indicator."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Text colour"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Text size"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "12 to 24. Empty follows your theme."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Theme"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Rounded corners"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "0 is square. Empty follows your theme."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Buttons"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "The form's buttons and its step indicator."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "The form's button. Add a Page break field to split the form into steps."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Submit button"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Position"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Button position"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Left"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Centre"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Right"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Next button"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Back button"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Step indicator"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Steps"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Progress bar"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "None"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Error messages"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "What visitors read when something needs correcting."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "A required field is empty"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "An answer is not valid"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Above the form"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Shown when the form could not be sent."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "For developers"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Hooks for your own stylesheet."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Added to the form's wrapper."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "No CAPTCHA and no outside service. How often one visitor may submit is set for all forms under VuloForm → Settings."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Hidden trap field"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "A field people never see. A submission that fills it in is filed as spam."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Minimum fill time"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "A form sent faster than a person could fill it in is filed as spam. 0 switches this off."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "seconds"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Send each submission to another service, such as a CRM or an automation tool. Sent in the background; a failed delivery is tried twice more."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Add webhook"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "New webhook"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "No webhooks"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Most forms do not need one. Add a webhook when another service gives you an address to send submissions to."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Webhook"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "No address yet"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Given to you by the other service. It must start with https://."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Fields to send"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Tick none to send every field."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Signing secret"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Optional. With a secret, each request carries an X-VuloForm-Signature header the other service can use to check it came from this site."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Copied"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Copy"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "This form is a draft, so visitors see nothing where you place it. Publish it first."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "On this site"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "In the block editor, add the \"VuloForm\" block and choose this form. Anywhere else that accepts shortcodes, paste this one."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Shortcode"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "On another website"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "For a page that is not on this WordPress site. The form loads from here, and submissions arrive here."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Embed code"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Copy the code."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Paste it into the other page's HTML, where the form should appear."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Keep this WordPress site online: it serves the form and receives the answers."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Copy to another WordPress site"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Download the form's fields and settings as a file, then choose New form → Import on the other site. Submissions are not included."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Download form (.json)"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Fields"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Share"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Could not open this form"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Back to forms"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Saved as a draft. Fix the problems listed above the form to publish it."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Form published."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Draft saved."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Form name"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Unsaved changes"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "All changes saved"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Undo"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Redo"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Preview"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Unpublish"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Save draft"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Update"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Publish"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Fix these before publishing"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Field removed. Use Undo to bring it back."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Try the form. Nothing you enter here is sent or saved."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Handed off"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Delivered"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Failed"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Will retry"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Skipped"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "SMS"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "The download failed."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "What people have sent through your forms. Only administrators can see this."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Export CSV"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Could not load submissions"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "No forms yet"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Create and publish a form, and what people send will appear here."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Go to forms"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Search submissions…"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Date range"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Submission"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "(empty)"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Received"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Spam"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "New"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Read"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "View"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Inbox"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Nothing here yet."
+msgstr ""
+
+#. translators: %d: submission number.
+#: assets/js/index.js:3
+msgid "Submission #%d"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Sent from"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "IP address"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Not spam"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Mark as spam"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Mark as new"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Delete this submission?"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "The submission and any files uploaded with it will be permanently deleted."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Keep"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Delete submission"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Submission deleted."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Privacy"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "What is kept about the people who fill in your forms, and for how long."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "days"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Keep submissions for"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Older submissions and their uploaded files are deleted automatically. 0 keeps them until you delete them."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Store the visitor's IP address"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Off by default. An IP address is personal data; only keep it if you have a reason to."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "On"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Abuse protection"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Applies to every form. Each form also has its own spam settings."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "per minute"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Submissions allowed from one visitor"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Per form. Further attempts in the same minute are refused. 0 switches the limit off."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Data"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "What happens to your forms, submissions and uploaded files when VuloForm is deleted."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "When VuloForm is deleted"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Keep data"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Reinstalling picks up where you left off."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Delete everything"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Removes forms, submissions and uploaded files."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Could not load settings"
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Privacy, abuse protection and data. Changes save by themselves."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Create and edit your forms."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "What people have sent you."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Privacy, spam protection and data."
+msgstr ""
+
+#: assets/js/index.js:3
+msgid "Search…"
+msgstr ""
+
+#: assets/js/block/form/block.json
+msgctxt "block title"
+msgid "VuloForm"
+msgstr ""
+
+#: assets/js/block/form/block.json
+msgctxt "block description"
+msgid "Show a form you built with VuloForm."
+msgstr ""
+
+#: assets/js/block/form/block.json
+msgctxt "block keyword"
+msgid "form"
+msgstr ""
+
+#: assets/js/block/form/block.json
+msgctxt "block keyword"
+msgid "contact"
+msgstr ""
+
+#: assets/js/block/form/block.json
+msgctxt "block keyword"
+msgid "survey"
+msgstr ""
