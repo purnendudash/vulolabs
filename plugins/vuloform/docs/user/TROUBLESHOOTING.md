@@ -20,7 +20,7 @@ The rate limit was reached. Wait a minute. If real visitors hit it, raise **Subm
 
 ## A real submission landed in Spam
 
-The form was sent faster than the form's **minimum time**. Lower it in the form's Settings tab. Mark the submission **Not spam** to move it to the inbox.
+The form was sent faster than the **minimum fill time**. Lower it under **VuloForm > Settings > Spam protection**. Mark the submission **Not spam** to move it to the inbox.
 
 ## Notification emails do not arrive
 

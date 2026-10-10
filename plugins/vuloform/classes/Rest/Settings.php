@@ -55,6 +55,10 @@ class Settings extends Controller {
 			$after['rate_limit'] = max( 0, min( 120, (int) $input['rate_limit'] ) );
 		}
 
+		if ( isset( $input['min_seconds'] ) ) {
+			$after['min_seconds'] = max( 0, min( 60, (int) $input['min_seconds'] ) );
+		}
+
 		if ( isset( $input['recaptcha_type'] ) ) {
 			$after['recaptcha_type'] = 'v3' === $input['recaptcha_type'] ? 'v3' : 'v2';
 		}
@@ -83,14 +87,16 @@ class Settings extends Controller {
 		}
 
 		// The on/off settings arrive from the form as a toggle group: `{ store_ip: { enable: bool } }`.
-		foreach ( $input as $value ) {
-			if ( is_array( $value ) && isset( $value['store_ip'] ) ) {
-				$after['store_ip'] = is_array( $value['store_ip'] ) && ! empty( $value['store_ip']['enable'] );
+		foreach ( array( 'store_ip', 'honeypot' ) as $toggle ) {
+			foreach ( $input as $value ) {
+				if ( is_array( $value ) && isset( $value[ $toggle ] ) ) {
+					$after[ $toggle ] = is_array( $value[ $toggle ] ) && ! empty( $value[ $toggle ]['enable'] );
+				}
 			}
-		}
 
-		if ( array_key_exists( 'store_ip', $input ) && ! is_array( $input['store_ip'] ) ) {
-			$after['store_ip'] = (bool) $input['store_ip'];
+			if ( array_key_exists( $toggle, $input ) && ! is_array( $input[ $toggle ] ) ) {
+				$after[ $toggle ] = (bool) $input[ $toggle ];
+			}
 		}
 
 		update_option( Utill::SETTINGS_KEY, $after, false );

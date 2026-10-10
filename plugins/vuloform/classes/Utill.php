@@ -57,8 +57,12 @@ class Utill {
 		'store_ip'            => false,
 		// Submissions one visitor may send to one form per minute; 0 disables the limit.
 		'rate_limit'          => 5,
+		// A hidden field only bots fill in, and the fewest seconds a person needs to fill in a form
+		// (0 switches that check off). Both apply to every form.
+		'honeypot'            => true,
+		'min_seconds'         => 2,
 		// Google reCAPTCHA: v2 (checkbox) or v3 (score), its two keys, and the lowest v3 score
-		// treated as a person. Each form switches the check on for itself.
+		// treated as a person. Each form switches the check on for itself, in its builder.
 		'recaptcha_type'       => 'v2',
 		'recaptcha_site_key'   => '',
 		'recaptcha_secret_key' => '',

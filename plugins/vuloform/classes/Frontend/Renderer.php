@@ -12,6 +12,7 @@ use VuloForm\Forms\DynamicValues;
 use VuloForm\Security\Recaptcha;
 use VuloForm\Security\Spam;
 use VuloForm\Security\Token;
+use VuloForm\Utill;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -144,7 +145,7 @@ class Renderer {
 			$html .= '</div></div>';
 		}
 
-		if ( ! empty( $settings['spam']['honeypot'] ) ) {
+		if ( ! empty( Utill::settings()['honeypot'] ) ) {
 			// Hidden from people (and from screen readers and tab order), irresistible to bots.
 			$html .= sprintf(
 				'<div class="vuloform-hp" aria-hidden="true"><label for="%1$s-hp">%2$s</label><input type="text" id="%1$s-hp" name="%3$s" value="" tabindex="-1" autocomplete="off"></div>',

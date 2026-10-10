@@ -71,7 +71,7 @@ class TestSubmissions extends TestCase {
 			'schema' => Schema::sanitize(
 				array(
 					'fields'   => $fields,
-					'settings' => array_merge( array( 'spam' => array( 'honeypot' => true, 'min_seconds' => 2 ) ), $settings ),
+					'settings' => $settings,
 				)
 			),
 		);
@@ -245,6 +245,23 @@ class TestSubmissions extends TestCase {
 		$this->assertSame( array( 'spam', 'spam' ), array_column( $this->store->rows, 'status' ) );
 	}
 
+	public function test_the_trap_field_and_fill_time_are_site_settings_and_can_be_switched_off() {
+		$this->options['vuloform_settings'] = array(
+			'honeypot'    => false,
+			'min_seconds' => 0,
+		);
+
+		$form      = $this->form( $this->contact_fields() );
+		$processor = new Processor( $this->store );
+		$values    = array( 'name' => 'Jane', 'email' => 'jane@example.com' );
+
+		$processor->handle( $form, $this->post( $values, array( 'vf_website' => 'http://spam.example' ) ) );
+		$processor->handle( $form, array( 'vf' => $values, 'vf_token' => Token::issue( 5 ) ) );
+
+		$this->assertSame( array( 'unread', 'unread' ), array_column( $this->store->rows, 'status' ) );
+		$this->assertStringNotContainsString( 'name="vf_website"', \VuloForm\Frontend\Renderer::render( $form ) );
+	}
+
 	/** A form with reCAPTCHA switched on, on a site whose keys are saved. */
 	private function recaptcha_form( $type = 'v2' ) {
 		$this->options['vuloform_settings'] = array(
@@ -254,7 +271,7 @@ class TestSubmissions extends TestCase {
 			'recaptcha_score'      => 0.5,
 		);
 
-		return $this->form( $this->contact_fields(), array( 'spam' => array( 'honeypot' => true, 'min_seconds' => 2, 'recaptcha' => true ) ) );
+		return $this->form( $this->contact_fields(), array( 'spam' => array( 'recaptcha' => true ) ) );
 	}
 
 	/** Makes Google answer a verification request with the given body, and records what was sent. */
@@ -345,7 +362,7 @@ class TestSubmissions extends TestCase {
 	public function test_recaptcha_does_nothing_until_the_keys_are_saved() {
 		Functions\expect( 'wp_remote_post' )->never();
 
-		$form   = $this->form( $this->contact_fields(), array( 'spam' => array( 'honeypot' => true, 'min_seconds' => 2, 'recaptcha' => true ) ) );
+		$form   = $this->form( $this->contact_fields(), array( 'spam' => array( 'recaptcha' => true ) ) );
 		$result = ( new Processor( $this->store ) )->handle( $form, $this->post( array( 'name' => 'Jane', 'email' => 'jane@example.com' ) ) );
 
 		$this->assertTrue( $result['success'] );

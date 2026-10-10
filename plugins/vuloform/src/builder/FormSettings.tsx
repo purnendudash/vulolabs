@@ -1,8 +1,9 @@
 /* global vuloformAppLocalizer */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import type { Dispatch, ReactNode } from 'react';
 import { createInterpolateElement } from '@wordpress/element';
-import { __, sprintf } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 import { NoticeComponent } from '@zyra/components';
 import { ButtonInput, SelectInput, TextAreaInput, TextInput } from '@zyra/inputs';
 import Switch from '../components/Switch';
@@ -12,7 +13,8 @@ import { notify } from '../services/notify';
 import type { ConfirmationRule, Field, FormSettings as Settings, Notification, Webhook } from '../services/types';
 import { makeId } from '../services/types';
 import { fieldType } from './fields';
-import When, { NO_CONDITIONS } from './When';
+import { openBuilder, sectionFromHash } from './route';
+import When, { NO_CONDITIONS, OPERATORS } from './When';
 
 interface FormSettingsProps {
 	settings: Settings;
@@ -31,9 +33,18 @@ const MAX_CONFIRMATION_RULES = 10;
 // The group that was open, so going to Fields and back does not lose the place.
 let lastGroup = 'notifications';
 
-/** Makes the Settings tab open on a given group the next time it is shown. */
+/**
+ * A group's name in the URL (`&section=integrations`). Two ids differ from what the admin sees:
+ * Integrations is stored as `webhooks`, and an extension's group carries an `extension:` prefix.
+ */
+const sectionOf = (id: string) => ('webhooks' === id ? 'integrations' : id.replace(/^extension:/, ''));
+
+/** The group to return to when the Settings tab is opened again, as named in the URL. */
+export const lastSection = () => sectionOf(lastGroup);
+
+/** Opens a group of the Settings tab, by its id (`webhooks`) or its name in the URL. */
 export const openSettingsGroup = (id: string) => {
-	lastGroup = id;
+	openBuilder('settings', sectionOf(id));
 };
 
 const select = (name: string, value: string, options: { value: string; label: string }[], onChange: Dispatch<string>) => (
@@ -163,16 +174,14 @@ const Item = ({ icon, name, fallbackName, onRename, summary, enabled, isOpen, on
  * each laid out like the other VuloLabs settings screens.
  */
 const FormSettings = ({ settings, fields, onChange, onChangeWithEmailField }: FormSettingsProps) => {
-	const [group, setGroupState] = useState(lastGroup);
+	// The open group is whatever the URL names, so it can be linked to and survives a reload.
+	const requested = sectionFromHash(useLocation().hash);
 	const [openItem, setOpenItem] = useState('');
 	const set = (patch: Partial<Settings>) => onChange({ ...settings, ...patch });
 	const style = settings.style;
 	const setStyle = (key: string, value: string) => set({ style: { ...style, [key]: value } });
 
-	const setGroup = (id: string) => {
-		lastGroup = id;
-		setGroupState(id);
-	};
+	const setGroup = (id: string) => openSettingsGroup(id);
 
 	const inputs = fields.filter((field) => fieldType(field.type)?.input);
 	const emailFields = inputs.filter((field) => 'email' === field.type);
@@ -202,6 +211,102 @@ const FormSettings = ({ settings, fields, onChange, onChangeWithEmailField }: Fo
 	const setAlternatives = (rules: ConfirmationRule[]) => set({ confirmation: { ...settings.confirmation, rules } });
 	const setAlternative = (index: number, patch: Partial<ConfirmationRule>) =>
 		setAlternatives(alternatives.map((item, i) => (i === index ? { ...item, ...patch } : item)));
+	// A rule can look at any answer except an uploaded file.
+	const ruleFields = inputs.filter((field) => 'file' !== field.type);
+
+	// What one confirmation shows: a message or another page. The same two settings serve the
+	// confirmation everyone gets and each exception to it.
+	const afterSubmit = (
+		name: string,
+		value: { type: string; message: string; redirect_url: string },
+		// eslint-disable-next-line no-unused-vars
+		onPatch: (patch: { type?: string; message?: string; redirect_url?: string }) => void,
+		// Inside an exception there is no room for a label beside each setting, so it goes above.
+		stacked = false
+	) => {
+		const line = (label: string, control: ReactNode, desc?: ReactNode) =>
+			stacked ? (
+				<div className="vuloform-field" key={label}>
+					<span className="vuloform-control-label">{label}</span>
+					{control}
+					{desc && <span className="vuloform-control-desc">{desc}</span>}
+				</div>
+			) : (
+				<Row label={label} desc={desc} key={label}>
+					{control}
+				</Row>
+			);
+
+		return (
+			<>
+				{line(
+					stacked ? __('They see', 'vuloform') : __('Show', 'vuloform'),
+					<Segmented
+						label={__('What to show after the form is sent', 'vuloform')}
+						value={value.type}
+						options={[
+							{ value: 'message', label: __('A message', 'vuloform') },
+							{ value: 'redirect', label: __('Another page', 'vuloform') },
+						]}
+						onChange={(type) => onPatch({ type })}
+					/>
+				)}
+				{'redirect' === value.type
+					? line(
+							__('Page address', 'vuloform'),
+							<TextInput name={`${name}-redirect`} value={value.redirect_url} placeholder="https://" onChange={(text) => onPatch({ redirect_url: String(text) })} />,
+							__('The visitor is taken here straight away. Use the full address, starting with https://.', 'vuloform')
+					  )
+					: line(
+							__('Message', 'vuloform'),
+							<TextAreaInput
+								name={`${name}-message`}
+								rowNumber={3}
+								usePlainText
+								placeholder={__('Thank you. Your message has been sent.', 'vuloform')}
+								value={value.message}
+								onChange={(text) => onPatch({ message: String(text) })}
+							/>,
+							answerTags((tag) => onPatch({ message: withTag(value.message, tag) }))
+					  )}
+			</>
+		);
+	};
+
+	// An exception in one line: the answer it waits for and what it then shows.
+	const exceptionSummary = (item: ConfirmationRule) => {
+		const rule = item.conditions?.rules?.[0];
+		const shows = 'redirect' === item.type ? __('another page', 'vuloform') : __('a message', 'vuloform');
+
+		if (!rule) {
+			return __('No rule yet: add one to say who sees this', 'vuloform');
+		}
+
+		const label = fields.find((field) => field.key === rule.field)?.label || rule.field;
+		const needsAnswer = 'empty' !== rule.operator && 'not_empty' !== rule.operator;
+
+		if (needsAnswer && '' === String(rule.value ?? '').trim()) {
+			return __('Not finished: enter the answer it waits for', 'vuloform');
+		}
+
+		const operator = OPERATORS.find((option) => option.value === rule.operator)?.label ?? rule.operator;
+		const when = `${label} ${operator}${needsAnswer ? ` "${rule.value}"` : ''}`;
+		const more = item.conditions.rules.length - 1;
+
+		return sprintf(
+			/* translators: 1: a rule such as: Subject is "Sales". 2: "a message" or "another page". */
+			__('When %1$s: shows %2$s', 'vuloform'),
+			more > 0
+				? sprintf(
+						/* translators: 1: a rule such as: Subject is "Sales". 2: number of further rules. */
+						_n('%1$s and %2$d more rule', '%1$s and %2$d more rules', more, 'vuloform'),
+						when,
+						more
+				  )
+				: when,
+			shows
+		);
+	};
 
 	// "Only for some answers": a switch, and under it the rules that decide.
 	// eslint-disable-next-line no-unused-vars
@@ -242,14 +347,18 @@ const FormSettings = ({ settings, fields, onChange, onChangeWithEmailField }: Fo
 	const count = (n: number) => (n > 0 ? ` (${n})` : '');
 	const groups = [
 		{ id: 'notifications', title: __('Notifications', 'vuloform') + count(settings.notifications.length), icon: 'notification' },
-		{ id: 'confirmation', title: __('Confirmation', 'vuloform'), icon: 'check' },
+		// Named for what it holds; "confirmation" is also an email, added under Notifications.
+		{ id: 'confirmation', title: __('After submitting', 'vuloform'), icon: 'check' },
 		{ id: 'appearance', title: __('Appearance', 'vuloform'), icon: 'edit' },
-		{ id: 'spam', title: __('Spam protection', 'vuloform'), icon: 'security' },
 		// The id predates the name: it is where problems with a webhook point to.
 		{ id: 'webhooks', title: __('Integrations', 'vuloform') + count(integrationCount), icon: 'link' },
 		...extensions.map((item) => ({ id: `extension:${item.id}`, title: item.title, icon: item.icon })),
 	];
-	const current = groups.some((item) => item.id === group) ? group : 'notifications';
+	const current = groups.find((item) => sectionOf(item.id) === requested)?.id ?? 'notifications';
+
+	useEffect(() => {
+		lastGroup = current;
+	}, [current]);
 	const extension = extensions.find((item) => `extension:${item.id}` === current);
 
 	// A form that keeps nothing and tells nobody loses every submission.
@@ -589,119 +698,117 @@ const FormSettings = ({ settings, fields, onChange, onChangeWithEmailField }: Fo
 
 			{'confirmation' === current && (
 				<Sections>
-					<Section icon="check" title={__('After submitting', 'vuloform')} desc={__('What the visitor sees once the form is sent.', 'vuloform')}>
-						<Row label={__('Then', 'vuloform')}>
-							<Segmented
-								label={__('After submitting', 'vuloform')}
-								value={settings.confirmation.type}
-								options={[
-									{ value: 'message', label: __('Show a message', 'vuloform') },
-									{ value: 'redirect', label: __('Go to another page', 'vuloform') },
-								]}
-								onChange={(type) => set({ confirmation: { ...settings.confirmation, type } })}
-							/>
-						</Row>
-						{'redirect' === settings.confirmation.type ? (
-							<Row label={__('Page address', 'vuloform')} desc={__('The full address, starting with https://.', 'vuloform')}>
-								<TextInput
-									name="redirect_url"
-									value={settings.confirmation.redirect_url}
-									placeholder="https://"
-									onChange={(value) => set({ confirmation: { ...settings.confirmation, redirect_url: String(value) } })}
-								/>
-							</Row>
-						) : (
-							<Row label={__('Message', 'vuloform')} desc={__('Replaces the form. You can include an answer with its placeholder, such as {name}.', 'vuloform')}>
-								<TextAreaInput
-									name="confirmation-message"
-									rowNumber={3}
-									usePlainText
-									value={settings.confirmation.message}
-									onChange={(value) => set({ confirmation: { ...settings.confirmation, message: value } })}
-								/>
-							</Row>
-						)}
+					<Section
+						icon="check"
+						title={__('What visitors see', 'vuloform')}
+						desc={__('Shown to everyone as soon as the form is sent, in place of the form.', 'vuloform')}
+					>
+						{afterSubmit('confirmation', settings.confirmation, (patch) => set({ confirmation: { ...settings.confirmation, ...patch } }))}
 					</Section>
-					{alternatives.map((item, index) => (
-						<Section
-							key={item.id}
-							icon="filter"
-							title={sprintf(
-								/* translators: %d: number of the alternative confirmation. */
-								__('For certain answers (%d)', 'vuloform'),
-								index + 1
-							)}
-							desc={__('Used instead of the confirmation above when its rules are met. When several match, the first one wins.', 'vuloform')}
-							action={
-								<button type="button" className="vuloform-link-button is-danger" onClick={() => setAlternatives(alternatives.filter((_, i) => i !== index))}>
-									{__('Remove this confirmation', 'vuloform')}
-								</button>
-							}
-						>
-							<Wide>
-								<When name={`c-when-${index}`} value={item.conditions} fields={fields} onChange={(conditions) => setAlternative(index, { conditions })} />
-							</Wide>
-							<Row label={__('Then', 'vuloform')}>
-								<Segmented
-									label={__('After submitting', 'vuloform')}
-									value={item.type}
-									options={[
-										{ value: 'message', label: __('Show a message', 'vuloform') },
-										{ value: 'redirect', label: __('Go to another page', 'vuloform') },
-									]}
-									onChange={(type) => setAlternative(index, { type })}
-								/>
-							</Row>
-							{'redirect' === item.type ? (
-								<Row label={__('Page address', 'vuloform')} desc={__('The full address, starting with https://.', 'vuloform')}>
-									<TextInput
-										name={`c-redirect-${index}`}
-										value={item.redirect_url}
-										placeholder="https://"
-										onChange={(value) => setAlternative(index, { redirect_url: String(value) })}
-									/>
-								</Row>
-							) : (
-								<Row label={__('Message', 'vuloform')} desc={__('Replaces the form. You can include an answer with its placeholder, such as {name}.', 'vuloform')}>
-									<TextAreaInput
-										name={`c-message-${index}`}
-										rowNumber={3}
-										usePlainText
-										value={item.message}
-										onChange={(value) => setAlternative(index, { message: value })}
-									/>
-								</Row>
-							)}
-						</Section>
-					))}
-					{alternatives.length < MAX_CONFIRMATION_RULES && (
-						<Section
-							icon="filter"
-							title={__('Different confirmation for some answers', 'vuloform')}
-							desc={__('For example, send people who chose "Sales" to a booking page and thank everyone else.', 'vuloform')}
-						>
-							<Wide>
-								<ButtonInput
-									buttons={{
-										text: __('Add a confirmation for certain answers', 'vuloform'),
-										icon: 'plus',
-										color: 'purple',
-										onClick: () =>
-											setAlternatives([
-												...alternatives,
-												{ id: makeId('c'), type: 'message', message: '', redirect_url: '', conditions: { enabled: true, match: 'all', rules: [] } },
-											]),
-									}}
-								/>
-							</Wide>
-						</Section>
-					)}
-					<Section icon="database" title={__('Submissions', 'vuloform')} desc={__('Where what people send is kept.', 'vuloform')}>
+					<Section
+						icon="filter"
+						title={__('Exceptions', 'vuloform')}
+						desc={__('Optional. Show something different to visitors who gave a certain answer. Everyone else sees the message above. When more than one exception matches, the first is used.', 'vuloform')}
+					>
+						<Wide>
+							<div className="vuloform-exceptions">
+								<div className="vuloform-exceptions-head">
+									<span className="vuloform-control-desc">
+										{sprintf(
+											/* translators: 1: number of exceptions. 2: the most a form can have. */
+											__('%1$d of %2$d', 'vuloform'),
+											alternatives.length,
+											MAX_CONFIRMATION_RULES
+										)}
+									</span>
+									{alternatives.length < MAX_CONFIRMATION_RULES && (
+										<ButtonInput
+											buttons={{
+												text: __('Add an exception', 'vuloform'),
+												icon: 'plus',
+												color: 'purple',
+												onClick: () => {
+													const id = makeId('c');
+
+													setAlternatives([
+														...alternatives,
+														{
+															id,
+															type: 'message',
+															message: '',
+															redirect_url: '',
+															// Starts with one rule, so it is clear what there is to fill in.
+															conditions: { enabled: true, match: 'all', rules: ruleFields[0] ? [{ field: ruleFields[0].key, operator: 'is', value: '' }] : [] },
+														},
+													]);
+													setOpenItem(id);
+												},
+											}}
+										/>
+									)}
+								</div>
+								{0 === alternatives.length && (
+									<div className="vuloform-empty">
+										<i className="adminfont-filter" aria-hidden="true" />
+										<strong>{__('Everyone sees the same message', 'vuloform')}</strong>
+										<span>{__('For example: people who chose "Sales" go to a booking page, and everyone else is thanked.', 'vuloform')}</span>
+									</div>
+								)}
+								{alternatives.map((item, index) => {
+									const isOpen = openItem === item.id;
+									const title = sprintf(
+										/* translators: %d: number of the exception. */
+										__('Exception %d', 'vuloform'),
+										index + 1
+									);
+
+									return (
+										<div className={`vuloform-item${isOpen ? ' is-open' : ''}`} key={item.id}>
+											<div className="vuloform-item-head">
+												<button type="button" className="vuloform-item-toggle" aria-expanded={isOpen} aria-label={title} onClick={() => setOpenItem(isOpen ? '' : item.id)}>
+													<i className="adminfont-filter" aria-hidden="true" />
+												</button>
+												<button type="button" className="vuloform-item-text vuloform-exception-text" onClick={() => setOpenItem(isOpen ? '' : item.id)}>
+													<strong>{title}</strong>
+													<span className="vuloform-item-summary">{exceptionSummary(item)}</span>
+												</button>
+												<button
+													type="button"
+													className="vuloform-icon-button is-danger"
+													aria-label={sprintf(
+														/* translators: %s: name of the exception, such as: Exception 1. */
+														__('Remove %s', 'vuloform'),
+														title
+													)}
+													onClick={() => setAlternatives(alternatives.filter((_, i) => i !== index))}
+												>
+													<i className="adminfont-delete" aria-hidden="true" />
+												</button>
+												<button type="button" className="vuloform-icon-button" aria-hidden="true" tabIndex={-1} onClick={() => setOpenItem(isOpen ? '' : item.id)}>
+													<i className={`adminfont-keyboard-arrow-down${isOpen ? ' is-flipped' : ''}`} aria-hidden="true" />
+												</button>
+											</div>
+											{isOpen && (
+												<div className="vuloform-exception-body">
+													<div className="vuloform-field">
+														<span className="vuloform-control-label">{__('When the visitor\'s answer', 'vuloform')}</span>
+														<When name={`c-when-${index}`} value={item.conditions} fields={fields} onChange={(conditions) => setAlternative(index, { conditions })} />
+													</div>
+													{afterSubmit(`c-${index}`, item, (patch) => setAlternative(index, patch), true)}
+												</div>
+											)}
+										</div>
+									);
+								})}
+							</div>
+						</Wide>
+					</Section>
+					<Section icon="database" title={__('Keep a copy', 'vuloform')} desc={__('Whether what people send is also saved on this site.', 'vuloform')}>
 						<Wide>
 							<Switch
 								name="store_submissions"
 								label={__('Save submissions on this site', 'vuloform')}
-								desc={__('You read them under VuloForm → Submissions. Off: nothing is kept here, and only notifications and webhooks receive it.', 'vuloform')}
+								desc={__('On: read them any time under VuloForm → Submissions. Off: nothing is kept here, so they only reach your notifications and integrations.', 'vuloform')}
 								checked={settings.store_submissions}
 								onChange={(store_submissions) => set({ store_submissions })}
 							/>
@@ -809,67 +916,6 @@ const FormSettings = ({ settings, fields, onChange, onChangeWithEmailField }: Fo
 						<Row label={__('CSS class', 'vuloform')} desc={__('Added to the form\'s wrapper.', 'vuloform')}>
 							<TextInput name="form_css_class" value={style.css_class} onChange={(value) => setStyle('css_class', String(value))} />
 						</Row>
-					</Section>
-				</Sections>
-			)}
-
-{'spam' === current && (
-				<Sections>
-					<Section
-						icon="security"
-						title={__('Spam protection', 'vuloform')}
-						desc={__('The first two checks need no outside service. How often one visitor may submit is set for all forms under VuloForm → Settings.', 'vuloform')}
-					>
-						<Wide>
-							<Switch
-								name="honeypot"
-								label={__('Hidden trap field', 'vuloform')}
-								desc={__('A field people never see. A submission that fills it in is filed as spam.', 'vuloform')}
-								checked={settings.spam.honeypot}
-								onChange={(honeypot) => set({ spam: { ...settings.spam, honeypot } })}
-							/>
-						</Wide>
-						<Row label={__('Minimum fill time', 'vuloform')} desc={__('A form sent faster than a person could fill it in is filed as spam. 0 switches this off.', 'vuloform')}>
-							<TextInput
-								name="min_seconds"
-								type="number"
-								size={10}
-								minNumber={0}
-								maxNumber={60}
-								postText={__('seconds', 'vuloform')}
-								value={settings.spam.min_seconds}
-								onChange={(value) => set({ spam: { ...settings.spam, min_seconds: Number(value) } })}
-							/>
-						</Row>
-					</Section>
-					<Section
-						icon="security"
-						title={__('Google reCAPTCHA', 'vuloform')}
-						desc={__('An extra check by Google for forms that still get spam. It loads a Google script for everyone who opens this form.', 'vuloform')}
-					>
-						<Wide>
-							<Switch
-								name="recaptcha"
-								label={__('Protect this form with reCAPTCHA', 'vuloform')}
-								desc={__('Uses the version and keys saved under VuloForm → Settings.', 'vuloform')}
-								checked={Boolean(settings.spam.recaptcha)}
-								onChange={(recaptcha) => set({ spam: { ...settings.spam, recaptcha } })}
-							/>
-						</Wide>
-						{settings.spam.recaptcha && !vuloformAppLocalizer.recaptcha_ready && (
-							<Wide>
-								<NoticeComponent
-									displayPosition="inline-notice"
-									type="warning"
-									title={__('reCAPTCHA is not set up yet', 'vuloform')}
-									message={__('Until a site key and secret key are saved under VuloForm → Settings, this form is sent without the reCAPTCHA check.', 'vuloform')}
-									actionLabel={__('Open settings', 'vuloform')}
-									onAction={() => {
-										window.location.hash = '&tab=settings';
-									}}
-								/>
-							</Wide>
-						)}
 					</Section>
 				</Sections>
 			)}
