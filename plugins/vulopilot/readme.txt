@@ -316,7 +316,7 @@ It is designed for websites using common WordPress tools, including:
 
 Explore the developer documentation to learn how to extend and customize VuloPilot.
 
-[Get developer docs here](https://github.com/vulolabs/vulolabs/tree/main/plugins/vulopilot/docs/developer)
+[Get developer docs here](https://github.com/vulolabs/vulolabs/tree/main/plugins/vulopilot/docs/developer?utm_source=wordpress&utm_medium=description&utm_campaign=tracking)
 
 ---
 
@@ -339,7 +339,7 @@ Use the free version to identify issues, review findings, and plan improvements.
 
 ---
 
-## Upgrade to Pro ##
+## [Upgrade to Pro] (https://vulopilot.com/pricing?utm_source=wordpress&utm_medium=description&utm_campaign=tracking) ##
 
 **VuloPilot Pro helps you act on findings and spend less time repeating website checks.**
 
