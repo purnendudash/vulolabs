@@ -39,7 +39,7 @@ class Mailgun extends AbstractApiMailer {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
-					'help'     => __( 'A sending key for your domain is enough.', 'vulomail' ),
+					'help'     => __( 'A sending key for your domain is enough. <a href="https://app.mailgun.com/settings/api_security/api_keys" target="_blank" rel="noopener noreferrer">Find it in Mailgun</a>, under Account Settings → API Keys.', 'vulomail' ),
 				),
 				array(
 					'key'      => 'domain',

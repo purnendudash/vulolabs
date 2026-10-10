@@ -1,159 +1,347 @@
-=== VuloForm ===
-
+=== VuloForm – Drag & Drop Contact Form Builder, Multi-Step Forms & Conditional Logic ===
 Contributors: vulolabs
-Tags: form builder, contact form, forms, drag and drop, conditional logic
-Requires at least: 6.4
-Tested up to: 7.1
-Requires PHP: 7.4
+Tags: contact form, form builder, multi-step form, conditional logic, webhooks
+Requires at least: 6.7
+Tested up to: 7.1.3
+Requires PHP: 8.1
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Every form your website needs. One simple builder.
+Drag-and-drop WordPress form builder: contact forms, multi-step forms, conditional logic, file uploads, calculations, spam protection & webhooks.
 
 == Description ==
 
-VuloForm is a drag-and-drop form builder for WordPress. Build a form, publish it, add it to a page with a block or a shortcode, and read what people send, all inside your own site.
+**VuloForm is a free drag-and-drop form builder for WordPress.** Build a contact form, inquiry form, lead generation form, survey, event registration form, job application form or quote request form in minutes, publish it with a block or shortcode, and read every submission from your WordPress dashboard.
 
-It needs no VuloLabs account, no subscription and no other plugin. There is no limit on the number of forms or submissions.
+No coding is needed. Add fields by dragging them onto the page, set up email notifications, and publish. Your forms and your submission data stay on your own website.
 
-= The builder =
+= Why choose VuloForm? =
 
-* Three panes: field types on the left, your form in the middle, the selected field's settings on the right.
-* Drag fields in, drag to reorder, or use the buttons and keyboard instead.
-* Duplicate, delete, undo and redo.
-* Preview the real form before you publish. Nothing entered in the preview is sent.
-* Ten ready-made forms to start from: contact, general inquiry, lead generation, newsletter signup, feedback, survey, event registration, job application, support request, and order or quote inquiry.
-* Export a form to a file and import it on another site.
+* **Drag-and-drop WordPress form builder** with a clear three-panel layout: field library, live form, field settings.
+* **10 ready-made form templates** so you can launch a contact form, newsletter signup form, feedback form or support request form quickly.
+* **Multi-step forms** with Next and Back buttons and a step indicator, using a simple Page break field.
+* **Conditional logic** to show, hide or require fields based on a visitor's answers.
+* **Spam protection without CAPTCHA** (honeypot trap field, minimum time check and rate limiting), with optional Google reCAPTCHA v2 or v3.
+* **Email and SMS notifications**, visitor confirmation emails and **webhooks** to send form data to a CRM, spreadsheet tool or automation service.
+* **Privacy-minded by default:** IP address storage is off, automatic data retention is available, and VuloForm works with WordPress personal data export and erase tools.
 
-= Fields =
+= Ready-made form templates =
 
-Short text, long text, email, phone, number, website, dropdown, single choice, multiple choice, consent, date, time, file upload, name, address, hidden field, calculation, section heading, text/HTML, divider and page break.
+Start from a blank form or pick a template:
 
-= Conditional logic =
+* Contact form
+* Inquiry form
+* Lead generation form
+* Newsletter signup form
+* Feedback form
+* Survey form
+* Event registration form
+* Job application form
+* Support request form
+* Order or quote inquiry form
 
-Show, hide or require a field depending on other answers, with "all" or "any" matching. The rules run in the browser as the visitor types and are enforced again on your server.
+= Form builder features =
+
+* Drag fields from the library or click to add them to the end of the form.
+* Rearrange fields by dragging, or with the up and down arrows (keyboard friendly).
+* Duplicate a field with all its settings, or remove it with one click.
+* **Undo and redo** your changes.
+* **Autosave:** changes are saved automatically as you work, so there is no Save button to forget.
+* **Live preview** shows the form exactly as visitors will see it. Nothing entered in preview is sent or saved.
+* **Publish and unpublish** forms at any time. If something would stop a form from working, VuloForm tells you what to fix and keeps it as a draft.
+* **Import and export forms (.json)** to copy a form to another WordPress site.
+* A warning appears if a form would lose submissions because nothing is stored and no notification or webhook is on.
+
+= Form field types =
+
+**Questions**
+
+* Short text
+* Long text (textarea)
+* Email (validated format)
+* Phone
+* Number (minimum, maximum, step)
+* Website (URL)
+* Dropdown (select)
+* Single choice (radio buttons)
+* Multiple choice (checkboxes)
+* Consent (agreement checkbox)
+* Date (browser date picker)
+* Time
+* File upload
+
+**Text and layout**
+
+* Heading
+* Text block with basic formatting
+* Divider
+* Page break (multi-step form)
+
+**Special fields**
+
+* Name (first and last name in one field)
+* Address (street, city, state, postcode, country; choose which parts to show)
+* Hidden value (for campaign tracking)
+* Calculation (live total, price or quote calculator)
+
+= Field settings =
+
+* Required fields
+* Field label, placeholder text, help text and pre-filled answers
+* Shortest and longest answer, lowest and highest number
+* Field width: full, two thirds, half or a third, with side-by-side fields on wide screens that stack on phones
+* Hide the label visually while screen readers still read it
+* Custom CSS class and a developer-friendly field name used in emails, exports and webhooks
+
+= Conditional logic form builder =
+
+Make your forms smarter and shorter. Show a field only when it is relevant, hide it when it is not, or make it required only in certain cases.
+
+* Actions: **Shown**, **Hidden** or **Required**
+* Combine multiple rules and choose whether **all** or **any** must match
+* Comparisons: is, is not, contains, does not contain, is empty, is not empty, is greater than, is less than
+* Rules are checked in the visitor's browser and again on your server
+* Hidden fields are never required, and hidden answers are not saved or sent
+
+Use the same rules after submission to:
+
+* Send a notification only for certain answers, for example routing sales and support questions to different people
+* Send a webhook only for certain submissions
+* Show a different confirmation message or redirect to a different page depending on the answers
 
 = Multi-step forms =
 
-Add a page break to split a form into steps, with Next and Back buttons and a step indicator. Each step is validated before the visitor moves on.
+Split long forms into easy steps. Add a **Page break** field and VuloForm adds Next and Back buttons and a step indicator. Customize the button wording in the form's Appearance settings.
 
-= Calculations =
+= Calculation fields, quote forms and order forms =
 
-A calculation field works out a number from other answers, for example quantity times price, and shows it live. The result is recomputed on your server.
+Add a **Calculation** field to show a live number worked out from other answers, for example `{quantity} * 25` or `({adults} * 40) + ({children} * 25)`.
 
-= Submissions =
+* Build formulas with buttons or type them
+* A plain-language readback checks your formula means what you intended
+* Choose decimal places and a prefix such as a currency symbol
+* The result is recalculated on the server when the form is sent, so visitors cannot change it
 
-* Every submission is stored on your site, unless you switch that off for a form.
-* Search, filter by status and date, mark as read, new or spam.
-* Export to CSV.
-* Delete single submissions, with their uploaded files.
-* Optional automatic deletion after a number of days.
+= File upload forms =
 
-= Notifications =
+Accept documents and images in job application forms, support requests and more.
 
-* Email notifications to you or your team, with placeholders for any answer.
-* A confirmation email to the person who filled in the form.
-* Text message (SMS) notifications when the separate VuloMail plugin is installed with an SMS connection. Without it, SMS notifications are skipped.
+* Choose allowed file types, maximum size and number of files
+* Safe types only: images, PDF, office documents, plain text, CSV, ZIP, MP3 and MP4
+* Programs and scripts can never be uploaded, and file content is checked against its type
+* Files are stored privately and downloaded from the submission, with no public links
 
-Email is sent through WordPress's own `wp_mail()`, or through VuloMail when that plugin is active.
+= Smart default values and campaign tracking =
 
-= Webhooks =
+Fill fields automatically with dynamic tags:
 
-Send each submission as JSON to another service over HTTPS. Requests are sent in the background, retried twice on failure, can be signed with a secret, and every attempt is recorded on the submission.
+* `{query:utm_source}` or any other URL parameter, to see which campaign a lead came from
+* `{user:email}`, `{user:name}`, `{user:first_name}`, `{user:last_name}`, `{user:username}`, `{user:id}` for logged-in visitors
+* `{page:title}`, `{page:url}`, `{page:id}` for the page the form is on
+* `{site:name}`, `{site:url}` and `{date}`
 
-= Embed on another website =
+= Email and SMS notifications =
 
-Copy a small snippet from the form's Share tab and paste it into any web page, including sites that do not run WordPress. The form loads from your WordPress site and submissions arrive there.
+* Add up to **10 notifications per form**
+* Send as email, text message, or both
+* Multiple recipients, custom subject and message, and reply-to set to the visitor's email
+* Placeholders such as `{all_fields}`, `{form_title}`, `{site_name}` and `{your_field_name}`
+* One-click **confirmation email to the visitor**
+* Turn notifications on and off without deleting them
+* Works with the **VuloMail** plugin for more reliable email delivery and for SMS (SMS requires VuloMail with an SMS connection, and your SMS provider charges per message)
 
-= File uploads =
+= Webhooks and integrations =
 
-Choose the allowed file types, size and number of files per field. Only a fixed list of safe file types can be allowed, content is checked against the file type, and files are stored under random names in a protected folder. Administrators download them from the submission.
+Send each submission to another service the moment it arrives, such as a CRM, spreadsheet tool or automation platform.
+
+* Up to **5 custom webhook connectors per form**
+* Optional **signing secret** so the receiving service can verify the data came from your site
+* Choose which fields to send, or send them all
+* Background delivery, so visitors never wait
+* Automatic retries after 5 and 30 minutes, with every attempt logged on the submission
+* Safety rules: webhooks must use `https://` and cannot target private networks or your own server
+* **VuloForm Pro** adds ready-made connections to mailing lists and CRMs
+
+= Submissions manager =
+
+* View all form entries under **VuloForm > Submissions**
+* Statuses: New, Read, Spam, plus an Inbox view
+* **Search** across all answers and filter by **date range**
+* See every answer, the page the form was sent from, and the delivery status of each notification and webhook
+* Mark as new, mark as spam, mark as not spam, or delete (uploaded files are deleted too)
+* **Export submissions to CSV** with your current search, status and date filters applied
 
 = Spam protection =
 
-A hidden trap field, a minimum fill time and a per-visitor rate limit protect every form. No CAPTCHA, and no visitor data is sent to another company.
+Every form is protected out of the box by three checks that need no CAPTCHA and send no visitor data to another company:
 
-= Design =
+* Hidden trap field (honeypot)
+* Minimum time before a form can be sent (configurable per form)
+* Rate limit per visitor per form (default 5 per minute)
 
-Forms follow your theme. Per form you can set label position, spacing, accent colour, text colour, text size, corner roundness and button alignment, and add your own CSS class.
+For stubborn spam, switch on **Google reCAPTCHA v2 (checkbox) or v3 (invisible)** for individual forms. Caught spam is kept in a Spam list for review and triggers no notifications or webhooks.
 
-= Accessibility =
+= Publish anywhere =
 
-Forms are plain HTML with labels on every control, grouped controls in fieldsets, errors linked to their fields and announced to screen readers, and full keyboard use. The public form does not use React or jQuery, and works without JavaScript on your own site.
+* **Block editor:** add the VuloForm block and choose your form
+* **Shortcode:** `[vuloform id="12"]` works in pages, posts, widgets and page builders
+* **Other websites:** copy an embed code to show a form on a landing page, static site or shop on another platform, while submissions still arrive in your WordPress dashboard
 
-= Privacy =
+= Form design and appearance =
 
-* No telemetry and no connection to VuloLabs.
-* Visitor IP addresses are not stored unless you switch that on.
-* Works with WordPress's Export Personal Data and Erase Personal Data tools.
-* Adds suggested text to the WordPress privacy policy guide.
+Control label position, spacing, accent colour, text colour, text size, corner roundness and button alignment. Leave values empty and the form follows your theme. Customize button text and error messages.
 
-VuloForm gives you these tools. It does not by itself make a site compliant with GDPR or any other law.
+= Privacy and data control =
 
-= For developers =
+* **Keep submissions for** a set number of days, then delete them automatically with their files
+* **IP address storage is off by default**
+* Option to store nothing on your site and only send an email
+* Works with **Tools > Export Personal Data** and **Tools > Erase Personal Data**
+* Suggested wording for your privacy policy in **Settings > Privacy > Policy guide**
+* **Consent field** for agreements, stored with each submission
+* Choose whether data is kept or deleted if VuloForm is deleted. Deactivating never deletes anything.
+* VuloForm does not send your data or your visitors' data to VuloLabs.
 
-Actions and filters for validation, spam checks, stored values, notification emails, webhook payloads, field types, templates and field rendering. Functions `vuloform_render()`, `vuloform_get_form()` and `vuloform_get_submission()`. See the `docs/developer` folder in the plugin's source repository.
+VuloForm gives you tools such as consent fields, retention, export and erasure. It does not make a site compliant with GDPR or any other law by itself. How you use the tools is your responsibility.
 
-== External services ==
+= Who is VuloForm for? =
 
-VuloForm does not contact any external service on its own.
+* Small business owners who need a simple WordPress contact form
+* Agencies building lead generation forms and quote request forms for clients
+* Event organizers collecting registrations
+* HR teams and recruiters collecting job applications with CV uploads
+* Support teams collecting support requests with attachments
+* Marketers tracking campaigns with hidden UTM fields
+* Developers who want webhooks and clean CSS hooks
 
-It sends data to other servers only when an administrator sets that up:
+= Requirements =
 
-* **Webhooks.** When you add a webhook to a form, each submission to that form (the answers, form title, submission number and time) is sent to the URL you entered. What that service does with the data is governed by its own terms and privacy policy.
-* **Email and SMS notifications.** These are handed to your site's mail system, or to the VuloMail plugin if you use it. Any external email or SMS provider involved is one you configured there.
+You need to be an administrator of the site to use VuloForm. Webhooks need the receiving address to use `https://`. SMS notifications need the VuloMail plugin with an SMS connection.
 
 == Installation ==
 
-1. Install VuloForm from Plugins > Add New, or upload the zip file there.
-2. Activate it.
-3. Open VuloForm in the WordPress menu and select New form.
-4. Publish the form, then add it to a page with the VuloForm block or the shortcode shown on the form's Share tab.
+1. In your WordPress dashboard go to **Plugins > Add New**, search for **VuloForm** and select **Install Now**, then **Activate**. Or upload the plugin folder to `/wp-content/plugins/`.
+2. Open **VuloForm** in the WordPress menu and select **New form**.
+3. Choose **Blank form** or a ready-made template, then drag fields onto the form.
+4. Open the form's **Settings** tab and check where notifications go.
+5. Select **Preview** to try it, then **Publish**.
+6. Open the **Share** tab. Add the **VuloForm** block to a page, or paste the shortcode, for example `[vuloform id="12"]`.
+7. Send a test submission and check **VuloForm > Submissions**.
 
 == Frequently Asked Questions ==
 
-= Is there a limit on forms or submissions? =
+= How do I create a contact form in WordPress with VuloForm? =
 
-No.
+Go to **VuloForm > New form**, choose the Contact template, adjust the fields, publish, and add the form to a page with the VuloForm block or shortcode.
 
-= Do I need another plugin? =
+= Is VuloForm a drag-and-drop form builder? =
 
-No. VuloForm works by itself. VuloMail is optional: it makes email delivery more reliable and is required for SMS notifications.
+Yes. Drag field types from the library onto your form, drag to reorder, and edit settings on the right. You can also click a field type to add it to the end.
 
-= How do I add a form to a page? =
+= Can I build multi-step forms? =
 
-In the block editor, add the VuloForm block and choose the form. Anywhere else, paste the shortcode from the form's Share tab, for example `[vuloform id="12"]`.
+Yes. Add a **Page break** field wherever a new step should start. Visitors see Next and Back buttons and a step indicator.
 
-= Can I put a form on a site that is not WordPress? =
+= Does VuloForm support conditional logic? =
 
-Yes. Copy the snippet under "On another website" on the form's Share tab and paste it into that page's HTML. Your WordPress site must stay online, and the form needs JavaScript on the other site.
+Yes. Show, hide or require a field based on other answers. You can also use conditions to choose which notifications and webhooks are sent and which confirmation message is shown.
 
-= My notification emails do not arrive. Why? =
+= Can I accept file uploads? =
 
-Open the submission. If the notification says "Handed off", VuloForm passed the email to your site's mail system and the problem is delivery: check the spam folder and consider an SMTP plugin such as VuloMail. If it says "Skipped", the recipient address is missing or invalid.
+Yes. Choose allowed types from a safe list, set the maximum size and number of files. Uploaded files are stored privately and downloaded from the submission.
 
-= Does "Handed off" mean the email was delivered? =
+= Can I make a quote or price calculator form? =
 
-No. It means your site's mail system accepted it. VuloForm cannot see whether it reached the inbox.
+Yes. Use number fields together with a **Calculation** field. The result is shown live and recalculated on the server when the form is sent.
 
-= Is there a CAPTCHA? =
+= How do I stop spam without CAPTCHA? =
 
-No. Forms are protected by a hidden trap field, a minimum fill time and a rate limit. Developers can connect another anti-spam service with the `vuloform_spam_check` filter.
+Every form includes a hidden trap field, a minimum-time check and a rate limit. You can add Google reCAPTCHA v2 or v3 per form if you need more.
 
-= Are uploaded files public? =
+= Does VuloForm store submissions in WordPress? =
 
-They are stored under long random names in a folder that blocks direct access on Apache and LiteSpeed servers, and administrators download them through WordPress. On nginx, ask your host to block access to `wp-content/uploads/vuloform/`.
+Yes, by default. You can switch off **Save submissions on this site** in a form's Confirmation settings if you only want the email.
 
-= Can conditional logic be bypassed? =
+= Can I export form submissions? =
 
-The rules are checked again on your server. A field that is hidden by its rules is never stored, and a required field cannot be skipped by turning off JavaScript.
+Yes. Use **Export CSV** on the Submissions screen. Your current search, status and date filters are applied.
 
-= What is removed when I delete the plugin? =
+= Can I send form data to my CRM or other apps? =
 
-Nothing, by default, so a reinstall picks up where you left off. To remove forms, submissions and uploaded files, choose "Delete everything" under VuloForm > Settings before deleting the plugin.
+Yes. Add a custom webhook connector in the form's **Integrations** settings. VuloForm Pro adds ready-made connections to mailing lists and CRMs.
+
+= Does VuloForm send SMS text messages? =
+
+Yes, through the VuloMail plugin with an SMS connection. Your SMS provider charges for each message.
+
+= Can I show a VuloForm on a non-WordPress website? =
+
+Yes. On the **Share** tab, copy the embed code from **On another website** and paste it into the other page. Your WordPress site must stay online and both sites should use `https`.
+
+= Can I copy a form to another WordPress site? =
+
+Yes. Use **Download form (.json)** on the Share tab, then **New form > Import a form (.json)** on the other site. Submissions are not included.
+
+= Is VuloForm GDPR compliant? =
+
+VuloForm provides tools that help, including consent fields, data retention, personal data export and erase integration, and IP storage off by default. It does not make your site compliant on its own, so you remain responsible for how you use it.
+
+= Does VuloForm send my data to VuloLabs? =
+
+No. The only outgoing messages are the emails, texts and webhooks you set up, and the Google reCAPTCHA check if you enable it.
+
+= What happens to my data if I deactivate or delete VuloForm? =
+
+Deactivating never deletes anything. When deleting, you choose **Keep data** or **Delete everything** in the site-wide settings. The default is Keep data.
+
+= Do visitors need JavaScript? =
+
+Forms need JavaScript on other websites, and visitors without it see a short note. On your WordPress site, reCAPTCHA also needs JavaScript.
+
+= Why am I not receiving notification emails? =
+
+VuloForm hands email to your site's mail system, and it cannot see whether it reaches the inbox. For better reliability, use the VuloMail plugin. See the troubleshooting guide in the plugin documentation.
+
+== External services ==
+
+VuloForm does not connect to any external service by default. The services below are used only if you choose to enable them.
+
+= Google reCAPTCHA (optional) =
+
+If you switch on reCAPTCHA for a form, the form loads Google's reCAPTCHA script for every visitor who opens it, and Google receives information about the visitor's device and behaviour. When a form is sent, the server verifies the answer with Google. VuloForm's server does not send the visitor's IP address in that check.
+
+* Service: Google reCAPTCHA
+* Terms of Service: https://policies.google.com/terms
+* Privacy Policy: https://policies.google.com/privacy
+
+Mention this in your own privacy policy. Forms without reCAPTCHA load nothing from Google.
+
+= Webhooks (optional) =
+
+If you add a webhook, submission data for the fields you choose is sent to the address you enter. You control the receiving service and are responsible for its terms and privacy practices.
+
+= Email and SMS (optional) =
+
+Emails are handed to your site's mail system, or to the VuloMail plugin if active. Text messages are sent through the SMS connection configured in VuloMail, and your provider's terms apply.
+
+== Screenshots ==
+
+1. Drag-and-drop form builder with field library, live form and field settings.
+2. Ready-made form templates: contact, lead generation, survey, event registration and more.
+3. Conditional logic settings to show, hide or require fields.
+4. Multi-step form with Next and Back buttons and a step indicator.
+5. Calculation field for quote and order forms.
+6. Form settings: notifications, confirmation, appearance, spam protection and integrations.
+7. Submissions manager with search, date filter, statuses and CSV export.
+8. Share tab with block, shortcode, embed code and form export.
 
 == Changelog ==
 
 = 1.0.0 =
-* First release.
+* Initial release.
+
+== Upgrade Notice ==
+
+= 1.0.0 =
+Initial release.

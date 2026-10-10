@@ -1,6 +1,6 @@
 <?php
 /**
- * SendGrid mailer class file.
+ * SendLayer mailer class file.
  *
  * @package VuloMail
  */
@@ -14,11 +14,11 @@ use VuloMail\Email\Message;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * SendGrid v3 Mail Send API.
+ * SendLayer Email API.
  */
-class SendGrid extends AbstractApiMailer {
+class SendLayer extends AbstractApiMailer {
 
-	const ENDPOINT = 'https://api.sendgrid.com/v3/mail/send';
+	const ENDPOINT = 'https://console.sendlayer.com/api/v1/email';
 
 	/**
 	 * Describes the provider and its connection fields.
@@ -27,8 +27,8 @@ class SendGrid extends AbstractApiMailer {
 	 */
 	public static function definition() {
 		return array(
-			'label'  => __( 'SendGrid', 'vulomail' ),
-			'desc'   => __( 'Twilio SendGrid transactional email API.', 'vulomail' ),
+			'label'  => __( 'SendLayer', 'vulomail' ),
+			'desc'   => __( 'SendLayer transactional email API.', 'vulomail' ),
 			'fields' => array(
 				array(
 					'key'      => 'api_key',
@@ -36,7 +36,7 @@ class SendGrid extends AbstractApiMailer {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
-					'help'     => __( 'Needs the "Mail Send" permission. <a href="https://app.sendgrid.com/settings/api_keys" target="_blank" rel="noopener noreferrer">Create one in SendGrid</a>.', 'vulomail' ),
+					'help'     => __( '<a href="https://sendlayer.com/docs/managing-api-keys/" target="_blank" rel="noopener noreferrer">Find it in SendLayer</a>, under Settings → API Keys.', 'vulomail' ),
 				),
 			),
 		);
@@ -69,47 +69,46 @@ class SendGrid extends AbstractApiMailer {
 			);
 		};
 
-		$personalization = array( 'to' => $map( $message->to ) );
-
-		if ( $message->cc ) {
-			$personalization['cc'] = $map( $message->cc );
-		}
-
-		if ( $message->bcc ) {
-			$personalization['bcc'] = $map( $message->bcc );
-		}
-
 		$payload = array(
-			'personalizations' => array( $personalization ),
-			'from'             => array_filter(
+			'From'    => array_filter(
 				array(
 					'email' => $message->from_email,
 					'name'  => $message->from_name,
 				)
 			),
-			'subject'          => $message->subject,
-			'content'          => array(
-				array(
-					'type'  => $message->is_html() ? 'text/html' : 'text/plain',
-					'value' => $message->body,
-				),
-			),
+			'To'      => $map( $message->to ),
+			'Subject' => $message->subject,
 		);
 
+		if ( $message->is_html() ) {
+			$payload['ContentType'] = 'html';
+			$payload['HTMLContent'] = $message->body;
+		} else {
+			$payload['ContentType']  = 'text';
+			$payload['PlainContent'] = $message->body;
+		}
+
+		if ( $message->cc ) {
+			$payload['CC'] = $map( $message->cc );
+		}
+
+		if ( $message->bcc ) {
+			$payload['BCC'] = $map( $message->bcc );
+		}
+
 		if ( $message->reply_to ) {
-			$payload['reply_to_list'] = $map( $message->reply_to );
+			$payload['ReplyTo'] = $map( $message->reply_to )[0];
 		}
 
 		if ( $message->headers ) {
-			$payload['headers'] = $message->headers;
+			$payload['Headers'] = $message->headers;
 		}
 
 		foreach ( $files as $file ) {
-			$payload['attachments'][] = array(
-				'content'     => base64_encode( $file['content'] ), // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode -- required attachment encoding.
-				'filename'    => $file['name'],
-				'type'        => $file['type'],
-				'disposition' => 'attachment',
+			$payload['Attachments'][] = array(
+				'content'  => base64_encode( $file['content'] ), // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode -- required attachment encoding.
+				'filename' => $file['name'],
+				'type'     => $file['type'],
 			);
 		}
 
@@ -122,12 +121,12 @@ class SendGrid extends AbstractApiMailer {
 			wp_json_encode( $payload )
 		);
 
-		if ( is_wp_error( $response ) || 202 !== $response['code'] ) {
-			$detail = is_wp_error( $response ) ? '' : (string) ( $response['json']['errors'][0]['message'] ?? '' );
+		if ( is_wp_error( $response ) || $response['code'] >= 300 ) {
+			$detail = is_wp_error( $response ) ? '' : (string) ( $response['json']['Errors'][0]['message'] ?? $response['json']['message'] ?? '' );
 
 			return $this->failure( $response, $detail );
 		}
 
-		return Result::ok( $response['headers']['x-message-id'] ?? '' );
+		return Result::ok( (string) ( $response['json']['MessageID'] ?? '' ) );
 	}
 }

@@ -1,7 +1,7 @@
 /* global vulomailAppLocalizer */
 import { useState } from 'react';
 import { __ } from '@wordpress/i18n';
-import { FormGroupComponent, FormGroupWrapperComponent } from '@zyra/components';
+import { FormGroupComponent, FormGroupWrapperComponent, IconComponent } from '@zyra/components';
 import { ButtonInput, SelectInput, TextInput } from '@zyra/inputs';
 import Switch from '../components/Switch';
 import { apiPost } from '../services/api';
@@ -120,6 +120,25 @@ const ConnectionForm = ({ channel, connection, onSaved, onCancel }: ConnectionFo
 
 	return (
 		<div className="vulomail-popup-body">
+			{/* Chrome ignores autoComplete="off" on a text input immediately followed by a password
+			    input and autofills a saved login into both - these absorb that instead of "Connection
+			    name" and the real secret field below. Invisible and never focusable by a real visitor. */}
+			<div className="vulomail-autofill-trap" aria-hidden="true">
+				<input type="text" name="vulomail-decoy-user" tabIndex={-1} autoComplete="off" />
+				<input type="password" name="vulomail-decoy-pass" tabIndex={-1} autoComplete="new-password" />
+			</div>
+			<div className="popup-header vulomail-connection-header">
+				<div className="popup-title">
+					<IconComponent name={'email' === channel ? 'mail' : 'send'} />
+					{connection ? __('Edit connection', 'vulomail') : __('Add connection', 'vulomail')}
+				</div>
+				<Switch
+					name="enabled"
+					label={__('Connection enabled', 'vulomail')}
+					checked={enabled}
+					onChange={setEnabled}
+				/>
+			</div>
 			<FormGroupWrapperComponent>
 				{!connection && (
 					<FormGroupComponent label={__('Provider', 'vulomail')} desc={provider?.desc}>
@@ -157,14 +176,6 @@ const ConnectionForm = ({ channel, connection, onSaved, onCancel }: ConnectionFo
 						{renderField(field)}
 					</FormGroupComponent>
 				))}
-				<FormGroupComponent>
-					<Switch
-						name="enabled"
-						label={__('Connection enabled', 'vulomail')}
-						checked={enabled}
-						onChange={setEnabled}
-					/>
-				</FormGroupComponent>
 			</FormGroupWrapperComponent>
 			<div className="vulomail-form-footer">
 				<ButtonInput

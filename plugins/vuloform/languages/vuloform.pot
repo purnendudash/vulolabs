@@ -8,9 +8,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-10T06:09:00+00:00\n"
+"POT-Creation-Date: 2026-10-10T12:23:33+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: vuloform\n"
 
 #. Plugin Name of the plugin
@@ -186,6 +186,7 @@ msgstr ""
 
 #. translators: %s: form title.
 #: classes/Forms/FormRepository.php:185
+#, php-format
 msgid "%s (copy)"
 msgstr ""
 
@@ -207,6 +208,7 @@ msgid "Back"
 msgstr ""
 
 #: classes/Forms/Schema.php:81
+#: assets/js/index.js:6
 msgid "Thank you. Your message has been sent."
 msgstr ""
 
@@ -223,40 +225,46 @@ msgid "Please correct the highlighted fields and try again."
 msgstr ""
 
 #. translators: %s: field label.
-#: classes/Forms/Schema.php:218
+#: classes/Forms/Schema.php:217
+#, php-format
 msgid "\"%s\" has no choices for visitors to pick from. Select the field and add at least one under Choices."
 msgstr ""
 
 #. translators: %s: field label.
-#: classes/Forms/Schema.php:227
+#: classes/Forms/Schema.php:226
+#, php-format
 msgid "\"%s\" has nothing to calculate yet. Select the field and build its calculation under \"What to calculate\", for example {quantity} * {price}."
 msgstr ""
 
 #. translators: %s: field label.
-#: classes/Forms/Schema.php:230
+#: classes/Forms/Schema.php:229
+#, php-format
 msgid "The calculation in \"%s\" cannot be worked out. Select the field: what is wrong is shown under the calculation."
 msgstr ""
 
-#: classes/Forms/Schema.php:235
+#: classes/Forms/Schema.php:234
 msgid "The form has no field for visitors to fill in. Add one from the list on the left of the Fields tab."
 msgstr ""
 
-#: classes/Forms/Schema.php:241
+#: classes/Forms/Schema.php:240
 msgid "A page break is the last field, so the step after it would be empty. Add a field after it or remove it."
 msgstr ""
 
 #. translators: %s: webhook name.
-#: classes/Forms/Schema.php:247
+#: classes/Forms/Schema.php:246
+#, php-format
 msgid "The webhook \"%s\" has no address. Enter one that starts with https://, or switch the webhook off."
 msgstr ""
 
 #. translators: %s: notification name.
-#: classes/Forms/Schema.php:254
+#: classes/Forms/Schema.php:253
+#, php-format
 msgid "The notification \"%s\" has nobody to send to. Fill in \"To\", or switch the notification off."
 msgstr ""
 
 #. translators: %s: extension id, e.g. "payments".
-#: classes/Forms/Schema.php:272
+#: classes/Forms/Schema.php:271
+#, php-format
 msgid "This form relies on \"%s\", which is not active on this site. Activate it, or switch that feature off for this form."
 msgstr ""
 
@@ -622,62 +630,64 @@ msgstr ""
 msgid "This form no longer exists."
 msgstr ""
 
-#: classes/Frontend/Renderer.php:62
+#: classes/Frontend/Renderer.php:63
 msgid "This form is a draft. Publish it in VuloForm to show it here."
 msgstr ""
 
-#: classes/Frontend/Renderer.php:152
+#: classes/Frontend/Renderer.php:153
 msgid "Leave this field empty"
 msgstr ""
 
-#: classes/Frontend/Renderer.php:163
+#: classes/Frontend/Renderer.php:164
 msgid "This form is protected by Google reCAPTCHA, which needs JavaScript. Please switch JavaScript on to send it."
 msgstr ""
 
-#: classes/Frontend/Renderer.php:249
+#: classes/Frontend/Renderer.php:250
 #: classes/Submissions/Processor.php:315
 msgid "Enter a valid email address."
 msgstr ""
 
-#: classes/Frontend/Renderer.php:250
+#: classes/Frontend/Renderer.php:251
 #: classes/Submissions/Processor.php:318
 msgid "Enter a valid web address, starting with https://."
 msgstr ""
 
-#: classes/Frontend/Renderer.php:251
+#: classes/Frontend/Renderer.php:252
 #: classes/Submissions/Processor.php:327
 msgid "Enter a number."
 msgstr ""
 
-#: classes/Frontend/Renderer.php:252
+#: classes/Frontend/Renderer.php:253
 msgid "That file is too large or not an allowed type."
 msgstr ""
 
-#: classes/Frontend/Renderer.php:253
+#: classes/Frontend/Renderer.php:254
 msgid "Something went wrong. Please check your connection and try again."
 msgstr ""
 
-#: classes/Frontend/Renderer.php:254
+#: classes/Frontend/Renderer.php:255
 msgid "Sending…"
 msgstr ""
 
-#: classes/Frontend/Renderer.php:255
+#: classes/Frontend/Renderer.php:256
 msgid "This is a preview. Nothing was sent."
 msgstr ""
 
 #. translators: 1: current step, 2: number of steps.
-#: classes/Frontend/Renderer.php:257
-#: classes/Frontend/Renderer.php:271
+#: classes/Frontend/Renderer.php:258
+#: classes/Frontend/Renderer.php:272
+#, php-format
 msgid "Step %1$s of %2$s"
 msgstr ""
 
 #. translators: Placeholder option of a dropdown field.
-#: classes/Frontend/Renderer.php:349
+#: classes/Frontend/Renderer.php:350
 msgid "Select…"
 msgstr ""
 
 #. translators: 1: comma-separated file extensions, 2: size in megabytes.
-#: classes/Frontend/Renderer.php:442
+#: classes/Frontend/Renderer.php:443
+#, php-format
 msgid "Allowed: %1$s. Up to %2$d MB."
 msgstr ""
 
@@ -717,6 +727,7 @@ msgstr ""
 #. translators: %d: HTTP status code.
 #: classes/Notifications/Webhooks.php:192
 #: classes/Notifications/Webhooks.php:197
+#, php-format
 msgid "The endpoint answered HTTP %d."
 msgstr ""
 
@@ -748,25 +759,25 @@ msgstr ""
 msgid "Please enable JavaScript to use this form."
 msgstr ""
 
-#: classes/Rest/Settings.php:105
+#: classes/Rest/Settings.php:111
 msgid "Settings saved."
 msgstr ""
 
-#: classes/Rest/Submissions.php:133
-#: classes/Rest/Submissions.php:147
+#: classes/Rest/Submissions.php:135
+#: classes/Rest/Submissions.php:149
 msgid "Choose at least one submission."
 msgstr ""
 
-#: classes/Rest/Submissions.php:179
+#: classes/Rest/Submissions.php:181
 msgid "ID"
 msgstr ""
 
-#: classes/Rest/Submissions.php:179
+#: classes/Rest/Submissions.php:181
 #: classes/Security/Privacy.php:77
 msgid "Submitted"
 msgstr ""
 
-#: classes/Rest/Submissions.php:179
+#: classes/Rest/Submissions.php:181
 #: assets/js/index.js:6
 msgid "Status"
 msgstr ""
@@ -846,11 +857,13 @@ msgstr ""
 
 #. translators: %s: smallest allowed number.
 #: classes/Submissions/Processor.php:332
+#, php-format
 msgid "Enter a number of %s or more."
 msgstr ""
 
 #. translators: %s: largest allowed number.
 #: classes/Submissions/Processor.php:337
+#, php-format
 msgid "Enter a number of %s or less."
 msgstr ""
 
@@ -864,6 +877,7 @@ msgstr ""
 
 #. translators: %d: number of characters.
 #: classes/Submissions/Processor.php:364
+#, php-format
 msgid "Enter at least %d character."
 msgid_plural "Enter at least %d characters."
 msgstr[0] ""
@@ -871,6 +885,7 @@ msgstr[1] ""
 
 #. translators: %d: number of characters.
 #: classes/Submissions/Processor.php:369
+#, php-format
 msgid "Enter no more than %d character."
 msgid_plural "Enter no more than %d characters."
 msgstr[0] ""
@@ -878,6 +893,7 @@ msgstr[1] ""
 
 #. translators: %d: number of files.
 #: classes/Submissions/Uploads.php:47
+#, php-format
 msgid "You can upload %d file here."
 msgid_plural "You can upload up to %d files here."
 msgstr[0] ""
@@ -889,11 +905,13 @@ msgstr ""
 
 #. translators: %d: size in megabytes.
 #: classes/Submissions/Uploads.php:57
+#, php-format
 msgid "Each file must be %d MB or smaller."
 msgstr ""
 
 #. translators: %s: comma-separated file extensions.
 #: classes/Submissions/Uploads.php:62
+#, php-format
 msgid "That file type is not allowed. Allowed types: %s."
 msgstr ""
 
@@ -952,11 +970,13 @@ msgstr ""
 
 #. translators: %s: date and time.
 #: assets/js/index.js:1
+#, js-format
 msgid "Edited %s"
 msgstr ""
 
 #. translators: %d: number of submissions.
 #: assets/js/index.js:1
+#, js-format
 msgid "%d submission"
 msgid_plural "%d submissions"
 msgstr[0] ""
@@ -964,6 +984,7 @@ msgstr[1] ""
 
 #. translators: %d: number of unread submissions.
 #: assets/js/index.js:1
+#, js-format
 msgid "%d new"
 msgstr ""
 
@@ -1022,6 +1043,7 @@ msgstr ""
 
 #. translators: 1: form title, 2: number of submissions.
 #: assets/js/index.js:1
+#, js-format
 msgid "\"%1$s\" and its %2$d submission, including any uploaded files, will be permanently deleted."
 msgid_plural "\"%1$s\" and its %2$d submissions, including any uploaded files, will be permanently deleted."
 msgstr[0] ""
@@ -1041,6 +1063,7 @@ msgstr ""
 
 #. translators: %d: option number.
 #: assets/js/index.js:3
+#, js-format
 msgid "Option %d"
 msgstr ""
 
@@ -1086,6 +1109,7 @@ msgstr ""
 
 #. translators: %d: page number.
 #: assets/js/index.js:3
+#, js-format
 msgid "Page %d starts here"
 msgstr ""
 
@@ -1104,21 +1128,25 @@ msgstr ""
 
 #. translators: %s: field label.
 #: assets/js/index.js:3
+#, js-format
 msgid "Move %s up"
 msgstr ""
 
 #. translators: %s: field label.
 #: assets/js/index.js:3
+#, js-format
 msgid "Move %s down"
 msgstr ""
 
 #. translators: %s: field label.
 #: assets/js/index.js:3
+#, js-format
 msgid "Duplicate %s"
 msgstr ""
 
 #. translators: %s: field label.
 #: assets/js/index.js:3
+#, js-format
 msgid "Delete %s"
 msgstr ""
 
@@ -1287,6 +1315,7 @@ msgstr ""
 
 #. translators: %s: placeholder such as {price}.
 #: assets/js/index.js:5
+#, js-format
 msgid "%s is not a number field of this form."
 msgstr ""
 
@@ -1413,6 +1442,7 @@ msgstr ""
 
 #. translators: %d: number of choices.
 #: assets/js/index.js:5
+#, js-format
 msgid "%d choice"
 msgid_plural "%d choices"
 msgstr[0] ""
@@ -1448,16 +1478,19 @@ msgstr ""
 
 #. translators: %s: field label.
 #: assets/js/index.js:5
+#, js-format
 msgid "The answer to \"%s\""
 msgstr ""
 
 #. translators: %s: field label.
 #: assets/js/index.js:6
+#, js-format
 msgid "The answer to \"%s\". Counts as 0 unless the answer is a number."
 msgstr ""
 
 #. translators: %s: field label, such as Quantity.
 #: assets/js/index.js:6
+#, js-format
 msgid "Adds a \"%s\" number field to the form and uses it here"
 msgstr ""
 
@@ -1522,7 +1555,9 @@ msgid "Parts to show"
 msgstr ""
 
 #. translators: 1: parts shown, 2: parts available.
+#. translators: 1: number of exceptions. 2: the most a form can have.
 #: assets/js/index.js:6
+#, js-format
 msgid "%1$d of %2$d"
 msgstr ""
 
@@ -1684,10 +1719,12 @@ msgstr ""
 
 #. translators: %s: name of a notification or webhook.
 #: assets/js/index.js:6
+#, js-format
 msgid "Close \"%s\""
 msgstr ""
 
 #: assets/js/index.js:6
+#, js-format
 msgid "Open \"%s\""
 msgstr ""
 
@@ -1705,11 +1742,13 @@ msgstr ""
 
 #. translators: %s: name of a notification or webhook.
 #: assets/js/index.js:6
+#, js-format
 msgid "Use \"%s\""
 msgstr ""
 
 #. translators: %s: name of a notification or webhook.
 #: assets/js/index.js:6
+#, js-format
 msgid "Remove \"%s\""
 msgstr ""
 
@@ -1724,6 +1763,64 @@ msgstr ""
 #: assets/js/index.js:6
 msgid "Every answer, one per line"
 msgstr ""
+
+#: assets/js/index.js:6
+msgid "They see"
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "Show"
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "What to show after the form is sent"
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "A message"
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "Another page"
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "Page address"
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "The visitor is taken here straight away. Use the full address, starting with https://."
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "another page"
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "a message"
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "No rule yet: add one to say who sees this"
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "Not finished: enter the answer it waits for"
+msgstr ""
+
+#. translators: 1: a rule such as: Subject is "Sales". 2: "a message" or "another page".
+#: assets/js/index.js:6
+#, js-format
+msgid "When %1$s: shows %2$s"
+msgstr ""
+
+#. translators: 1: a rule such as: Subject is "Sales". 2: number of further rules.
+#: assets/js/index.js:6
+#, js-format
+msgid "%1$s and %2$d more rule"
+msgid_plural "%1$s and %2$d more rules"
+msgstr[0] ""
+msgstr[1] ""
 
 #: assets/js/index.js:6
 msgid "When to send"
@@ -1742,15 +1839,11 @@ msgid "Notifications"
 msgstr ""
 
 #: assets/js/index.js:6
-msgid "Confirmation"
+msgid "After submitting"
 msgstr ""
 
 #: assets/js/index.js:6
 msgid "Appearance"
-msgstr ""
-
-#: assets/js/index.js:6
-msgid "Spam protection"
 msgstr ""
 
 #: assets/js/index.js:6
@@ -1771,6 +1864,14 @@ msgstr ""
 
 #: assets/js/index.js:6
 msgid "Thank you for getting in touch. This is a copy of what you sent:"
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "Custom connector"
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "A webhook: sends each submission to any address another service gives you."
 msgstr ""
 
 #: assets/js/index.js:6
@@ -1815,6 +1916,7 @@ msgstr ""
 
 #. translators: %s: the site's admin email address.
 #: assets/js/index.js:6
+#, js-format
 msgid "Email each submission to %s"
 msgstr ""
 
@@ -1828,16 +1930,19 @@ msgstr ""
 
 #. translators: 1: email address, 2: phone number.
 #: assets/js/index.js:6
+#, js-format
 msgid "Email to %1$s and text message to %2$s"
 msgstr ""
 
 #. translators: %s: phone number or placeholder.
 #: assets/js/index.js:6
+#, js-format
 msgid "Text message to %s"
 msgstr ""
 
 #. translators: %s: email address or placeholder.
 #: assets/js/index.js:6
+#, js-format
 msgid "Email to %s"
 msgstr ""
 
@@ -1887,6 +1992,7 @@ msgstr ""
 
 #. translators: %s: field label.
 #: assets/js/index.js:6
+#, js-format
 msgid "The address in \"%s\""
 msgstr ""
 
@@ -1923,64 +2029,55 @@ msgid "Send this to different people depending on what was answered, for example
 msgstr ""
 
 #: assets/js/index.js:6
-msgid "After submitting"
+msgid "What visitors see"
 msgstr ""
 
 #: assets/js/index.js:6
-msgid "What the visitor sees once the form is sent."
+msgid "Shown to everyone as soon as the form is sent, in place of the form."
 msgstr ""
 
 #: assets/js/index.js:6
-msgid "Then"
+msgid "Exceptions"
 msgstr ""
 
 #: assets/js/index.js:6
-msgid "Show a message"
+msgid "Optional. Show something different to visitors who gave a certain answer. Everyone else sees the message above. When more than one exception matches, the first is used."
 msgstr ""
 
 #: assets/js/index.js:6
-msgid "Go to another page"
+msgid "Add an exception"
 msgstr ""
 
 #: assets/js/index.js:6
-msgid "Page address"
+msgid "Everyone sees the same message"
 msgstr ""
 
 #: assets/js/index.js:6
-msgid "The full address, starting with https://."
+msgid "For example: people who chose \"Sales\" go to a booking page, and everyone else is thanked."
+msgstr ""
+
+#. translators: %d: number of the exception.
+#: assets/js/index.js:6
+#, js-format
+msgid "Exception %d"
+msgstr ""
+
+#. translators: %s: name of the exception, such as: Exception 1.
+#: assets/js/index.js:6
+#, js-format
+msgid "Remove %s"
 msgstr ""
 
 #: assets/js/index.js:6
-msgid "Replaces the form. You can include an answer with its placeholder, such as {name}."
-msgstr ""
-
-#. translators: %d: number of the alternative confirmation.
-#: assets/js/index.js:6
-msgid "For certain answers (%d)"
+msgid "When the visitor's answer"
 msgstr ""
 
 #: assets/js/index.js:6
-msgid "Used instead of the confirmation above when its rules are met. When several match, the first one wins."
+msgid "Keep a copy"
 msgstr ""
 
 #: assets/js/index.js:6
-msgid "Remove this confirmation"
-msgstr ""
-
-#: assets/js/index.js:6
-msgid "Different confirmation for some answers"
-msgstr ""
-
-#: assets/js/index.js:6
-msgid "For example, send people who chose \"Sales\" to a booking page and thank everyone else."
-msgstr ""
-
-#: assets/js/index.js:6
-msgid "Add a confirmation for certain answers"
-msgstr ""
-
-#: assets/js/index.js:6
-msgid "Where what people send is kept."
+msgid "Whether what people send is also saved on this site."
 msgstr ""
 
 #: assets/js/index.js:6
@@ -1988,7 +2085,7 @@ msgid "Save submissions on this site"
 msgstr ""
 
 #: assets/js/index.js:6
-msgid "You read them under VuloForm → Submissions. Off: nothing is kept here, and only notifications and webhooks receive it."
+msgid "On: read them any time under VuloForm → Submissions. Off: nothing is kept here, so they only reach your notifications and integrations."
 msgstr ""
 
 #: assets/js/index.js:6
@@ -2144,87 +2241,37 @@ msgid "Added to the form's wrapper."
 msgstr ""
 
 #: assets/js/index.js:6
-msgid "The first two checks need no outside service. How often one visitor may submit is set for all forms under VuloForm → Settings."
+msgid "Pass each submission on to the other services you use. It is sent in the background, so visitors never wait, and a failed delivery is tried twice more."
 msgstr ""
 
 #: assets/js/index.js:6
-msgid "Hidden trap field"
+msgid "Cancel"
 msgstr ""
 
 #: assets/js/index.js:6
-msgid "A field people never see. A submission that fills it in is filed as spam."
+msgid "Add integration"
 msgstr ""
 
 #: assets/js/index.js:6
-msgid "Minimum fill time"
+msgid "Choose what to connect"
 msgstr ""
 
 #: assets/js/index.js:6
-msgid "A form sent faster than a person could fill it in is filed as spam. 0 switches this off."
+msgid "Nothing is connected to this form"
 msgstr ""
 
 #: assets/js/index.js:6
-msgid "seconds"
+msgid "Most forms do not need this. Add an integration when submissions should also reach another service."
+msgstr ""
+
+#. translators: %s: web address.
+#: assets/js/index.js:6
+#, js-format
+msgid "Webhook to %s"
 msgstr ""
 
 #: assets/js/index.js:6
-msgid "Google reCAPTCHA"
-msgstr ""
-
-#: assets/js/index.js:6
-msgid "An extra check by Google for forms that still get spam. It loads a Google script for everyone who opens this form."
-msgstr ""
-
-#: assets/js/index.js:6
-msgid "Protect this form with reCAPTCHA"
-msgstr ""
-
-#: assets/js/index.js:6
-msgid "Uses the version and keys saved under VuloForm → Settings."
-msgstr ""
-
-#: assets/js/index.js:6
-msgid "reCAPTCHA is not set up yet"
-msgstr ""
-
-#: assets/js/index.js:6
-msgid "Until a site key and secret key are saved under VuloForm → Settings, this form is sent without the reCAPTCHA check."
-msgstr ""
-
-#: assets/js/index.js:6
-msgid "Open settings"
-msgstr ""
-
-#: assets/js/index.js:6
-msgid "Webhooks"
-msgstr ""
-
-#: assets/js/index.js:6
-msgid "Send each submission to any other service that gives you an address to send to, such as a CRM or an automation tool. Sent in the background; a failed delivery is tried twice more."
-msgstr ""
-
-#: assets/js/index.js:6
-msgid "Add webhook"
-msgstr ""
-
-#: assets/js/index.js:6
-msgid "New webhook"
-msgstr ""
-
-#: assets/js/index.js:6
-msgid "No webhooks"
-msgstr ""
-
-#: assets/js/index.js:6
-msgid "Most forms do not need one. Add a webhook when another service gives you an address to send submissions to."
-msgstr ""
-
-#: assets/js/index.js:6
-msgid "Webhook"
-msgstr ""
-
-#: assets/js/index.js:6
-msgid "Not saved yet: enter its address"
+msgid "Not saved yet: enter the address to send to"
 msgstr ""
 
 #: assets/js/index.js:6
@@ -2397,6 +2444,7 @@ msgstr ""
 
 #. translators: %d: number of problems.
 #: assets/js/index.js:6
+#, js-format
 msgid "%d thing to fix in this form, which is live"
 msgid_plural "%d things to fix in this form, which is live"
 msgstr[0] ""
@@ -2404,6 +2452,7 @@ msgstr[1] ""
 
 #. translators: %d: number of problems.
 #: assets/js/index.js:6
+#, js-format
 msgid "%d thing to fix before this form can be published"
 msgid_plural "%d things to fix before this form can be published"
 msgstr[0] ""
@@ -2423,6 +2472,30 @@ msgstr ""
 
 #: assets/js/index.js:6
 msgid "Field removed. Use Undo to bring it back."
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "Google reCAPTCHA"
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "An extra spam check before the form is sent. It loads a Google script for everyone who opens this form."
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "reCAPTCHA is not set up yet, so this form is sent without the check."
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "Add the keys in Settings"
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "The hidden trap field, the minimum fill time and the submission limit protect every form."
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "Spam protection settings"
 msgstr ""
 
 #: assets/js/index.js:6
@@ -2454,6 +2527,10 @@ msgid "SMS"
 msgstr ""
 
 #: assets/js/index.js:6
+msgid "Webhook"
+msgstr ""
+
+#: assets/js/index.js:6
 msgid "The download failed."
 msgstr ""
 
@@ -2462,7 +2539,15 @@ msgid "What people have sent through your forms. Only administrators can see thi
 msgstr ""
 
 #: assets/js/index.js:6
+msgid "All forms"
+msgstr ""
+
+#: assets/js/index.js:6
 msgid "Export CSV"
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "Choose one form to export its submissions."
 msgstr ""
 
 #: assets/js/index.js:6
@@ -2487,6 +2572,10 @@ msgstr ""
 
 #: assets/js/index.js:6
 msgid "Date range"
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "Reset filters"
 msgstr ""
 
 #: assets/js/index.js:6
@@ -2527,6 +2616,7 @@ msgstr ""
 
 #. translators: %d: submission number.
 #: assets/js/index.js:6
+#, js-format
 msgid "Submission #%d"
 msgstr ""
 
@@ -2607,7 +2697,7 @@ msgid "Abuse protection"
 msgstr ""
 
 #: assets/js/index.js:6
-msgid "Applies to every form. Each form also has its own spam settings."
+msgid "Checks that need no outside service. They apply to every form."
 msgstr ""
 
 #: assets/js/index.js:6
@@ -2623,7 +2713,31 @@ msgid "Per form. Further attempts in the same minute are refused. 0 switches the
 msgstr ""
 
 #: assets/js/index.js:6
-msgid "Optional. Create a site key and secret key at google.com/recaptcha/admin for the version you choose here, then switch reCAPTCHA on in each form's Spam settings."
+msgid "seconds"
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "Minimum fill time"
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "A form sent faster than a person could fill it in is filed as spam. 0 switches this off."
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "Hidden trap field"
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "A field people never see. A submission that fills it in is filed as spam."
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "Optional. Create a site key and secret key for the version you choose here, then switch reCAPTCHA on in each form, at the bottom of its Fields tab."
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "Get reCAPTCHA keys"
 msgstr ""
 
 #: assets/js/index.js:6
@@ -2711,7 +2825,11 @@ msgid "Removes forms, submissions and uploaded files."
 msgstr ""
 
 #: assets/js/index.js:6
-msgid "Limits and checks that apply to every form. Each form also has its own spam settings."
+msgid "Spam protection"
+msgstr ""
+
+#: assets/js/index.js:6
+msgid "Limits and checks that apply to every form, and the keys for Google reCAPTCHA."
 msgstr ""
 
 #: assets/js/index.js:6

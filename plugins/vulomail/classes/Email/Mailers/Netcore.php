@@ -1,6 +1,6 @@
 <?php
 /**
- * SendGrid mailer class file.
+ * Netcore mailer class file.
  *
  * @package VuloMail
  */
@@ -14,11 +14,11 @@ use VuloMail\Email\Message;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * SendGrid v3 Mail Send API.
+ * Netcore Email API v5 (formerly Pepipost).
  */
-class SendGrid extends AbstractApiMailer {
+class Netcore extends AbstractApiMailer {
 
-	const ENDPOINT = 'https://api.sendgrid.com/v3/mail/send';
+	const ENDPOINT = 'https://api.pepipost.com/v5/mail/send';
 
 	/**
 	 * Describes the provider and its connection fields.
@@ -27,8 +27,8 @@ class SendGrid extends AbstractApiMailer {
 	 */
 	public static function definition() {
 		return array(
-			'label'  => __( 'SendGrid', 'vulomail' ),
-			'desc'   => __( 'Twilio SendGrid transactional email API.', 'vulomail' ),
+			'label'  => __( 'Netcore Email API', 'vulomail' ),
+			'desc'   => __( 'Netcore (formerly Pepipost) transactional email API v5.', 'vulomail' ),
 			'fields' => array(
 				array(
 					'key'      => 'api_key',
@@ -36,7 +36,7 @@ class SendGrid extends AbstractApiMailer {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
-					'help'     => __( 'Needs the "Mail Send" permission. <a href="https://app.sendgrid.com/settings/api_keys" target="_blank" rel="noopener noreferrer">Create one in SendGrid</a>.', 'vulomail' ),
+					'help'     => __( '<a href="https://email.netcorecloud.com" target="_blank" rel="noopener noreferrer">Log in to Netcore</a>, then Settings → Integrations → API.', 'vulomail' ),
 				),
 			),
 		);
@@ -80,7 +80,6 @@ class SendGrid extends AbstractApiMailer {
 		}
 
 		$payload = array(
-			'personalizations' => array( $personalization ),
 			'from'             => array_filter(
 				array(
 					'email' => $message->from_email,
@@ -90,14 +89,15 @@ class SendGrid extends AbstractApiMailer {
 			'subject'          => $message->subject,
 			'content'          => array(
 				array(
-					'type'  => $message->is_html() ? 'text/html' : 'text/plain',
+					'type'  => $message->is_html() ? 'html' : 'plain',
 					'value' => $message->body,
 				),
 			),
+			'personalizations' => array( $personalization ),
 		);
 
 		if ( $message->reply_to ) {
-			$payload['reply_to_list'] = $map( $message->reply_to );
+			$payload['reply_to'] = $map( $message->reply_to )[0];
 		}
 
 		if ( $message->headers ) {
@@ -107,7 +107,7 @@ class SendGrid extends AbstractApiMailer {
 		foreach ( $files as $file ) {
 			$payload['attachments'][] = array(
 				'content'     => base64_encode( $file['content'] ), // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode -- required attachment encoding.
-				'filename'    => $file['name'],
+				'name'        => $file['name'],
 				'type'        => $file['type'],
 				'disposition' => 'attachment',
 			);
@@ -116,18 +116,18 @@ class SendGrid extends AbstractApiMailer {
 		$response = $this->http->post(
 			self::ENDPOINT,
 			array(
-				'Authorization' => 'Bearer ' . $this->config( 'api_key' ),
-				'Content-Type'  => 'application/json',
+				'api_key'      => $this->config( 'api_key' ),
+				'Content-Type' => 'application/json',
 			),
 			wp_json_encode( $payload )
 		);
 
-		if ( is_wp_error( $response ) || 202 !== $response['code'] ) {
+		if ( is_wp_error( $response ) || $response['code'] >= 300 ) {
 			$detail = is_wp_error( $response ) ? '' : (string) ( $response['json']['errors'][0]['message'] ?? '' );
 
 			return $this->failure( $response, $detail );
 		}
 
-		return Result::ok( $response['headers']['x-message-id'] ?? '' );
+		return Result::ok( (string) ( $response['json']['message_id'] ?? '' ) );
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Brevo mailer class file.
+ * Sweego mailer class file.
  *
  * @package VuloMail
  */
@@ -14,11 +14,11 @@ use VuloMail\Email\Message;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Brevo (formerly Sendinblue) transactional email API v3.
+ * Sweego Email API.
  */
-class Brevo extends AbstractApiMailer {
+class Sweego extends AbstractApiMailer {
 
-	const ENDPOINT = 'https://api.brevo.com/v3/smtp/email';
+	const ENDPOINT = 'https://api.sweego.io/send';
 
 	/**
 	 * Describes the provider and its connection fields.
@@ -27,8 +27,8 @@ class Brevo extends AbstractApiMailer {
 	 */
 	public static function definition() {
 		return array(
-			'label'  => __( 'Brevo', 'vulomail' ),
-			'desc'   => __( 'Brevo (formerly Sendinblue) transactional email API.', 'vulomail' ),
+			'label'  => __( 'Sweego', 'vulomail' ),
+			'desc'   => __( 'Sweego email and SMS API.', 'vulomail' ),
 			'fields' => array(
 				array(
 					'key'      => 'api_key',
@@ -36,7 +36,7 @@ class Brevo extends AbstractApiMailer {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
-					'help'     => __( 'A v3 API key from SMTP & API in your Brevo account. <a href="https://app.brevo.com/settings/keys/api" target="_blank" rel="noopener noreferrer">Create one in Brevo</a>.', 'vulomail' ),
+					'help'     => __( 'From the Email section of your dashboard. Shown only once. <a href="https://app.sweego.io" target="_blank" rel="noopener noreferrer">Open Sweego</a>.', 'vulomail' ),
 				),
 			),
 		);
@@ -58,24 +58,34 @@ class Brevo extends AbstractApiMailer {
 		$map = static function ( array $addresses ) {
 			return array_map(
 				static function ( $address ) {
-					return array_filter( $address );
+					return array_filter(
+						array(
+							'email' => $address['email'],
+							'name'  => $address['name'],
+						)
+					);
 				},
 				$addresses
 			);
 		};
 
 		$payload = array(
-			'sender'  => array_filter(
+			'channel'    => 'email',
+			'from'       => array_filter(
 				array(
 					'email' => $message->from_email,
 					'name'  => $message->from_name,
 				)
 			),
-			'to'      => $map( $message->to ),
-			'subject' => $message->subject,
+			'recipients' => $map( $message->to ),
+			'subject'    => $message->subject,
 		);
 
-		$payload[ $message->is_html() ? 'htmlContent' : 'textContent' ] = $message->body;
+		if ( $message->is_html() ) {
+			$payload['message-html'] = $message->body;
+		} else {
+			$payload['message-txt'] = $message->body;
+		}
 
 		if ( $message->cc ) {
 			$payload['cc'] = $map( $message->cc );
@@ -86,7 +96,7 @@ class Brevo extends AbstractApiMailer {
 		}
 
 		if ( $message->reply_to ) {
-			$payload['replyTo'] = array_filter( $message->reply_to[0] );
+			$payload['reply-to'] = $message->reply_to[0]['email'];
 		}
 
 		if ( $message->headers ) {
@@ -94,26 +104,28 @@ class Brevo extends AbstractApiMailer {
 		}
 
 		foreach ( $files as $file ) {
-			$payload['attachment'][] = array(
-				'name'    => $file['name'],
-				'content' => base64_encode( $file['content'] ), // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode -- required attachment encoding.
+			$payload['attachments'][] = array(
+				'filename' => $file['name'],
+				'content'  => base64_encode( $file['content'] ), // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode -- required attachment encoding.
+				'type'     => $file['type'],
 			);
 		}
 
 		$response = $this->http->post(
 			self::ENDPOINT,
 			array(
-				'api-key'      => $this->config( 'api_key' ),
+				'Api-Key'      => $this->config( 'api_key' ),
 				'Content-Type' => 'application/json',
-				'Accept'       => 'application/json',
 			),
 			wp_json_encode( $payload )
 		);
 
-		if ( is_wp_error( $response ) || $response['code'] < 200 || $response['code'] >= 300 ) {
-			return $this->failure( $response, is_wp_error( $response ) ? '' : (string) ( $response['json']['message'] ?? '' ) );
+		if ( is_wp_error( $response ) || $response['code'] >= 300 ) {
+			$detail = is_wp_error( $response ) ? '' : (string) ( $response['json']['message'] ?? '' );
+
+			return $this->failure( $response, $detail );
 		}
 
-		return Result::ok( $response['json']['messageId'] ?? '' );
+		return Result::ok( (string) ( $response['json']['message-id'] ?? $response['json']['id'] ?? '' ) );
 	}
 }

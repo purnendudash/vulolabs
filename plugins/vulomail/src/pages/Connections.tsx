@@ -114,6 +114,16 @@ const Connections = () => {
 			.catch((e) => notify('error', errorMessage(e)));
 	};
 
+	/** Switches a connection on or off, without opening the edit form. */
+	const toggleEnabled = (connection: Connection) => {
+		apiPost<ConnectionsPayload>('connections', { id: connection.id, enabled: !connection.enabled })
+			.then((next) => {
+				setPayload(next);
+				notify('success', connection.enabled ? __('Connection disabled.', 'vulomail') : __('Connection enabled.', 'vulomail'));
+			})
+			.catch((e) => notify('error', errorMessage(e)));
+	};
+
 	const renderChannel = (channel: (typeof CHANNELS)[number]) => {
 		const connections = payload.connections.filter((item) => item.channel === channel.id);
 		const primaryId = payload.routing[`${channel.id}_primary` as keyof Routing];
@@ -173,6 +183,12 @@ const Connections = () => {
 										},
 								  ]
 								: []),
+							{
+								text: item.enabled ? __('Disable', 'vulomail') : __('Enable', 'vulomail'),
+								icon: item.enabled ? 'cross' : 'check',
+								color: 'purple',
+								onClick: () => toggleEnabled(item),
+							},
 							{
 								text: __('Test', 'vulomail'),
 								icon: 'send',
@@ -260,10 +276,11 @@ const Connections = () => {
 								<NoticeComponent
 									displayPosition="inline-notice"
 									type="info"
-									message={__(
-										'Your connection is saved but not in use yet. Choose "Set as primary" to start sending email through it.',
-										'vulomail'
-									)}
+									message={
+										connections.some((item) => item.enabled && 0 === item.missing.length)
+											? __('Your connection is saved but not in use yet. Choose "Set as primary" to start sending email through it.', 'vulomail')
+											: __('Your connection is saved but switched off or missing a field. Fix or enable it below, then choose "Set as primary".', 'vulomail')
+									}
 								/>
 							)}
 						</FormGroupComponent>
@@ -282,12 +299,7 @@ const Connections = () => {
 				width={36}
 				height="auto"
 				position="lightbox"
-				header={{
-					icon: 'email' === editing?.channel ? 'mail' : 'send',
-					title: editing?.connection
-						? __('Edit connection', 'vulomail')
-						: __('Add connection', 'vulomail'),
-				}}
+				className="vulomail-connection-popup"
 			>
 				{editing && (
 					<ConnectionForm
