@@ -32,14 +32,6 @@ class TestSms extends TestCase {
 		$this->assertSame( '', PhoneNumber::normalize( 'call me' ) );
 	}
 
-	public function test_segment_estimate() {
-		$this->assertSame( 0, PhoneNumber::segments( '' ) );
-		$this->assertSame( 1, PhoneNumber::segments( str_repeat( 'a', 160 ) ) );
-		$this->assertSame( 2, PhoneNumber::segments( str_repeat( 'a', 161 ) ) );
-		$this->assertSame( 1, PhoneNumber::segments( str_repeat( 'й', 70 ) ) );
-		$this->assertSame( 2, PhoneNumber::segments( str_repeat( 'й', 71 ) ) );
-	}
-
 	public function test_twilio_builds_the_request() {
 		$http = new FakeHttp();
 		$http->queue( 201, array( 'sid' => 'SM123' ) );

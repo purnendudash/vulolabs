@@ -113,8 +113,6 @@ class Admin {
 			return;
 		}
 
-		wp_enqueue_script( 'wp-element' );
-
 		FrontendScripts::admin_load_scripts();
 		FrontendScripts::enqueue_script( 'vulomail-vendor-script' );
 		FrontendScripts::enqueue_script( 'vulomail-admin-script' );
