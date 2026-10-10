@@ -13,7 +13,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 ## Description ##
 
-**VuloPilot is an AI SEO, security, and website optimization plugin for WordPress that brings technical audits, performance monitoring, Core Web Vitals, accessibility, and site health into one dashboard.**
+**VuloPilot is a WordPress operating system that brings AI SEO, security, and website optimization plugin for WordPress that brings technical audits, performance monitoring, Core Web Vitals, accessibility, and site health into one dashboard.**
 
 * **Improve your search visibility:** Optimize SEO titles, meta descriptions, schema markup, XML sitemaps, internal linking, and redirects, with Google Search Console integration.
 * **Prepare your website for AI search:** Analyze AI search readiness (AEO/GEO), manage llms.txt, and monitor AI crawler traffic.
@@ -310,6 +310,13 @@ It is designed for websites using common WordPress tools, including:
 * WPML.
 * Polylang.
 * WordPress Multisite.
+
+---
+## For developers ##
+
+Explore the developer documentation to learn how to extend and customize VuloPilot.
+
+[Get developer docs here](https://github.com/vulolabs/vulolabs/tree/main/plugins/vulopilot/docs/developer)
 
 ---
 
