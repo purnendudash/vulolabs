@@ -1468,3 +1468,79 @@
 	border-radius: 0.5rem;
 	background: var(--background-white);
 }
+
+// Under the fields of a form: the form's own spam check, managed where the form is built.
+.vuloform-canvas-guard {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	margin-top: 1rem;
+	padding: 1rem 1.25rem;
+	border: 0.063rem dashed var(--borderColor, #dcdcde);
+	border-radius: 0.5rem;
+	background: #fff;
+
+	.vuloform-control-desc {
+		margin: 0;
+
+		a {
+			font-weight: 600;
+			color: var(--color-primary);
+		}
+	}
+}
+
+// An exception to the confirmation: its line is one button, not a name to edit.
+.vuloform-exception-text {
+	padding: 0;
+	border: 0;
+	background: none;
+	color: var(--text-color);
+	font: inherit;
+	text-align: left;
+	cursor: pointer;
+
+	> strong {
+		font-weight: 600;
+		line-height: 1.5;
+	}
+}
+
+// Exceptions to the confirmation: a list managed on the right of its section.
+.vuloform-exceptions {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 0.75rem;
+}
+
+.vuloform-exceptions-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+.vuloform-exception-body {
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+	padding: 1rem 1.25rem 1.25rem;
+	border-top: 0.063rem solid var(--border-color);
+}
+
+// A setting with its label above it, where there is no room for the label beside it.
+.vuloform-field {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 0.5rem;
+
+	> .vuloform-segmented {
+		align-self: flex-start;
+
+		button {
+			white-space: nowrap;
+		}
+	}
+}

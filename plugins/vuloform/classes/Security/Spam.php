@@ -31,7 +31,7 @@ class Spam {
 	 *                                                 spam) or reject (tell the visitor).
 	 */
 	public static function check( array $form, array $post ) {
-		$spam = $form['schema']['settings']['spam'];
+		$spam = Utill::settings();
 		$age  = Token::age( (string) ( $post['vf_token'] ?? '' ), $form['id'] );
 
 		if ( false === $age ) {

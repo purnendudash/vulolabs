@@ -95,7 +95,7 @@ export interface FormSettings {
 	confirmation: { type: string; message: string; redirect_url: string; rules?: ConfirmationRule[] };
 	messages: { required: string; invalid: string; error: string };
 	style: Record<string, string>;
-	spam: { honeypot: boolean; min_seconds: number; recaptcha?: boolean };
+	spam: { recaptcha?: boolean };
 	notifications: Notification[];
 	webhooks: Webhook[];
 	/** Per-form settings of extensions, keyed by extension id. */

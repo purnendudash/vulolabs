@@ -23,10 +23,10 @@ A `spam` verdict returns the normal success message, stores the submission with 
 | --- | --- |
 | Token | `Security\Token`: `timestamp.hmac` signed with a per-site secret (`vuloform_secret` option). Valid for one day. Fetched fresh from `/public/forms/{id}/token` so page caching does not break it. |
 | Rate limit | Per form and visitor, per minute (Settings, default 5). The visitor is identified by an HMAC of `REMOTE_ADDR`; the address itself is not stored. Forwarded-for headers are ignored because a visitor can set them. |
-| Honeypot | A hidden `vf_website` input. Filled in means spam. |
-| Minimum time | The token's age must be at least `spam.min_seconds`. |
+| Honeypot | A hidden `vf_website` input. Filled in means spam. Site setting `honeypot` (default on). |
+| Minimum time | The token's age must be at least the site setting `min_seconds` (default 2; 0 is off). |
 
-There is no CAPTCHA. An anti-spam service can be plugged in with `vuloform_spam_check`.
+Google reCAPTCHA is optional and switched on per form (`settings.spam.recaptcha`, checked last by `Security\Recaptcha`, keys in the site settings). Another anti-spam service can be plugged in with `vuloform_spam_check`.
 
 ## File uploads
 

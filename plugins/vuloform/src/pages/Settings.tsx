@@ -12,6 +12,8 @@ import { settingsTabs } from '../services/slots';
 interface Stored {
 	retention_days: number;
 	rate_limit: number;
+	honeypot: boolean;
+	min_seconds: number;
 	store_ip: boolean;
 	keep_data_uninstall: string;
 	recaptcha_type: string;
@@ -67,7 +69,7 @@ export const schema = {
 			type: 'section',
 			icon: 'security',
 			title: __('Abuse protection', 'vuloform'),
-			desc: __('Applies to every form. Each form also has its own spam settings.', 'vuloform'),
+			desc: __('Checks that need no outside service. They apply to every form.', 'vuloform'),
 		},
 		{
 			key: 'rate_limit',
@@ -80,12 +82,36 @@ export const schema = {
 			settingDescription: __('Per form. Further attempts in the same minute are refused. 0 switches the limit off.', 'vuloform'),
 		},
 		{
+			key: 'min_seconds',
+			type: 'number',
+			size: 10,
+			minNumber: 0,
+			maxNumber: 60,
+			postText: __('seconds', 'vuloform'),
+			label: __('Minimum fill time', 'vuloform'),
+			settingDescription: __('A form sent faster than a person could fill it in is filed as spam. 0 switches this off.', 'vuloform'),
+		},
+		{
+			key: 'spam_options',
+			type: 'setting-row',
+			row: false,
+			rows: [
+				{
+					valueKey: 'honeypot',
+					icon: 'security purple',
+					title: __('Hidden trap field', 'vuloform'),
+					desc: __('A field people never see. A submission that fills it in is filed as spam.', 'vuloform'),
+					control: { toggle: true, toggleStatusLabel: { on: __('On', 'vuloform'), off: __('Off', 'vuloform') } },
+				},
+			],
+		},
+		{
 			key: 'recaptcha-section',
 			type: 'section',
 			icon: 'security',
 			title: __('Google reCAPTCHA', 'vuloform'),
 			desc: __(
-				'Optional. Create a site key and secret key at google.com/recaptcha/admin for the version you choose here, then switch reCAPTCHA on in each form\'s Spam settings.',
+				'Optional. Create a site key and secret key at google.com/recaptcha/admin for the version you choose here, then switch reCAPTCHA on in each form, at the bottom of its Fields tab.',
 				'vuloform'
 			),
 		},
@@ -188,7 +214,7 @@ const SUBTABS = [
 	{
 		id: 'spam',
 		title: __('Spam protection', 'vuloform'),
-		desc: __('Limits and checks that apply to every form. Each form also has its own spam settings.', 'vuloform'),
+		desc: __('Limits and checks that apply to every form, and the keys for Google reCAPTCHA.', 'vuloform'),
 		icon: 'lock',
 		sections: ['spam-section', 'recaptcha-section'],
 	},
@@ -248,6 +274,8 @@ const Panel = ({ id }: { id: string }) => {
 				setValues({
 					retention_days: stored.retention_days,
 					rate_limit: stored.rate_limit,
+					min_seconds: stored.min_seconds,
+					spam_options: { honeypot: { enable: stored.honeypot } },
 					keep_data_uninstall: stored.keep_data_uninstall,
 					recaptcha_type: stored.recaptcha_type,
 					recaptcha_site_key: stored.recaptcha_site_key,

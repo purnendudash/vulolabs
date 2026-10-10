@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { __, sprintf } from '@wordpress/i18n';
 import { ReactSortable } from 'react-sortablejs';
 import { BadgeComponent } from '@zyra/components';
@@ -15,6 +16,8 @@ interface CanvasProps {
 	onDuplicate: (id: string) => void;
 	// eslint-disable-next-line no-unused-vars
 	onDelete: (id: string) => void;
+	/** Shown under the fields: what belongs to the form as a whole but is managed alongside them. */
+	footer?: ReactNode;
 }
 
 /** What the palette hands to the canvas when a field type is dragged across. */
@@ -38,7 +41,7 @@ const SORT_GROUP = 'vuloform-fields';
  * it), which appends it after the selected field. Fields are reordered by dragging their handle or
  * with the Move up / Move down buttons, so everything works without a pointer.
  */
-const Canvas = ({ fields, selectedId, onChange, onSelect, onDuplicate, onDelete }: CanvasProps) => {
+const Canvas = ({ fields, selectedId, onChange, onSelect, onDuplicate, onDelete, footer }: CanvasProps) => {
 	const add = (type: string) => {
 		const field = createField(type, fields);
 		const index = fields.findIndex((item) => item.id === selectedId);
@@ -250,6 +253,7 @@ const Canvas = ({ fields, selectedId, onChange, onSelect, onDuplicate, onDelete 
 						);
 					})}
 				</ReactSortable>
+				{footer}
 			</section>
 		</div>
 	);

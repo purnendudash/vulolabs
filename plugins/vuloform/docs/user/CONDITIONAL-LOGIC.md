@@ -45,7 +45,7 @@ The same kind of rules can decide what the form does once it is sent. These are 
 
 - **Notifications.** Open a notification, and under **When to send** switch on **Only for certain answers**. The notification is then sent only for submissions that meet its rules, so sales questions can go to one team and support questions to another. A notification that was skipped is listed as **Skipped** on the submission.
 - **Webhooks.** The same switch on a webhook passes on only the submissions the other service should receive.
-- **Confirmation.** Under **Confirmation**, select **Add a confirmation for certain answers**. Give it rules and its own message or page address. It is used instead of the usual confirmation when its rules are met; when several match, the first one wins, and everyone else gets the usual confirmation.
+- **What visitors see.** Under **After submitting**, select **Add an exception** in the **Exceptions** section. Give it rules and its own message or page address. Visitors whose answers match see it instead of the usual message; when several exceptions match, the first is used, and everyone else sees the usual message.
 
 A field hidden by its own conditional logic counts as empty in these rules. Rules about a field you later delete are removed when the form is saved.
 

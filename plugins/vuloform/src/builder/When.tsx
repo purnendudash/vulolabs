@@ -5,7 +5,7 @@ import { Segmented } from '../components/Section';
 import type { Field, Rule, When as WhenValue } from '../services/types';
 import { fieldType } from './fields';
 
-const OPERATORS = [
+export const OPERATORS = [
 	{ value: 'is', label: __('is', 'vuloform') },
 	{ value: 'is_not', label: __('is not', 'vuloform') },
 	{ value: 'contains', label: __('contains', 'vuloform') },

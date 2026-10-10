@@ -2,7 +2,7 @@
 
 ## Site-wide settings
 
-**VuloForm > Settings** has three sub-tabs: **Privacy** (the first two settings below), **Spam protection** (the visitor limit and Google reCAPTCHA) and **Data** (what happens when VuloForm is deleted). Changes save by themselves.
+**VuloForm > Settings** has three sub-tabs: **Privacy** (the first two settings below), **Spam protection** (the visitor limit, the minimum fill time, the hidden trap field and the Google reCAPTCHA keys) and **Data** (what happens when VuloForm is deleted). Changes save by themselves.
 
 | Setting | What it does | Default |
 | --- | --- | --- |
@@ -18,8 +18,10 @@ Deactivating the plugin never deletes anything.
 Every form is protected by three checks that need no CAPTCHA and send no visitor data to another company:
 
 - **Hidden trap field.** Invisible to people, filled in by many bots.
-- **Minimum time.** A form sent faster than a person could fill it in is treated as spam. Set the number of seconds per form, in the form's Settings tab.
-- **Rate limit.** The site-wide setting above.
+- **Minimum fill time.** A form sent faster than a person could fill it in is treated as spam. 0 switches the check off.
+- **Rate limit.** How many submissions one visitor may send to one form per minute.
+
+All three are set once, under **VuloForm > Settings > Spam protection**, and apply to every form.
 
 Caught submissions go to the **Spam** list and trigger no notifications.
 
@@ -29,7 +31,7 @@ For a form that still gets spam, you can add Google reCAPTCHA on top.
 
 1. Create a site key and a secret key at [google.com/recaptcha/admin](https://www.google.com/recaptcha/admin). Choose **v2 checkbox** (visitors tick "I'm not a robot") or **v3** (invisible, scores each visitor). Keys only work for the version they were created for.
 2. Under **VuloForm > Settings > Google reCAPTCHA**, choose the same version and paste both keys. The secret key is kept on the server and is not shown again.
-3. In each form that should use it, open **Settings > Spam** and switch on **Protect this form with reCAPTCHA**.
+3. In each form that should use it, open the form and switch on **Google reCAPTCHA** under its fields, on the **Fields** tab.
 
 Things to know:
 

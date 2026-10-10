@@ -1,4 +1,6 @@
+/* global vuloformAppLocalizer */
 import { useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { BadgeComponent, CardComponent, ContainerComponent, ModuleGuardComponent, PopupComponent } from '@zyra/components';
 import { ButtonInput } from '@zyra/inputs';
@@ -8,8 +10,11 @@ import type { Field, Form, FormSettings as Settings } from '../services/types';
 import Canvas from './Canvas';
 import Inspector from './Inspector';
 import { createField, uniqueKey } from './fields';
-import FormSettings, { openSettingsGroup } from './FormSettings';
+import FormSettings, { lastSection, openSettingsGroup } from './FormSettings';
 import Share from './Share';
+import Switch from '../components/Switch';
+import { builderHash, openBuilder, tabFromHash } from './route';
+import type { BuilderTab } from './route';
 import { duplicateField } from './fields';
 
 interface Snapshot {
@@ -18,7 +23,7 @@ interface Snapshot {
 	settings: Settings;
 }
 
-type Tab = 'fields' | 'settings' | 'share';
+type Tab = BuilderTab;
 
 const TABS: { id: Tab; label: string; icon: string }[] = [
 	{ id: 'fields', label: __('Fields', 'vuloform'), icon: 'form' },
@@ -48,7 +53,9 @@ const Builder = ({ formId }: { formId: number }) => {
 	const [past, setPast] = useState<Snapshot[]>([]);
 	const [future, setFuture] = useState<Snapshot[]>([]);
 	const [selectedId, setSelectedId] = useState('');
-	const [tab, setTab] = useState<Tab>('fields');
+	// The open tab is read from the URL (`&subtab=settings`), so it can be linked to and reloaded.
+	const tab = tabFromHash(useLocation().hash);
+	const setTab = (next: Tab) => openBuilder(next, 'settings' === next ? lastSection() : '');
 	// What the server holds, to tell whether anything differs from it.
 	const savedSnapshot = useRef('');
 	// idle, saving, saved (shown for a moment) or error (the next attempt waits longer).
@@ -60,8 +67,6 @@ const Builder = ({ formId }: { formId: number }) => {
 	const latest = useRef<{ form: Form | null; present: Snapshot | null }>({ form: null, present: null });
 	const inFlight = useRef(false);
 	const [problems, setProblems] = useState<NonNullable<Form['issues']>>([]);
-	// Bumped to reopen the Settings tab on the group a problem points at.
-	const [settingsKey, setSettingsKey] = useState(0);
 	const [previewHtml, setPreviewHtml] = useState<string | null>(null);
 	const lastCommit = useRef(0);
 	// Undoing back to what was saved is not an unsaved change.
@@ -378,7 +383,7 @@ const Builder = ({ formId }: { formId: number }) => {
 				<div className="tabs-item" role="tablist">
 					{TABS.map((item) => (
 						<a
-							href={`#&tab=forms&form=${form.id}`}
+							href={`#${builderHash(item.id, 'settings' === item.id ? lastSection() : '')}`}
 							role="tab"
 							key={item.id}
 							aria-selected={tab === item.id}
@@ -440,8 +445,6 @@ const Builder = ({ formId }: { formId: number }) => {
 													className="vuloform-link"
 													onClick={() => {
 														openSettingsGroup(problem.group);
-														setSettingsKey((key) => key + 1);
-														setTab('settings');
 													}}
 												>
 													{__('Open that setting', 'vuloform')}
@@ -498,6 +501,29 @@ const Builder = ({ formId }: { formId: number }) => {
 
 							notify('info', __('Field removed. Use Undo to bring it back.', 'vuloform'));
 						}}
+						footer={
+							<div className="vuloform-canvas-guard">
+								<Switch
+									name="recaptcha"
+									label={__('Google reCAPTCHA', 'vuloform')}
+									desc={__('An extra spam check before the form is sent. It loads a Google script for everyone who opens this form.', 'vuloform')}
+									checked={Boolean(present.settings.spam.recaptcha)}
+									onChange={(recaptcha) => commit({ settings: { ...present.settings, spam: { ...present.settings.spam, recaptcha } } })}
+								/>
+								{present.settings.spam.recaptcha && !vuloformAppLocalizer.recaptcha_ready && (
+									<p className="vuloform-note">
+										{__('reCAPTCHA is not set up yet, so this form is sent without the check.', 'vuloform')}{' '}
+										<a href="#&tab=settings&subtab=spam">{__('Add the keys in Settings', 'vuloform')}</a>
+									</p>
+								)}
+								{!present.settings.spam.recaptcha && (
+									<p className="vuloform-control-desc">
+										{__('The hidden trap field, the minimum fill time and the submission limit protect every form.', 'vuloform')}{' '}
+										<a href="#&tab=settings&subtab=spam">{__('Spam protection settings', 'vuloform')}</a>
+									</p>
+								)}
+							</div>
+						}
 					/>
 					<Inspector
 						field={selected}
@@ -518,7 +544,6 @@ const Builder = ({ formId }: { formId: number }) => {
 			{'settings' === tab && (
 				<ContainerComponent general>
 					<FormSettings
-						key={settingsKey}
 						settings={present.settings}
 						fields={present.fields}
 						onChange={(settings) => commit({ settings })}

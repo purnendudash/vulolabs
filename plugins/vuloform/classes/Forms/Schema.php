@@ -100,10 +100,9 @@ class Schema {
 				'css_class'      => '',
 			),
 			'spam'              => array(
-				'honeypot'    => true,
-				'min_seconds' => 2,
-				// Google reCAPTCHA; only does anything once its keys are saved under Settings.
-				'recaptcha'   => false,
+				// Google reCAPTCHA; only does anything once its keys are saved under Settings. The
+				// other spam checks are site-wide settings (see Utill::SETTINGS_DEFAULTS).
+				'recaptcha' => false,
 			),
 			'notifications'     => array(),
 			'webhooks'          => array(),
@@ -589,9 +588,7 @@ class Schema {
 				'css_class'      => self::css_classes( $style['css_class'] ),
 			),
 			'spam'              => array(
-				'honeypot'    => ! empty( $raw['spam']['honeypot'] ),
-				'min_seconds' => max( 0, min( 60, (int) $raw['spam']['min_seconds'] ) ),
-				'recaptcha'   => ! empty( $raw['spam']['recaptcha'] ),
+				'recaptcha' => ! empty( $raw['spam']['recaptcha'] ),
 			),
 			'notifications'     => array(),
 			'webhooks'          => array(),
