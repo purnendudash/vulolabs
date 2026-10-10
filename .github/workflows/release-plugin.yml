@@ -14,6 +14,8 @@ on:
         options:
           - vulopilot
           - vulocart
+          - vuloform
+          - vulomail
 
       action:
         description: "Release action"
