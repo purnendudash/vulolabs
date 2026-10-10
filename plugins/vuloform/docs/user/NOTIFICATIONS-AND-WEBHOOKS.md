@@ -1,6 +1,6 @@
 # Notifications and webhooks
 
-Both are set per form: open the form, then the **Settings** tab, then **Notifications** or **Webhooks**.
+Both are set per form: open the form, then the **Settings** tab. Notifications have their own group; webhooks are under **Integrations**.
 
 ## Email notifications
 
@@ -38,16 +38,18 @@ Choose **Text message** under **Send as** and enter a phone number in internatio
 
 Text messages need the **VuloMail** plugin with an SMS connection. Without it, the notification is skipped and the submission says so. Your SMS provider charges for each message.
 
-## Webhooks
+## Integrations and webhooks
 
-A webhook sends each submission to another service the moment it arrives, for example a CRM, a spreadsheet tool or an automation service.
+Open the form's **Settings**, then **Integrations**. Everything the form passes submissions on to is in this one list, added with the **Add integration** button.
 
-1. Select **Add webhook**.
+A **custom connector** is a webhook: it sends each submission to another service the moment it arrives, for example a CRM, a spreadsheet tool or an automation service.
+
+1. Select **Add integration**. If you are offered a choice, pick **Custom connector**.
 2. Paste the address the other service gave you. It must start with `https://`.
 3. Optionally enter a **signing secret**. The other service can use it to check that the data really came from your site.
 4. Optionally tick the fields to send. With none ticked, every field is sent.
 
-A form can have up to five webhooks.
+A form can have up to five custom connectors. Click a connector's name to rename it.
 
 ### Delivery
 

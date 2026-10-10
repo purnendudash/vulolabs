@@ -58,7 +58,7 @@ The **Settings** tab of the form is split into groups; choose one from the row o
 - **Confirmation:** show a message, or send the visitor to another page. The message may include answers, for example `Thanks {name}!`. Under **Submissions**, switch off **Save submissions on this site** if you only want the email and nothing stored.
 - **Appearance:** the design, the wording of the buttons and the error messages. The Next and Back buttons and the step indicator appear here once the form has a Page break. Design covers label position, spacing, accent colour, text colour, text size, corner roundness and button alignment. Leave a value empty and the form follows your theme.
 - **Spam protection:** see [SETTINGS-AND-PRIVACY.md](SETTINGS-AND-PRIVACY.md).
-- **Webhooks:** send submissions to another service. See [NOTIFICATIONS-AND-WEBHOOKS.md](NOTIFICATIONS-AND-WEBHOOKS.md).
+- **Integrations:** send submissions to other services with webhooks. See [NOTIFICATIONS-AND-WEBHOOKS.md](NOTIFICATIONS-AND-WEBHOOKS.md). (VuloForm Pro adds ready-made connections to mailing lists and CRMs here.)
 
 If a form saves nothing and has no notification or webhook switched on, a warning at the top says that submissions would be lost.
 

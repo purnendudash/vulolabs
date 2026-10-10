@@ -227,14 +227,26 @@ const FormSettings = ({ settings, fields, onChange, onChangeWithEmailField }: Fo
 	const setWebhook = (index: number, patch: Partial<Webhook>) =>
 		set({ webhooks: settings.webhooks.map((item, i) => (i === index ? { ...item, ...patch } : item)) });
 
-	const extensions = formSettingsSections();
+	// An extension either gets a sub-tab of its own or, when it connects the form to another
+	// service, a place inside Integrations next to the webhooks.
+	const allExtensions = formSettingsSections();
+	const extensions = allExtensions.filter((item) => 'integrations' !== item.placement);
+	const integrations = allExtensions.filter((item) => 'integrations' === item.placement);
+	const integrationCount = integrations.reduce((total, item) => {
+		const items = settings.extensions?.[item.id]?.items;
+
+		return total + (Array.isArray(items) ? items.length : 0);
+	}, settings.webhooks.length);
+	const kit = { Section, Row, Wide, Switch, Segmented, Item };
+	const [choosing, setChoosing] = useState(false);
 	const count = (n: number) => (n > 0 ? ` (${n})` : '');
 	const groups = [
 		{ id: 'notifications', title: __('Notifications', 'vuloform') + count(settings.notifications.length), icon: 'notification' },
 		{ id: 'confirmation', title: __('Confirmation', 'vuloform'), icon: 'check' },
 		{ id: 'appearance', title: __('Appearance', 'vuloform'), icon: 'edit' },
 		{ id: 'spam', title: __('Spam protection', 'vuloform'), icon: 'security' },
-		{ id: 'webhooks', title: __('Webhooks', 'vuloform') + count(settings.webhooks.length), icon: 'link' },
+		// The id predates the name: it is where problems with a webhook point to.
+		{ id: 'webhooks', title: __('Integrations', 'vuloform') + count(integrationCount), icon: 'link' },
 		...extensions.map((item) => ({ id: `extension:${item.id}`, title: item.title, icon: item.icon })),
 	];
 	const current = groups.some((item) => item.id === group) ? group : 'notifications';
@@ -299,9 +311,37 @@ const FormSettings = ({ settings, fields, onChange, onChangeWithEmailField }: Fo
 	const addWebhook = () => {
 		const id = makeId('w');
 
-		set({ webhooks: [...settings.webhooks, { id, name: __('New webhook', 'vuloform'), enabled: true, url: '', secret: '', fields: [] }] });
+		set({ webhooks: [...settings.webhooks, { id, name: __('Custom connector', 'vuloform'), enabled: true, url: '', secret: '', fields: [] }] });
 		setOpenItem(id);
 	};
+
+	// Everything "Add integration" can add: what extensions offer first, then VuloForm's own
+	// custom connector, a webhook to any address.
+	const connectors = [
+		...integrations.flatMap((item) =>
+			(item.connectors ?? []).map((connector) => ({
+				...connector,
+				id: `${item.id}:${connector.id}`,
+				icon: connector.icon ?? 'link',
+				add: () => {
+					const value = settings.extensions?.[item.id] ?? {};
+
+					set({ extensions: { ...(settings.extensions ?? {}), [item.id]: item.add ? item.add(connector.id, value, fields) : value } });
+				},
+			}))
+		),
+		...(settings.webhooks.length < MAX_WEBHOOKS
+			? [
+					{
+						id: 'webhook',
+						label: __('Custom connector', 'vuloform'),
+						desc: __('A webhook: sends each submission to any address another service gives you.', 'vuloform'),
+						icon: 'link',
+						add: addWebhook,
+					},
+			  ]
+			: []),
+	];
 
 	// A single entry is shown open; with several, the one last opened.
 	const isOpen = (id: string, total: number) => openItem === id || (1 === total && '' === openItem);
@@ -837,24 +877,76 @@ const FormSettings = ({ settings, fields, onChange, onChangeWithEmailField }: Fo
 						{'webhooks' === current && (
 				<>
 					<div className="vuloform-subhead">
-						<p>{__('Send each submission to another service, such as a CRM or an automation tool. Sent in the background; a failed delivery is tried twice more.', 'vuloform')}</p>
-						{settings.webhooks.length < MAX_WEBHOOKS && <ButtonInput buttons={{ text: __('Add webhook', 'vuloform'), icon: 'plus', onClick: addWebhook }} />}
+						<p>
+							{__(
+								'Pass each submission on to the other services you use. It is sent in the background, so visitors never wait, and a failed delivery is tried twice more.',
+								'vuloform'
+							)}
+						</p>
+						{connectors.length > 0 && (
+							<ButtonInput
+								buttons={{
+									text: choosing ? __('Cancel', 'vuloform') : __('Add integration', 'vuloform'),
+									icon: choosing ? undefined : 'plus',
+									color: choosing ? 'purple' : undefined,
+									// With one kind of integration there is nothing to choose between.
+									onClick: () => (1 === connectors.length && !choosing ? connectors[0].add() : setChoosing(!choosing)),
+								}}
+							/>
+						)}
 					</div>
-					{0 === settings.webhooks.length && (
-						<div className="vuloform-empty">
-							<i className="adminfont-link" aria-hidden="true" />
-							<strong>{__('No webhooks', 'vuloform')}</strong>
-							<span>{__('Most forms do not need one. Add a webhook when another service gives you an address to send submissions to.', 'vuloform')}</span>
+					{choosing && (
+						<div className="vuloform-templates vuloform-connectors" role="group" aria-label={__('Choose what to connect', 'vuloform')}>
+							{connectors.map((connector) => (
+								<button
+									type="button"
+									key={connector.id}
+									className="vuloform-template"
+									onClick={() => {
+										connector.add();
+										setChoosing(false);
+									}}
+								>
+									<i className={`adminfont-${connector.icon}`} aria-hidden="true" />
+									<strong>{connector.label}</strong>
+									<span>{connector.desc}</span>
+								</button>
+							))}
 						</div>
 					)}
+					{0 === integrationCount && !choosing && (
+						<div className="vuloform-empty">
+							<i className="adminfont-link" aria-hidden="true" />
+							<strong>{__('Nothing is connected to this form', 'vuloform')}</strong>
+							<span>{__('Most forms do not need this. Add an integration when submissions should also reach another service.', 'vuloform')}</span>
+						</div>
+					)}
+					{integrations.map((item) => (
+						<item.Component
+							key={item.id}
+							ui={kit}
+							value={settings.extensions?.[item.id] ?? {}}
+							onChange={(value) => set({ extensions: { ...(settings.extensions ?? {}), [item.id]: value } })}
+							settings={settings}
+							fields={fields}
+						/>
+					))}
 					{settings.webhooks.map((item, index) => (
 						<Item
 							key={item.id}
 							icon="link"
 							name={item.name}
-							fallbackName={__('Webhook', 'vuloform')}
+							fallbackName={__('Custom connector', 'vuloform')}
 							onRename={(name) => setWebhook(index, { name })}
-							summary={item.url || __('Not saved yet: enter its address', 'vuloform')}
+							summary={
+								item.url
+									? sprintf(
+											/* translators: %s: web address. */
+											__('Webhook to %s', 'vuloform'),
+											item.url
+									  )
+									: __('Not saved yet: enter the address to send to', 'vuloform')
+							}
 							enabled={item.enabled}
 							isOpen={isOpen(item.id, settings.webhooks.length)}
 							onToggleOpen={() => toggleOpen(item.id, settings.webhooks.length)}
@@ -906,7 +998,7 @@ const FormSettings = ({ settings, fields, onChange, onChangeWithEmailField }: Fo
 {extension && (
 				<Sections>
 					<extension.Component
-						ui={{ Section, Row, Wide, Switch, Segmented }}
+						ui={kit}
 						value={settings.extensions?.[extension.id] ?? {}}
 						onChange={(value) => set({ extensions: { ...(settings.extensions ?? {}), [extension.id]: value } })}
 						settings={settings}
