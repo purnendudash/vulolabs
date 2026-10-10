@@ -18,16 +18,22 @@ defined( 'ABSPATH' ) || exit;
 class ConnectionRepository {
 
 	/**
+	 * Credential encryption.
+	 *
 	 * @var Secrets
 	 */
 	private $secrets;
 
 	/**
+	 * Provider definitions.
+	 *
 	 * @var ProviderRegistry
 	 */
 	private $providers;
 
 	/**
+	 * Constructor.
+	 *
 	 * @param Secrets          $secrets   Credential encryption.
 	 * @param ProviderRegistry $providers Provider definitions.
 	 */
@@ -37,6 +43,8 @@ class ConnectionRepository {
 	}
 
 	/**
+	 * Get every stored connection.
+	 *
 	 * @return array<string, array> Connection id => stored record (secrets still encrypted).
 	 */
 	public function all() {
@@ -46,6 +54,8 @@ class ConnectionRepository {
 	}
 
 	/**
+	 * Get one connection by id.
+	 *
 	 * @param string $id Connection id.
 	 * @return array|null Stored record.
 	 */
@@ -213,6 +223,8 @@ class ConnectionRepository {
 	}
 
 	/**
+	 * Remove a connection.
+	 *
 	 * @param string $id Connection id.
 	 * @return bool Whether a connection was removed.
 	 */
@@ -230,6 +242,8 @@ class ConnectionRepository {
 	}
 
 	/**
+	 * Sanitize a raw value according to its field definition.
+	 *
 	 * @param array $field Field definition.
 	 * @param mixed $value Raw value.
 	 * @return mixed
@@ -275,6 +289,8 @@ class ConnectionRepository {
 	}
 
 	/**
+	 * Generate a connection id that isn't already in use.
+	 *
 	 * @param array $all Existing connections.
 	 * @return string
 	 */

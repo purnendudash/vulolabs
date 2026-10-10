@@ -28,24 +28,63 @@ if ( ! class_exists( 'WP_Error', false ) ) {
 	 * Minimal stand-in for core's WP_Error.
 	 */
 	class WP_Error { // phpcs:ignore
+		/**
+		 * Error code.
+		 *
+		 * @var string
+		 */
 		private $code;
+
+		/**
+		 * Error message.
+		 *
+		 * @var string
+		 */
 		private $message;
+
+		/**
+		 * Error data.
+		 *
+		 * @var mixed
+		 */
 		private $data;
 
+		/**
+		 * Constructor.
+		 *
+		 * @param string $code    Error code.
+		 * @param string $message Error message.
+		 * @param mixed  $data    Error data.
+		 */
 		public function __construct( $code = '', $message = '', $data = '' ) {
 			$this->code    = $code;
 			$this->message = $message;
 			$this->data    = $data;
 		}
 
+		/**
+		 * Get the error code.
+		 *
+		 * @return string
+		 */
 		public function get_error_code() {
 			return $this->code;
 		}
 
+		/**
+		 * Get the error message.
+		 *
+		 * @return string
+		 */
 		public function get_error_message() {
 			return $this->message;
 		}
 
+		/**
+		 * Get the error data.
+		 *
+		 * @return mixed
+		 */
 		public function get_error_data() {
 			return $this->data;
 		}
@@ -66,5 +105,5 @@ function VuloMail() { // phpcs:ignore
 }
 
 require_once dirname( __DIR__, 2 ) . '/classes/Integrations/functions.php';
-require_once __DIR__ . '/src/TestCase.php';
-require_once __DIR__ . '/src/Doubles.php';
+
+// TestCase and the VuloMail\Tests doubles autoload via the classmap in composer.json's autoload-dev.

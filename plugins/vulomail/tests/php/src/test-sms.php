@@ -18,11 +18,23 @@ use VuloMail\Sms\Gateways\Twilio;
 use VuloMail\Sms\Gateways\Vonage;
 use VuloMail\Sms\PhoneNumber;
 
+/**
+ * Tests the SMS gateway adapters, phone number normalisation and the SMS Dispatcher.
+ */
 class TestSms extends TestCase {
 
-	// A made-up account SID. Written in pieces so secret scanners don't mistake it for a real one.
-	const SID = 'AC' . '0123456789abcdef' . '0123456789abcdef';
+	/**
+	 * A made-up account SID. Written in pieces so secret scanners don't mistake it for a real one.
+	 *
+	 * @var string
+	 */
+	const SID = 'AC' . '0123456789abcdef' . '0123456789abcdef'; // phpcs:ignore Generic.Strings.UnnecessaryStringConcat.Found -- split deliberately, see comment above.
 
+	/**
+	 * Phone numbers are normalised to E.164.
+	 *
+	 * @return void
+	 */
 	public function test_phone_numbers_are_normalised_to_e164() {
 		$this->assertSame( '+14155550123', PhoneNumber::normalize( '+1 (415) 555-0123' ) );
 		$this->assertSame( '+447911123456', PhoneNumber::normalize( '00 44 7911 123456' ) );
@@ -32,6 +44,11 @@ class TestSms extends TestCase {
 		$this->assertSame( '', PhoneNumber::normalize( 'call me' ) );
 	}
 
+	/**
+	 * Twilio builds the request.
+	 *
+	 * @return void
+	 */
 	public function test_twilio_builds_the_request() {
 		$http = new FakeHttp();
 		$http->queue( 201, array( 'sid' => 'SM123' ) );
@@ -60,6 +77,11 @@ class TestSms extends TestCase {
 		);
 	}
 
+	/**
+	 * Twilio uses a messaging service SID when given one.
+	 *
+	 * @return void
+	 */
 	public function test_twilio_uses_a_messaging_service_sid_when_given_one() {
 		$http = new FakeHttp();
 		$http->queue( 201, array( 'sid' => 'SM123' ) );
@@ -77,6 +99,11 @@ class TestSms extends TestCase {
 		$this->assertArrayNotHasKey( 'From', $http->requests[0]['body'] );
 	}
 
+	/**
+	 * Twilio rejects a malformed account SID before any request.
+	 *
+	 * @return void
+	 */
 	public function test_twilio_rejects_a_malformed_account_sid_before_any_request() {
 		$http   = new FakeHttp();
 		$result = ( new Twilio(
@@ -93,6 +120,11 @@ class TestSms extends TestCase {
 		$this->assertSame( array(), $http->requests );
 	}
 
+	/**
+	 * A Twilio error carries the gateway code but not the token.
+	 *
+	 * @return void
+	 */
 	public function test_twilio_error_carries_the_gateway_code_but_not_the_token() {
 		$http = new FakeHttp();
 		$http->queue(
@@ -118,6 +150,11 @@ class TestSms extends TestCase {
 		$this->assertStringNotContainsString( 'tw-token-12345678', $result->error_message );
 	}
 
+	/**
+	 * Vonage treats a non-zero status in a 200 response as failure.
+	 *
+	 * @return void
+	 */
 	public function test_vonage_treats_a_non_zero_status_in_a_200_response_as_failure() {
 		$http = new FakeHttp();
 		$http->queue(
@@ -146,6 +183,11 @@ class TestSms extends TestCase {
 		$this->assertStringContainsString( 'Bad Credentials', $result->error_message );
 	}
 
+	/**
+	 * Vonage flags unicode text and strips the plus sign.
+	 *
+	 * @return void
+	 */
 	public function test_vonage_flags_unicode_text_and_strips_the_plus_sign() {
 		$http = new FakeHttp();
 		$http->queue(
@@ -175,6 +217,11 @@ class TestSms extends TestCase {
 		$this->assertSame( 'unicode', $http->requests[0]['body']['type'] );
 	}
 
+	/**
+	 * Plivo builds the request.
+	 *
+	 * @return void
+	 */
 	public function test_plivo_builds_the_request() {
 		$http = new FakeHttp();
 		$http->queue( 202, array( 'message_uuid' => array( 'pl-1' ) ) );
@@ -202,6 +249,11 @@ class TestSms extends TestCase {
 		);
 	}
 
+	/**
+	 * Clickatell detects a per-message rejection in a 202 response.
+	 *
+	 * @return void
+	 */
 	public function test_clickatell_detects_a_per_message_rejection_in_a_202_response() {
 		$http = new FakeHttp();
 		$http->queue(
@@ -224,7 +276,15 @@ class TestSms extends TestCase {
 		$this->assertSame( 'click-key-123456', $http->requests[0]['headers']['Authorization'] );
 	}
 
-	private function dispatcher( array $outcomes, array $settings = array(), FakeLogs &$logs = null ) {
+	/**
+	 * Builds a Dispatcher whose connections succeed or fail as scripted.
+	 *
+	 * @param string[]      $outcomes 'ok' / 'fail' for the primary and, optionally, the backup.
+	 * @param array         $settings Extra settings.
+	 * @param FakeLogs|null $logs     Set by reference to the dispatcher's in-memory log.
+	 * @return Dispatcher
+	 */
+	private function dispatcher( array $outcomes, array $settings = array(), ?FakeLogs &$logs = null ) {
 		$registry    = new ScriptedRegistry( new FakeHttp() );
 		$connections = new ConnectionRepository( new Secrets(), $registry );
 		$ids         = array();
@@ -256,6 +316,11 @@ class TestSms extends TestCase {
 		return new Dispatcher( $store, $connections, $registry, new Logger( $logs, $store ) );
 	}
 
+	/**
+	 * The dispatcher fails over to the backup gateway.
+	 *
+	 * @return void
+	 */
 	public function test_dispatcher_fails_over_to_the_backup_gateway() {
 		$logs   = null;
 		$result = $this->dispatcher( array( 'fail', 'ok' ), array(), $logs )->send( '+1 415 555 0123', 'Your code is ready', 'my-plugin' );
@@ -271,6 +336,11 @@ class TestSms extends TestCase {
 		$this->assertNull( $logs->rows[0]['body'], 'Message text is not stored unless content logging is on.' );
 	}
 
+	/**
+	 * The dispatcher reports failure when every gateway fails.
+	 *
+	 * @return void
+	 */
 	public function test_dispatcher_reports_failure_when_every_gateway_fails() {
 		$logs = null;
 
@@ -284,6 +354,11 @@ class TestSms extends TestCase {
 		$this->assertSame( 'Gateway said no', $logs->rows[0]['error_message'] );
 	}
 
+	/**
+	 * The dispatcher rejects invalid numbers without calling a gateway.
+	 *
+	 * @return void
+	 */
 	public function test_dispatcher_rejects_invalid_numbers_without_calling_a_gateway() {
 		$result = $this->dispatcher( array( 'ok' ) )->send( 'not a number', 'Hello' );
 
@@ -292,6 +367,11 @@ class TestSms extends TestCase {
 		$this->assertSame( array(), ScriptedGateway::$sent );
 	}
 
+	/**
+	 * The dispatcher sends nothing when SMS is switched off.
+	 *
+	 * @return void
+	 */
 	public function test_dispatcher_sends_nothing_when_sms_is_switched_off() {
 		$dispatcher = $this->dispatcher( array( 'ok' ), array( 'sms_enabled' => false ) );
 		$result     = $dispatcher->send( '+14155550123', 'Hello' );
@@ -301,6 +381,11 @@ class TestSms extends TestCase {
 		$this->assertSame( array(), ScriptedGateway::$sent );
 	}
 
+	/**
+	 * The dispatcher strips markup and applies the default country code.
+	 *
+	 * @return void
+	 */
 	public function test_dispatcher_strips_markup_and_applies_the_default_country_code() {
 		$this->dispatcher( array( 'ok' ), array( 'sms_country_code' => '44' ) )->send( '07911 123456', '<b>Hello</b> there' );
 

@@ -17,6 +17,8 @@ defined( 'ABSPATH' ) || exit;
 class Overview extends Controller {
 
 	/**
+	 * REST base for this controller.
+	 *
 	 * @var string
 	 */
 	protected $rest_base = 'overview';
@@ -41,6 +43,8 @@ class Overview extends Controller {
 	}
 
 	/**
+	 * Builds the Dashboard tab's data in one response.
+	 *
 	 * @param \WP_REST_Request $request Request.
 	 * @return \WP_REST_Response
 	 */
@@ -111,6 +115,8 @@ class Overview extends Controller {
 	}
 
 	/**
+	 * Summarizes a channel's readiness and routing for the dashboard.
+	 *
 	 * @param object $dispatcher Email or SMS dispatcher.
 	 * @param string $setting    Setting key of the channel's on/off switch.
 	 * @return array{enabled: bool, ready: bool, primary: string, backup: string}

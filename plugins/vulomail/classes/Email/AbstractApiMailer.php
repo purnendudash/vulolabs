@@ -24,16 +24,22 @@ abstract class AbstractApiMailer implements MailerInterface {
 	const MAX_ATTACHMENT_BYTES = 20971520;
 
 	/**
+	 * Connection settings, secrets decrypted.
+	 *
 	 * @var array
 	 */
 	protected $config;
 
 	/**
+	 * HTTP client.
+	 *
 	 * @var HttpClient
 	 */
 	protected $http;
 
 	/**
+	 * Constructor.
+	 *
 	 * @param array      $config Connection settings, secrets decrypted.
 	 * @param HttpClient $http   HTTP client.
 	 */
@@ -43,6 +49,8 @@ abstract class AbstractApiMailer implements MailerInterface {
 	}
 
 	/**
+	 * Get a trimmed config value.
+	 *
 	 * @param string $key Config key.
 	 * @return string
 	 */

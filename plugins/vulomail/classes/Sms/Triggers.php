@@ -17,11 +17,15 @@ defined( 'ABSPATH' ) || exit;
 class Triggers {
 
 	/**
+	 * Plugin settings.
+	 *
 	 * @var Settings
 	 */
 	private $settings;
 
 	/**
+	 * SMS dispatcher.
+	 *
 	 * @var Dispatcher
 	 */
 	private $dispatcher;
@@ -56,6 +60,8 @@ class Triggers {
 	const EMAIL_FAILED_THROTTLE = 'vulomail_email_failed_alert';
 
 	/**
+	 * Constructor.
+	 *
 	 * @param Settings   $settings   Plugin settings.
 	 * @param Dispatcher $dispatcher SMS dispatcher.
 	 */
@@ -276,6 +282,8 @@ class Triggers {
 	}
 
 	/**
+	 * Whether a given trigger is switched on.
+	 *
 	 * @param string $id Trigger id.
 	 * @return bool Whether the trigger is switched on.
 	 */
@@ -286,6 +294,8 @@ class Triggers {
 	}
 
 	/**
+	 * `user_register` callback: alerts the admin about a new user.
+	 *
 	 * @param int $user_id New user id.
 	 * @return void
 	 */
@@ -402,6 +412,8 @@ class Triggers {
 	}
 
 	/**
+	 * `woocommerce_new_order` callback: alerts the admin of a new order.
+	 *
 	 * @param int            $order_id Order id.
 	 * @param \WC_Order|null $order    Order.
 	 * @return void
@@ -415,6 +427,8 @@ class Triggers {
 	}
 
 	/**
+	 * `woocommerce_order_status_changed` callback: alerts the admin and/or the customer.
+	 *
 	 * @param int            $order_id Order id.
 	 * @param string         $from     Old status.
 	 * @param string         $to       New status.
@@ -478,6 +492,8 @@ class Triggers {
 	}
 
 	/**
+	 * `woocommerce_low_stock` callback.
+	 *
 	 * @param \WC_Product $product Product.
 	 * @return void
 	 */
@@ -488,6 +504,8 @@ class Triggers {
 	}
 
 	/**
+	 * `woocommerce_no_stock` callback.
+	 *
 	 * @param \WC_Product $product Product.
 	 * @return void
 	 */
@@ -524,6 +542,8 @@ class Triggers {
 	}
 
 	/**
+	 * Resolves an order object, reusing one already passed by the hook.
+	 *
 	 * @param int            $order_id Order id.
 	 * @param \WC_Order|null $order    Order, when the hook already passed it.
 	 * @return \WC_Order|null
@@ -539,6 +559,8 @@ class Triggers {
 	}
 
 	/**
+	 * Template values for a product-related trigger.
+	 *
 	 * @param \WC_Product $product Product.
 	 * @return array<string, string>
 	 */
@@ -551,6 +573,8 @@ class Triggers {
 	}
 
 	/**
+	 * Template values for an order-related trigger.
+	 *
 	 * @param \WC_Order $order Order.
 	 * @return array<string, string>
 	 */

@@ -17,41 +17,57 @@ defined( 'ABSPATH' ) || exit;
 class Message {
 
 	/**
+	 * Primary recipients.
+	 *
 	 * @var array<int, array{email: string, name: string}>
 	 */
 	public $to = array();
 
 	/**
+	 * Carbon-copy recipients.
+	 *
 	 * @var array<int, array{email: string, name: string}>
 	 */
 	public $cc = array();
 
 	/**
+	 * Blind carbon-copy recipients.
+	 *
 	 * @var array<int, array{email: string, name: string}>
 	 */
 	public $bcc = array();
 
 	/**
+	 * Reply-to addresses.
+	 *
 	 * @var array<int, array{email: string, name: string}>
 	 */
 	public $reply_to = array();
 
 	/**
+	 * Sender email address.
+	 *
 	 * @var string
 	 */
 	public $from_email = '';
 
 	/**
+	 * Sender display name.
+	 *
 	 * @var string
 	 */
 	public $from_name = '';
 
 	/**
+	 * Message subject.
+	 *
 	 * @var string
 	 */
 	public $subject = '';
 
 	/**
+	 * Message body.
+	 *
 	 * @var string
 	 */
 	public $body = '';
@@ -64,6 +80,8 @@ class Message {
 	public $content_type = 'text/plain';
 
 	/**
+	 * Character encoding.
+	 *
 	 * @var string
 	 */
 	public $charset = 'UTF-8';
@@ -90,6 +108,8 @@ class Message {
 	public $source = '';
 
 	/**
+	 * Whether the message body is HTML.
+	 *
 	 * @return bool
 	 */
 	public function is_html() {
@@ -109,6 +129,8 @@ class Message {
 	}
 
 	/**
+	 * Formats a list of addresses as a comma-separated string.
+	 *
 	 * @param array<int, array{email: string, name: string}> $addresses Addresses.
 	 * @return string Comma-separated `Name <email>` list.
 	 */

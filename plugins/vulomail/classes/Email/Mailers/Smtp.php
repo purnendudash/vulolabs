@@ -20,6 +20,8 @@ defined( 'ABSPATH' ) || exit;
 class Smtp implements MailerInterface {
 
 	/**
+	 * Connection settings, secrets decrypted.
+	 *
 	 * @var array
 	 */
 	private $config;
@@ -32,6 +34,8 @@ class Smtp implements MailerInterface {
 	private $factory;
 
 	/**
+	 * Constructor.
+	 *
 	 * @param array         $config  Connection settings, secrets decrypted.
 	 * @param mixed         $http    Unused (SMTP makes no HTTP requests); kept for the adapter signature.
 	 * @param callable|null $factory Returns a PHPMailer instance.
@@ -170,6 +174,8 @@ class Smtp implements MailerInterface {
 	}
 
 	/**
+	 * Applies the connection's transport settings to a PHPMailer instance.
+	 *
 	 * @param object $mailer PHPMailer instance.
 	 * @return void
 	 */
@@ -192,6 +198,8 @@ class Smtp implements MailerInterface {
 	}
 
 	/**
+	 * Builds a fresh PHPMailer instance.
+	 *
 	 * @return \PHPMailer\PHPMailer\PHPMailer
 	 */
 	private static function new_phpmailer() {

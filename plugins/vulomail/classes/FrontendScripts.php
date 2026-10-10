@@ -133,6 +133,8 @@ class FrontendScripts {
 	}
 
 	/**
+	 * Get the catalog of SMS trigger definitions.
+	 *
 	 * @return array<int, array>
 	 */
 	private static function sms_trigger_definitions() {

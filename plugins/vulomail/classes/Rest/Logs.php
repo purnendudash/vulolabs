@@ -12,11 +12,13 @@ use VuloMail\Utill;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * vulomail/v1/logs - list, view, delete and resend delivery log entries.
+ * REST controller for vulomail/v1/logs - list, view, delete and resend delivery log entries.
  */
 class Logs extends Controller {
 
 	/**
+	 * REST base for this controller.
+	 *
 	 * @var string
 	 */
 	protected $rest_base = 'logs';
@@ -70,6 +72,8 @@ class Logs extends Controller {
 	}
 
 	/**
+	 * Lists delivery log entries, filtered and paginated.
+	 *
 	 * @param \WP_REST_Request $request Request.
 	 * @return \WP_REST_Response
 	 */
@@ -97,6 +101,8 @@ class Logs extends Controller {
 	}
 
 	/**
+	 * Gets one delivery log entry.
+	 *
 	 * @param \WP_REST_Request $request Request.
 	 * @return \WP_REST_Response|\WP_Error
 	 */
@@ -220,6 +226,8 @@ class Logs extends Controller {
 	}
 
 	/**
+	 * Whether a log row's message can be sent again.
+	 *
 	 * @param array $row Log row.
 	 * @return bool
 	 */

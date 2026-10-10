@@ -90,6 +90,8 @@ class Diagnostics {
 	}
 
 	/**
+	 * Builds one check's result row.
+	 *
 	 * @param string     $id      Check id.
 	 * @param string     $label   Check name.
 	 * @param string     $status  good|warning|error|info.
@@ -110,6 +112,8 @@ class Diagnostics {
 	}
 
 	/**
+	 * Builds an action that opens a VuloMail admin tab.
+	 *
 	 * @param string $label Button text.
 	 * @param string $tab   VuloMail admin tab, optionally with `&subtab=`.
 	 * @return array
@@ -122,6 +126,8 @@ class Diagnostics {
 	}
 
 	/**
+	 * Builds an action that opens an arbitrary admin URL.
+	 *
 	 * @param string $label Button text.
 	 * @param string $url   Admin URL.
 	 * @return array
@@ -134,6 +140,8 @@ class Diagnostics {
 	}
 
 	/**
+	 * Builds the "Add a connection" action shared by several checks.
+	 *
 	 * @return array
 	 */
 	private static function add_connection() {
@@ -141,6 +149,8 @@ class Diagnostics {
 	}
 
 	/**
+	 * Checks whether email routing is configured and working.
+	 *
 	 * @return array
 	 */
 	private function check_email_routing() {
@@ -187,6 +197,8 @@ class Diagnostics {
 	}
 
 	/**
+	 * Checks whether a sender address is configured.
+	 *
 	 * @return array
 	 */
 	private function check_sender() {
@@ -290,6 +302,8 @@ class Diagnostics {
 	}
 
 	/**
+	 * Whether a TXT record with a given prefix exists for a host.
+	 *
 	 * @param string $host   Host to query.
 	 * @param string $prefix Record prefix to look for.
 	 * @return bool|null Null when the lookup itself failed.
@@ -522,6 +536,8 @@ class Diagnostics {
 	}
 
 	/**
+	 * Finds the file that defines a hook callback.
+	 *
 	 * @param mixed $callback A hook callback.
 	 * @return string File that defines it, '' when unknown.
 	 */
@@ -575,6 +591,8 @@ class Diagnostics {
 	}
 
 	/**
+	 * Human-readable label for a provider id.
+	 *
 	 * @param string $provider Provider id from a log row or a connection.
 	 * @return string
 	 */
@@ -669,6 +687,8 @@ class Diagnostics {
 	}
 
 	/**
+	 * Summarizes recent log rows into totals and a failure streak.
+	 *
 	 * @param array $rows Log rows, newest first; each needs a `status`.
 	 * @return array{total: int, failed: int, streak: int} streak counts the failures at the newest end.
 	 */
@@ -694,6 +714,8 @@ class Diagnostics {
 	}
 
 	/**
+	 * Checks for other plugins that also take over wp_mail().
+	 *
 	 * @return array
 	 */
 	private function check_other_mail_plugins() {
@@ -727,6 +749,8 @@ class Diagnostics {
 	}
 
 	/**
+	 * Checks whether SMS routing is configured and working.
+	 *
 	 * @return array
 	 */
 	private function check_sms_routing() {
@@ -760,6 +784,8 @@ class Diagnostics {
 	}
 
 	/**
+	 * Checks for enabled connections with missing or undecryptable required fields.
+	 *
 	 * @return array|null
 	 */
 	private function check_connections() {
@@ -787,6 +813,8 @@ class Diagnostics {
 	}
 
 	/**
+	 * Checks that the PHP environment has what VuloMail needs.
+	 *
 	 * @return array
 	 */
 	private function check_environment() {
@@ -812,6 +840,8 @@ class Diagnostics {
 	}
 
 	/**
+	 * Checks that the delivery log table exists.
+	 *
 	 * @return array
 	 */
 	private function check_log_table() {
@@ -859,6 +889,8 @@ class Diagnostics {
 	}
 
 	/**
+	 * Checks whether a scheduled cron trigger is likely to run.
+	 *
 	 * @return array|null
 	 */
 	private function check_cron() {

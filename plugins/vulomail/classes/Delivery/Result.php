@@ -15,6 +15,8 @@ defined( 'ABSPATH' ) || exit;
 class Result {
 
 	/**
+	 * Whether the attempt succeeded.
+	 *
 	 * @var bool
 	 */
 	public $success = false;
@@ -27,6 +29,8 @@ class Result {
 	public $provider = '';
 
 	/**
+	 * Connection id the attempt was made through.
+	 *
 	 * @var string
 	 */
 	public $connection_id = '';
@@ -39,11 +43,15 @@ class Result {
 	public $message_id = '';
 
 	/**
+	 * Machine-readable error code.
+	 *
 	 * @var string
 	 */
 	public $error_code = '';
 
 	/**
+	 * Human-readable error message.
+	 *
 	 * @var string
 	 */
 	public $error_message = '';
@@ -63,6 +71,8 @@ class Result {
 	public $log_id = 0;
 
 	/**
+	 * Build a successful result.
+	 *
 	 * @param string $message_id Provider-side message id.
 	 * @return self
 	 */
@@ -75,6 +85,8 @@ class Result {
 	}
 
 	/**
+	 * Build a failed result.
+	 *
 	 * @param string $code    Machine-readable error code.
 	 * @param string $message Human-readable error, already scrubbed of credentials.
 	 * @return self
@@ -88,6 +100,8 @@ class Result {
 	}
 
 	/**
+	 * Convert the result into a WP_Error.
+	 *
 	 * @return \WP_Error
 	 */
 	public function to_wp_error() {
@@ -95,6 +109,8 @@ class Result {
 	}
 
 	/**
+	 * Convert the result into a plain array.
+	 *
 	 * @return array
 	 */
 	public function to_array() {
