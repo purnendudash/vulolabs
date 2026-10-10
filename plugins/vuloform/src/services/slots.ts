@@ -30,6 +30,22 @@ export interface SectionKit {
 	Section: ComponentType<{ icon: string; title: string; desc?: ReactNode; action?: ReactNode; children: ReactNode }>;
 	Row: ComponentType<{ label?: string; desc?: ReactNode; children: ReactNode }>;
 	Wide: ComponentType<{ children: ReactNode }>;
+	/** One collapsible line of a list, as notifications and webhooks use. */
+	Item: ComponentType<{
+		icon: string;
+		name: string;
+		fallbackName: string;
+		// eslint-disable-next-line no-unused-vars
+		onRename: (name: string) => void;
+		summary: string;
+		enabled: boolean;
+		isOpen: boolean;
+		onToggleOpen: () => void;
+		// eslint-disable-next-line no-unused-vars
+		onEnabled: (enabled: boolean) => void;
+		onRemove: () => void;
+		children: ReactNode;
+	}>;
 	// eslint-disable-next-line no-unused-vars
 	Segmented: ComponentType<{ label: string; value: string; options: { value: string; label: string }[]; onChange: (value: string) => void }>;
 	// eslint-disable-next-line no-unused-vars
@@ -42,6 +58,20 @@ export interface FormSettingsSection {
 	id: string;
 	title: string;
 	icon: string;
+	/**
+	 * `integrations` puts it inside the Integrations group, above the webhooks, instead of giving it
+	 * a sub-tab. Its stored value should then keep its entries in an `items` array, which is what the
+	 * count on the Integrations tab adds up.
+	 */
+	placement?: 'integrations';
+	/**
+	 * For `placement: 'integrations'`: what this extension adds to the form's one "Add integration"
+	 * chooser, and how to add one. `add` returns the extension's new value; it must not change
+	 * anything else. The component then draws the extension's entries and nothing around them.
+	 */
+	connectors?: { id: string; label: string; desc: string; icon?: string }[];
+	// eslint-disable-next-line no-unused-vars
+	add?: (connector: string, value: Record<string, unknown>, fields: Field[]) => Record<string, unknown>;
 	Component: ComponentType<{
 		ui: SectionKit;
 		/** This extension's stored settings for the form (`settings.extensions[id]`). */

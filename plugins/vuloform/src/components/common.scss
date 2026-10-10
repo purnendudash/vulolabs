@@ -1443,3 +1443,28 @@
 .vuloform-dynamic-tags {
 	margin-top: 0.375rem;
 }
+
+// A titled block inside a settings group, such as Webhooks inside Integrations.
+.vuloform-subhead h3 {
+	margin: 0 0 0.125rem;
+	font-size: 1rem;
+	font-weight: 600;
+	color: var(--text-color);
+}
+
+.vuloform-subhead > div {
+	flex: 1 1 20rem;
+	min-width: 0;
+}
+
+.vuloform-subhead > div p {
+	margin: 0;
+}
+
+// The choices behind "Add integration".
+.vuloform-connectors {
+	padding: 1rem;
+	border: 0.063rem solid var(--border-color);
+	border-radius: 0.5rem;
+	background: var(--background-white);
+}

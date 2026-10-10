@@ -31,7 +31,7 @@ Builder.tsx        state, undo/redo, save, preview, tabs
 
 ## The form's Settings tab
 
-Groups are sub-tabs, in the order people need them: Notifications, Confirmation, Appearance, Spam protection, Webhooks, then one per extension. A notification or webhook is a collapsible line (`Item` in `FormSettings.tsx`); `Segmented` in `components/Section.tsx` is used for choices between a few options. Each group is a panel of sections in the layout the other VuloLabs settings screens use (title and explanation on the left, settings on the right), built from `components/Section.tsx` (`Sections`, `Section`, `Row`, `Wide`) with zyra's own class names, and `components/Switch.tsx` for on/off settings. A notification or a webhook is one section each.
+Groups are sub-tabs, in the order people need them: Notifications, Confirmation, Appearance, Spam protection, Integrations (the webhooks, plus whatever extensions place there), then one per extension. A notification or webhook is a collapsible line (`Item` in `FormSettings.tsx`); `Segmented` in `components/Section.tsx` is used for choices between a few options. Each group is a panel of sections in the layout the other VuloLabs settings screens use (title and explanation on the left, settings on the right), built from `components/Section.tsx` (`Sections`, `Section`, `Row`, `Wide`) with zyra's own class names, and `components/Switch.tsx` for on/off settings. A notification or a webhook is one section each.
 
 ## Conventions
 
