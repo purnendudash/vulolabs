@@ -22,6 +22,8 @@ interface Row {
 	status: 'unread' | 'read' | 'spam';
 	created_at_display: string;
 	preview: { label: string; text: string }[];
+	// Only set when "All forms" is selected, since every row can be a different form there.
+	form_title?: string;
 	[key: string]: unknown;
 }
 
@@ -112,7 +114,7 @@ const download = (endpoint: string, params: Record<string, string | number | und
  */
 const Submissions = () => {
 	const linkedForm = Number(new URLSearchParams(useLocation().hash).get('form')) || 0;
-	const [forms, setForms] = useState<{ id: number; title: string }[] | null>(null);
+	const [forms, setForms] = useState<{ id: number; title: string; submissions?: number }[] | null>(null);
 	const [formId, setFormId] = useState(linkedForm);
 	const [query, setQuery] = useState<TableQuery>({ paged: 1, per_page: 10 });
 	const [list, setList] = useState<List>({ data: [], total: 0, status_counts: { unread: 0, read: 0, spam: 0 } });
@@ -121,15 +123,22 @@ const Submissions = () => {
 	const [reload, setReload] = useState(0);
 	const [detail, setDetail] = useState<Detail | null>(null);
 	const [confirmDelete, setConfirmDelete] = useState(false);
+	// Bumped to remount TableCard (its `key` below) and drop its own internal filter/search/paging
+	// state back to defaults — there's no other way to clear it from outside.
+	const [resetCount, setResetCount] = useState(0);
 
 	const onQueryUpdate = useCallback((next: TableQuery) => setQuery(next), []);
 
+	const hasActiveFilter = Boolean(query.filter?.date || query.searchValue || (query.categoryFilter && 'all' !== query.categoryFilter));
+
+	const resetFilters = () => {
+		setQuery({ paged: 1, per_page: 10 });
+		setResetCount((n) => n + 1);
+	};
+
 	useEffect(() => {
-		apiGet<{ data: { id: number; title: string }[] }>('forms', { per_page: 100 })
-			.then((result) => {
-				setForms(result.data);
-				setFormId((current) => current || result.data[0]?.id || 0);
-			})
+		apiGet<{ data: { id: number; title: string; submissions?: number }[] }>('forms', { per_page: 100 })
+			.then((result) => setForms(result.data))
 			.catch((e) => setError(errorMessage(e)));
 	}, []);
 
@@ -142,7 +151,8 @@ const Submissions = () => {
 	};
 
 	useEffect(() => {
-		if (!formId) {
+		// formId 0 is "All forms", a real, fetchable state — only wait for the forms list itself.
+		if (!forms) {
 			return undefined;
 		}
 
@@ -163,7 +173,7 @@ const Submissions = () => {
 		return () => {
 			cancelled = true;
 		};
-	}, [formId, query, reload]);
+	}, [forms, formId, query, reload]);
 
 	const refresh = () => setReload((n) => n + 1);
 
@@ -220,7 +230,10 @@ const Submissions = () => {
 								type="single-select"
 								name="form"
 								isClearable={false}
-								options={forms.map((form) => ({ value: String(form.id), label: form.title }))}
+								options={[
+									{ value: '0', label: __('All forms', 'vuloform') },
+									...forms.map((form) => ({ value: String(form.id), label: form.title })),
+								]}
 								value={String(formId)}
 								onChange={(value) => setFormId(Number(value))}
 							/>
@@ -229,7 +242,8 @@ const Submissions = () => {
 									text: __('Export CSV', 'vuloform'),
 									icon: 'export',
 									color: 'purple',
-									disabled: 0 === list.total,
+									disabled: 0 === list.total || 0 === formId,
+									tooltip: 0 === formId ? __('Choose one form to export its submissions.', 'vuloform') : undefined,
 									onClick: () => download('submissions/export', filters, 'submissions.csv'),
 								}}
 							/>
@@ -251,16 +265,24 @@ const Submissions = () => {
 							}}
 						/>
 					)}
-					{!error && formId > 0 && (
+					{!error && forms && forms.length > 0 && (
 						<TableCard
-							// A different form starts from its own first page and filters.
-							key={formId}
+							// A different form, or a reset, starts from its own first page and filters.
+							key={`${formId}-${resetCount}`}
 							search={{ placeholder: __('Search submissions…', 'vuloform') }}
 							showMenu={false}
 							filters={[{ key: 'date', type: 'date', label: __('Date range', 'vuloform') }]}
 							filtersBeforeSearch
+							buttonActions={
+								hasActiveFilter
+									? [{ label: __('Reset filters', 'vuloform'), icon: 'refresh', color: 'red', onClick: resetFilters }]
+									: undefined
+							}
 							format={vuloformAppLocalizer.date_format_js}
 							headers={{
+								...(0 === formId
+									? { form_title: { label: __('Form', 'vuloform') } }
+									: {}),
 								preview: {
 									label: __('Submission', 'vuloform'),
 									render: (row: Row) => (

@@ -40,17 +40,19 @@ class Submissions extends Controller {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function get_items( $request ) {
-		$form = VuloForm()->forms->get( absint( $request->get_param( 'form_id' ) ) );
+		// 0 means "All forms": every submission of every form, each formatted against its own schema.
+		$form_id = absint( $request->get_param( 'form_id' ) );
+		$form    = $form_id ? VuloForm()->forms->get( $form_id ) : null;
 
-		if ( ! $form ) {
+		if ( $form_id && ! $form ) {
 			return $this->not_found();
 		}
 
-		$result = VuloForm()->submissions->query( $this->filters( $request, $form['id'] ) );
+		$result = VuloForm()->submissions->query( $this->filters( $request, $form_id ) );
 		$rows   = array();
 
 		foreach ( $result['data'] as $submission ) {
-			$rows[] = $this->summary( $form, $submission );
+			$rows[] = $this->summary( $form ?? VuloForm()->forms->get( $submission['form_id'] ), $submission );
 		}
 
 		$result['data'] = $rows;
@@ -253,24 +255,29 @@ class Submissions extends Controller {
 	/**
 	 * One row of the list: the first few answers as a preview.
 	 *
-	 * @param array $form       Form.
-	 * @param array $submission Submission.
+	 * @param array|null $form       Form, or null when it could not be resolved (an orphaned
+	 *                               submission left behind by a form that no longer exists).
+	 * @param array      $submission Submission.
 	 * @return array
 	 */
-	private function summary( array $form, array $submission ) {
+	private function summary( ?array $form, array $submission ) {
 		$preview = array();
 
-		foreach ( Formatter::rows( $form, $submission['data'] ) as $row ) {
-			if ( '' !== $row['text'] && 'hidden' !== $row['type'] && count( $preview ) < 3 ) {
-				$preview[] = array(
-					'label' => $row['label'],
-					'text'  => mb_substr( $row['text'], 0, 120 ),
-				);
+		if ( $form ) {
+			foreach ( Formatter::rows( $form, $submission['data'] ) as $row ) {
+				if ( '' !== $row['text'] && 'hidden' !== $row['type'] && count( $preview ) < 3 ) {
+					$preview[] = array(
+						'label' => $row['label'],
+						'text'  => mb_substr( $row['text'], 0, 120 ),
+					);
+				}
 			}
 		}
 
 		return array(
 			'id'                 => $submission['id'],
+			'form_id'            => $submission['form_id'],
+			'form_title'         => $form ? $form['title'] : '',
 			'status'             => $submission['status'],
 			'created_at'         => $submission['created_at'],
 			'created_at_display' => Utill::format_datetime( $submission['created_at'] ),

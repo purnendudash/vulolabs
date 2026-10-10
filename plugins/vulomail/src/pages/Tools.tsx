@@ -61,12 +61,31 @@ const follow = (action: Check['action']) => {
 
 const TestCard = ({ channel, connections, preselected }: TestCardProps) => {
 	const isEmail = 'email' === channel;
+	const cardId = isEmail ? 'tools-test-email-card' : 'tools-test-sms-card';
+	// Whether the "Test" button on Connections sent the visitor here for this card's channel.
+	const isTarget = '' !== preselected && connections.some((item) => item.id === preselected);
 	const [to, setTo] = useState(isEmail ? vulomailAppLocalizer.admin_email : '');
 	const [connectionId, setConnectionId] = useState(
 		connections.some((item) => item.id === preselected) ? preselected : LIVE
 	);
 	const [isSending, setIsSending] = useState(false);
 	const [result, setResult] = useState<TestResult | null>(null);
+	const [isHighlighted, setIsHighlighted] = useState(isTarget);
+
+	// Scrolls to and briefly highlights this card so it's obvious which one was preselected,
+	// since both the email and SMS cards are already on screen without any tab to switch to.
+	useEffect(() => {
+		if (!isTarget) {
+			return;
+		}
+
+		setIsHighlighted(true);
+		document.getElementById(cardId)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+		const timeout = setTimeout(() => setIsHighlighted(false), 2000);
+
+		return () => clearTimeout(timeout);
+	}, [cardId, isTarget, preselected]);
 
 	const send = () => {
 		setIsSending(true);
@@ -85,7 +104,8 @@ const TestCard = ({ channel, connections, preselected }: TestCardProps) => {
 
 	return (
 		<CardComponent
-			id={isEmail ? 'tools-test-email-card' : 'tools-test-sms-card'}
+			id={cardId}
+			className={isHighlighted ? 'vulomail-highlight' : undefined}
 			title={isEmail ? __('Send a test email', 'vulomail') : __('Send a test SMS', 'vulomail')}
 			titleIcon={isEmail ? 'mail' : 'send'}
 			desc={
@@ -138,12 +158,18 @@ const TestCard = ({ channel, connections, preselected }: TestCardProps) => {
 							  )
 							: __('The test was not sent', 'vulomail')
 					}
-					message={[
-						result.message,
-						...result.attempts
-							.filter((attempt) => !attempt.success && result.attempts.length > 1)
-							.map((attempt) => `${providerLabel(attempt.provider)}: ${attempt.error_message}`),
-					]}
+					message={(() => {
+						const lines = [
+							result.message,
+							...result.attempts
+								.filter((attempt) => !attempt.success && result.attempts.length > 1)
+								.map((attempt) => `${providerLabel(attempt.provider)}: ${attempt.error_message}`),
+						];
+
+						// NoticeComponent's array form is the auto-rotating, closable banner UI; a
+						// single line should stay plain text, or a stray close icon appears with it.
+						return lines.length > 1 ? lines : lines[0];
+					})()}
 				/>
 			)}
 			<div className="vulomail-form-footer">

@@ -262,6 +262,85 @@
 	max-width: none;
 }
 
+// A real on/off slider for a single yes/no setting (Switch.tsx) - checked/unchecked colour comes
+// from the theme's own --color-primary/--border-color custom properties, same as the rest of the app.
+.vulomail-switch {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.625rem;
+	cursor: pointer;
+	user-select: none;
+
+	input {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		margin: -1px;
+		padding: 0;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	.vulomail-switch-track {
+		position: relative;
+		flex-shrink: 0;
+		width: 2.5rem;
+		height: 1.375rem;
+		border-radius: 999px;
+		background: var(--border-color);
+		transition: background-color 0.15s ease;
+
+		&::after {
+			position: absolute;
+			top: 0.125rem;
+			left: 0.125rem;
+			width: 1.125rem;
+			height: 1.125rem;
+			border-radius: 50%;
+			background: #fff;
+			box-shadow: 0 0.063rem 0.188rem rgba(0, 0, 0, 0.25);
+			transition: transform 0.15s ease;
+			content: '';
+		}
+	}
+
+	.vulomail-switch-label {
+		font-weight: 500;
+		color: var(--text-color);
+	}
+
+	input:checked + .vulomail-switch-track {
+		background: var(--color-primary);
+
+		&::after {
+			transform: translateX(1.125rem);
+		}
+	}
+
+	input:focus-visible + .vulomail-switch-track {
+		outline: 0.125rem solid var(--color-primary);
+		outline-offset: 0.125rem;
+	}
+}
+
+// Briefly marks the card a "Test" button on Connections sent the visitor to (Tools.tsx).
+.vulomail-highlight {
+	animation: vulomail-highlight-flash 2s ease-out;
+}
+
+@keyframes vulomail-highlight-flash {
+	0%,
+	40% {
+		box-shadow: 0 0 0 0.125rem var(--color-primary);
+	}
+
+	100% {
+		box-shadow: 0 0 0 0 transparent;
+	}
+}
+
 .vulomail-alert-message {
 	display: flex;
 	flex-direction: column;

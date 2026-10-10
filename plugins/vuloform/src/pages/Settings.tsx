@@ -111,8 +111,13 @@ export const schema = {
 			icon: 'security',
 			title: __('Google reCAPTCHA', 'vuloform'),
 			desc: __(
-				'Optional. Create a site key and secret key at google.com/recaptcha/admin for the version you choose here, then switch reCAPTCHA on in each form, at the bottom of its Fields tab.',
+				'Optional. Create a site key and secret key for the version you choose here, then switch reCAPTCHA on in each form, at the bottom of its Fields tab.',
 				'vuloform'
+			),
+			rightContent: (
+				<a className="link-item" href="https://www.google.com/recaptcha/admin" target="_blank" rel="noopener noreferrer">
+					{__('Get reCAPTCHA keys', 'vuloform')} <i className="adminfont-external-link" />
+				</a>
 			),
 		},
 		{

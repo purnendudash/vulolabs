@@ -615,9 +615,13 @@
 				} );
 		}
 
-		// A page served from a cache carries an old token; get a fresh one as soon as the form is used.
-		form.addEventListener( 'focusin', fetchToken, { once: true } );
-		form.addEventListener( 'pointerdown', fetchToken, { once: true } );
+		// A page served from a cache carries an old token, stamped with the cache's generation time
+		// rather than this visit. Refresh it now, as soon as the form is set up, not on the visitor's
+		// first interaction: Spam::check() measures how long the token has existed to tell a human from
+		// a bot, so starting that clock at first touch - rather than at page view - would shrink a
+		// careful visitor's fill time down to the gap between their first click and Submit, and falsely
+		// flag anyone who fills the form quickly or via autofill.
+		fetchToken();
 
 		/* ---------- Starting values from the page ---------- */
 
@@ -841,8 +845,8 @@
 						focusField( first );
 					}
 
-					// A rejected attempt may have used up the token's welcome; get a new one for the retry.
-					tokenFetched = false;
+					// The token already in the field stays valid for a retry: it is not single-use, and
+					// re-fetching here would only restart the fill-time clock the spam check just measured.
 
 					// A reCAPTCHA answer can be checked only once, so the visitor ticks the box again.
 					if ( captchaWidget !== null ) {

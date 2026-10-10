@@ -8,9 +8,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-09T16:08:01+00:00\n"
+"POT-Creation-Date: 2026-10-10T10:50:17+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: vulomail\n"
 
 #. Plugin Name of the plugin
@@ -59,24 +59,24 @@ msgid "Tools"
 msgstr ""
 
 #: classes/Admin.php:67
-#: classes/Admin.php:134
+#: classes/Admin.php:132
 #: assets/js/index.js:1
 msgid "Settings"
 msgstr ""
 
-#: classes/Connections/ConnectionRepository.php:87
+#: classes/Connections/ConnectionRepository.php:97
 #: assets/js/index.js:1
 msgid "Provider"
 msgstr ""
 
-#: classes/Connections/ConnectionRepository.php:156
-#: classes/Rest/Connections.php:96
-#: classes/Rest/Tools.php:103
-#: classes/Rest/Tools.php:162
+#: classes/Connections/ConnectionRepository.php:166
+#: classes/Rest/Connections.php:104
+#: classes/Rest/Tools.php:105
+#: classes/Rest/Tools.php:164
 msgid "That connection no longer exists."
 msgstr ""
 
-#: classes/Connections/ConnectionRepository.php:166
+#: classes/Connections/ConnectionRepository.php:176
 msgid "Unknown provider."
 msgstr ""
 
@@ -87,6 +87,7 @@ msgstr ""
 
 #. translators: %s: check id.
 #: classes/Diagnostics/Diagnostics.php:68
+#, php-format
 msgid "The \"%s\" check could not run on this server."
 msgstr ""
 
@@ -94,404 +95,430 @@ msgstr ""
 msgid "This does not affect delivery. If it keeps happening, check the PHP error log for the cause."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:140
+#: classes/Diagnostics/Diagnostics.php:148
 #: assets/js/index.js:1
 msgid "Add a connection"
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:147
+#: classes/Diagnostics/Diagnostics.php:157
 msgid "Email routing"
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:155
+#: classes/Diagnostics/Diagnostics.php:165
 msgid "Email routing is switched off. WordPress sends email with its default mailer."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:156
+#: classes/Diagnostics/Diagnostics.php:166
 msgid "To deliver email through your own provider, switch on \"Send email through VuloMail\" under Settings → Email."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:157
-#: classes/Diagnostics/Diagnostics.php:373
+#: classes/Diagnostics/Diagnostics.php:167
+#: classes/Diagnostics/Diagnostics.php:387
 msgid "Open email settings"
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:166
+#: classes/Diagnostics/Diagnostics.php:176
 msgid "No working email connection is set as primary. WordPress sends email with its default mailer, which many hosts restrict."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:167
+#: classes/Diagnostics/Diagnostics.php:177
 msgid "Add a connection for your email provider (or any SMTP account), complete its fields, and choose it as the primary email connection."
 msgstr ""
 
 #. translators: %s: connection name.
 #. translators: %s: connection names in failover order.
-#: classes/Diagnostics/Diagnostics.php:180
-#: classes/Diagnostics/Diagnostics.php:186
+#: classes/Diagnostics/Diagnostics.php:190
+#: classes/Diagnostics/Diagnostics.php:196
+#, php-format
 msgid "Email is sent through %s."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:181
+#: classes/Diagnostics/Diagnostics.php:191
 msgid "Optional: add a second connection and set it as backup, so email keeps going out if the primary one fails."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:193
+#: classes/Diagnostics/Diagnostics.php:205
 msgid "Sender address"
 msgstr ""
 
 #. translators: %s: email address.
-#: classes/Diagnostics/Diagnostics.php:202
+#: classes/Diagnostics/Diagnostics.php:214
+#, php-format
 msgid "No sender address is set, so email is sent from %s. Most providers only accept a sender you have verified with them."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:203
+#: classes/Diagnostics/Diagnostics.php:215
 msgid "Enter a sender email under Settings → Email. Use an address on your own domain that your email provider has verified."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:204
+#: classes/Diagnostics/Diagnostics.php:216
 msgid "Set the sender"
 msgstr ""
 
 #. translators: %s: email address.
-#: classes/Diagnostics/Diagnostics.php:209
+#: classes/Diagnostics/Diagnostics.php:221
+#, php-format
 msgid "Email is sent from %s."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:218
+#: classes/Diagnostics/Diagnostics.php:230
 msgid "Sender domain DNS"
 msgstr ""
 
 #. translators: %s: domain name.
-#: classes/Diagnostics/Diagnostics.php:258
+#: classes/Diagnostics/Diagnostics.php:270
+#, php-format
 msgid "The DNS records for %s could not be looked up from this server, so SPF and DMARC were not checked."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:259
+#: classes/Diagnostics/Diagnostics.php:271
 msgid "This is a limit of the server, not a delivery problem. Check the domain with any online SPF/DMARC lookup tool instead."
 msgstr ""
 
 #. translators: %s: domain name.
-#: classes/Diagnostics/Diagnostics.php:265
+#: classes/Diagnostics/Diagnostics.php:277
+#, php-format
 msgid "%s publishes SPF and DMARC records. DKIM is set up with your email provider and can't be checked from here."
 msgstr ""
 
 #. translators: %s: domain name.
-#: classes/Diagnostics/Diagnostics.php:272
+#: classes/Diagnostics/Diagnostics.php:284
+#, php-format
 msgid "SPF: add a TXT record on %s that starts with \"v=spf1\" and includes your email provider (the provider's setup guide gives the exact value)."
 msgstr ""
 
 #. translators: %s: DNS host name.
-#: classes/Diagnostics/Diagnostics.php:277
+#: classes/Diagnostics/Diagnostics.php:289
+#, php-format
 msgid "DMARC: add a TXT record on %s, for example \"v=DMARC1; p=none;\"."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:280
+#: classes/Diagnostics/Diagnostics.php:292
 msgid "Records are added where the domain's DNS is managed (your registrar or host). Changes can take a few hours to show here."
 msgstr ""
 
 #. translators: 1: domain name, 2: missing record types.
-#: classes/Diagnostics/Diagnostics.php:287
+#: classes/Diagnostics/Diagnostics.php:299
+#, php-format
 msgid "%1$s has no %2$s record. Mailbox providers such as Gmail and Yahoo may reject or junk email from it."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:321
+#: classes/Diagnostics/Diagnostics.php:335
 msgid "wp_mail() delivery"
 msgstr ""
 
 #. translators: %s: plugin name or file path.
-#: classes/Diagnostics/Diagnostics.php:335
+#: classes/Diagnostics/Diagnostics.php:349
+#, php-format
 msgid "%s replaces WordPress's wp_mail() function with its own, so email does not pass through VuloMail at all."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:336
+#: classes/Diagnostics/Diagnostics.php:350
 msgid "Deactivate that plugin, or switch off its email sending feature, then reload this page."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:337
-#: classes/Diagnostics/Diagnostics.php:722
-#: classes/Diagnostics/Diagnostics.php:833
+#: classes/Diagnostics/Diagnostics.php:351
+#: classes/Diagnostics/Diagnostics.php:744
+#: classes/Diagnostics/Diagnostics.php:863
 msgid "Open Plugins"
 msgstr ""
 
 #. translators: 1: connection name, 2: plugin names.
-#: classes/Diagnostics/Diagnostics.php:352
+#: classes/Diagnostics/Diagnostics.php:366
+#, php-format
 msgid "wp_mail() is handled by VuloMail and sent through %1$s. %2$s also hooks in ahead of VuloMail (the pre_wp_mail filter) and can send or stop a message first."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:353
+#: classes/Diagnostics/Diagnostics.php:367
 msgid "Nothing to do if that plugin only watches email. If messages are missing from the VuloMail log, switch off that plugin's own email sending."
 msgstr ""
 
 #. translators: 1: connection name, 2: provider name.
-#: classes/Diagnostics/Diagnostics.php:362
+#: classes/Diagnostics/Diagnostics.php:376
+#, php-format
 msgid "wp_mail() is handled by VuloMail: email is sent through %1$s (%2$s)."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:368
+#: classes/Diagnostics/Diagnostics.php:382
 msgid "No working email connection is set as primary, so VuloMail is not delivering email."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:369
+#: classes/Diagnostics/Diagnostics.php:383
 msgid "Email routing is switched off, so VuloMail is not delivering email."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:371
+#: classes/Diagnostics/Diagnostics.php:385
 msgid "Add an email connection (SMTP or a provider API) and set it as primary. VuloMail then sends email itself and no longer depends on the server's own mail setup."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:372
+#: classes/Diagnostics/Diagnostics.php:386
 msgid "Switch on \"Send email through VuloMail\" under Settings → Email, and make sure an email connection is set as primary."
 msgstr ""
 
 #. translators: %s: plugin names.
-#: classes/Diagnostics/Diagnostics.php:381
+#: classes/Diagnostics/Diagnostics.php:395
+#, php-format
 msgid "%s hooks into wp_mail() (the pre_wp_mail filter) and may be sending email itself."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:382
+#: classes/Diagnostics/Diagnostics.php:396
 msgid "Send a test email with \"Live routing\" to see whether email goes out. Keep only one plugin in charge of delivery."
 msgstr ""
 
 #. translators: %s: plugin names.
-#: classes/Diagnostics/Diagnostics.php:395
+#: classes/Diagnostics/Diagnostics.php:409
+#, php-format
 msgid "wp_mail() uses WordPress's built-in mailer, which %s reconfigures (the phpmailer_init hook). VuloMail can't tell where that sends email."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:396
+#: classes/Diagnostics/Diagnostics.php:410
 msgid "Send a test email with \"Live routing\" to see whether email goes out."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:404
+#: classes/Diagnostics/Diagnostics.php:418
 msgid "wp_mail() falls back to PHP's mail() function, and that function is disabled on this server. Email from this site is not being sent."
 msgstr ""
 
 #. translators: %s: path of the missing mail program.
-#: classes/Diagnostics/Diagnostics.php:413
+#: classes/Diagnostics/Diagnostics.php:427
+#, php-format
 msgid "wp_mail() falls back to PHP's mail() function, but this server has no mail program to hand messages to (%s was not found). Email from this site is not being sent."
 msgstr ""
 
 #. translators: %s: how PHP mail() hands messages on, e.g. a sendmail path.
-#: classes/Diagnostics/Diagnostics.php:424
+#: classes/Diagnostics/Diagnostics.php:438
+#, php-format
 msgid "wp_mail() uses WordPress's built-in mailer and PHP's mail() function (%s). Email sent this way is not authenticated, so it is often rejected or put in spam, and many hosts limit or block it."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:583
+#: classes/Diagnostics/Diagnostics.php:601
 msgid "WordPress's built-in mailer"
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:597
+#: classes/Diagnostics/Diagnostics.php:615
 msgid "Recent email delivery"
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:598
+#: classes/Diagnostics/Diagnostics.php:616
 msgid "Use \"Send a test email\" on this page and check that it reaches the inbox."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:605
+#: classes/Diagnostics/Diagnostics.php:623
 msgid "The delivery log is switched off, so there is no record of whether recent email went out."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:606
+#: classes/Diagnostics/Diagnostics.php:624
 msgid "Switch on the delivery log under Settings → Logging & Privacy to have this checked from now on."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:607
-#: classes/Diagnostics/Diagnostics.php:844
+#: classes/Diagnostics/Diagnostics.php:625
+#: classes/Diagnostics/Diagnostics.php:874
 msgid "Open logging settings"
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:614
+#: classes/Diagnostics/Diagnostics.php:632
 msgid "No email has been logged yet, so nothing confirms that email is going out."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:621
+#: classes/Diagnostics/Diagnostics.php:639
 msgid "View logs"
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:622
+#: classes/Diagnostics/Diagnostics.php:640
 msgid "Open Logs to see the full error for each attempt. The usual causes are a wrong password or API key, a sender address the provider has not verified, or a host that blocks the SMTP port. Correct the connection, then send a test email."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:625
+#: classes/Diagnostics/Diagnostics.php:643
 msgid "No error message was recorded."
 msgstr ""
 
 #. translators: 1: number of emails, 2: time span such as "5 mins", 3: error message.
-#: classes/Diagnostics/Diagnostics.php:633
+#: classes/Diagnostics/Diagnostics.php:651
+#, php-format
 msgid "The last %1$d emails all failed. Email is not going out. Latest error, %2$s ago: %3$s"
 msgstr ""
 
 #. translators: 1: time span such as "5 mins", 2: error message, 3: failed count, 4: number of emails checked.
-#: classes/Diagnostics/Diagnostics.php:644
+#: classes/Diagnostics/Diagnostics.php:662
+#, php-format
 msgid "The most recent email failed %1$s ago: %2$s (%3$d of the last %4$d failed.)"
 msgstr ""
 
 #. translators: 1: provider name, 2: time span such as "5 mins", 3: failed count, 4: number of emails checked.
-#: classes/Diagnostics/Diagnostics.php:656
+#: classes/Diagnostics/Diagnostics.php:674
+#, php-format
 msgid "The last email was accepted by %1$s %2$s ago, but %3$d of the last %4$d failed."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:657
+#: classes/Diagnostics/Diagnostics.php:675
 msgid "Open Logs and filter by \"Failed\" to see which messages did not go out and why."
 msgstr ""
 
 #. translators: 1: provider name, 2: time span such as "5 mins".
-#: classes/Diagnostics/Diagnostics.php:664
+#: classes/Diagnostics/Diagnostics.php:682
+#, php-format
 msgid "The last email was accepted by %1$s %2$s ago. It is the only one logged so far."
 msgstr ""
 
 #. translators: 1: provider name, 2: time span such as "5 mins", 3: number of emails checked.
-#: classes/Diagnostics/Diagnostics.php:668
+#: classes/Diagnostics/Diagnostics.php:686
+#, php-format
 msgid "The last email was accepted by %1$s %2$s ago, and none of the last %3$d failed."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:700
+#: classes/Diagnostics/Diagnostics.php:722
 msgid "Other email plugins"
 msgstr ""
 
 #. translators: %s: plugin names.
-#: classes/Diagnostics/Diagnostics.php:720
+#: classes/Diagnostics/Diagnostics.php:742
+#, php-format
 msgid "Also active: %s. Two email delivery plugins compete for the same messages, so some may be sent by the other plugin or sent twice."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:721
+#: classes/Diagnostics/Diagnostics.php:743
 msgid "Keep one plugin in charge of email. Deactivate the other one under Plugins, or switch off \"Send email through VuloMail\" if you prefer to keep it."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:726
+#: classes/Diagnostics/Diagnostics.php:748
 msgid "No other email delivery plugin detected."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:733
+#: classes/Diagnostics/Diagnostics.php:757
 msgid "SMS routing"
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:741
+#: classes/Diagnostics/Diagnostics.php:765
 msgid "SMS sending is switched off, so no text messages are sent."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:742
+#: classes/Diagnostics/Diagnostics.php:766
 msgid "Only needed if you want text messages: switch on \"Send SMS through VuloMail\" under Settings → SMS."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:743
+#: classes/Diagnostics/Diagnostics.php:767
 msgid "Open SMS settings"
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:752
+#: classes/Diagnostics/Diagnostics.php:776
 msgid "No working SMS connection is set as primary, so no text messages are sent."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:753
+#: classes/Diagnostics/Diagnostics.php:777
 msgid "Only needed if you want text messages: add a connection for your SMS gateway and choose it as the primary SMS connection."
 msgstr ""
 
 #. translators: %s: connection names in failover order.
-#: classes/Diagnostics/Diagnostics.php:759
+#: classes/Diagnostics/Diagnostics.php:783
+#, php-format
 msgid "SMS is sent through %s."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:780
+#: classes/Diagnostics/Diagnostics.php:806
 #: assets/js/index.js:1
 msgid "Connections"
 msgstr ""
 
 #. translators: %s: connection names.
-#: classes/Diagnostics/Diagnostics.php:783
+#: classes/Diagnostics/Diagnostics.php:809
+#, php-format
 msgid "Incomplete: %s. A required field is empty, or its saved credential can no longer be read (this happens when the site's security salts change). Nothing is sent through an incomplete connection."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:784
+#: classes/Diagnostics/Diagnostics.php:810
 msgid "Edit each connection listed, fill in the empty fields and re-enter its password or API key, then save and send a test."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:785
+#: classes/Diagnostics/Diagnostics.php:811
 msgid "Open connections"
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:793
+#: classes/Diagnostics/Diagnostics.php:821
 msgid "Server"
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:800
+#: classes/Diagnostics/Diagnostics.php:828
 msgid "The PHP OpenSSL extension is missing. Encrypted SMTP and provider API requests need it, and saved credentials can't be encrypted without it."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:801
+#: classes/Diagnostics/Diagnostics.php:829
 msgid "Ask your host to enable the PHP \"openssl\" extension. It is a standard extension that hosts can switch on from their control panel."
 msgstr ""
 
 #. translators: 1: PHP version, 2: WordPress version.
-#: classes/Diagnostics/Diagnostics.php:810
+#: classes/Diagnostics/Diagnostics.php:838
+#, php-format
 msgid "PHP %1$s, WordPress %2$s, OpenSSL available."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:820
+#: classes/Diagnostics/Diagnostics.php:850
 #: assets/js/index.js:1
 msgid "Delivery log"
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:831
+#: classes/Diagnostics/Diagnostics.php:861
 msgid "The log table is missing from the database, so nothing can be logged. Messages are still sent."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:832
+#: classes/Diagnostics/Diagnostics.php:862
 msgid "Deactivate VuloMail and activate it again under Plugins to create the table. Your connections and settings are kept."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:842
+#: classes/Diagnostics/Diagnostics.php:872
 msgid "Logging is switched off. Messages are still sent, but failures leave no record."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:843
+#: classes/Diagnostics/Diagnostics.php:873
 msgid "Switch on \"Keep a log of sent and failed messages\" under Settings → Logging & Privacy to be able to trace a missing message."
 msgstr ""
 
 #. translators: %d: number of days.
-#: classes/Diagnostics/Diagnostics.php:856
+#: classes/Diagnostics/Diagnostics.php:886
+#, php-format
 msgid "Logging is on. Entries are deleted after %d day."
 msgid_plural "Logging is on. Entries are deleted after %d days."
 msgstr[0] ""
 msgstr[1] ""
 
-#: classes/Diagnostics/Diagnostics.php:857
+#: classes/Diagnostics/Diagnostics.php:887
 msgid "Logging is on. Entries are kept until you delete them."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:871
+#: classes/Diagnostics/Diagnostics.php:903
 msgid "Scheduled tasks"
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:873
+#: classes/Diagnostics/Diagnostics.php:905
 msgid "WP-Cron is disabled in wp-config.php (DISABLE_WP_CRON). Old log entries are only cleaned up if something else runs wp-cron.php."
 msgstr ""
 
-#: classes/Diagnostics/Diagnostics.php:874
+#: classes/Diagnostics/Diagnostics.php:906
 msgid "Nothing to do if your host already runs wp-cron.php on a schedule, which is the usual reason for this setting. If it does not, ask the host to add a cron job for it."
 msgstr ""
 
-#: classes/Email/AbstractApiMailer.php:73
+#: classes/Email/AbstractApiMailer.php:81
 msgid "The attachments are too large to send through this provider."
 msgstr ""
 
 #. translators: 1: HTTP status code, 2: provider error message.
-#: classes/Email/AbstractApiMailer.php:107
+#: classes/Email/AbstractApiMailer.php:115
+#, php-format
 msgid "The provider rejected the message (HTTP %1$d): %2$s"
 msgstr ""
 
-#: classes/Email/Dispatcher.php:96
+#: classes/Email/Dispatcher.php:106
 msgid "No email connection is configured."
 msgstr ""
 
-#: classes/Email/Dispatcher.php:147
+#: classes/Email/Dispatcher.php:157
 msgid "This connection uses a provider that is no longer available."
 msgstr ""
 
-#: classes/Email/Dispatcher.php:149
+#: classes/Email/Dispatcher.php:159
 msgid "The message has no valid recipient."
 msgstr ""
 
-#: classes/Email/Dispatcher.php:156
+#: classes/Email/Dispatcher.php:166
 msgid "The email provider adapter failed unexpectedly."
 msgstr ""
 
@@ -583,51 +610,51 @@ msgstr ""
 msgid "Needs the \"Mail Send\" permission."
 msgstr ""
 
-#: classes/Email/Mailers/Smtp.php:51
+#: classes/Email/Mailers/Smtp.php:55
 msgid "SMTP"
 msgstr ""
 
-#: classes/Email/Mailers/Smtp.php:52
+#: classes/Email/Mailers/Smtp.php:56
 msgid "Any SMTP server: your host, Google Workspace, Microsoft 365, Amazon SES, Zoho and others."
 msgstr ""
 
-#: classes/Email/Mailers/Smtp.php:56
+#: classes/Email/Mailers/Smtp.php:60
 msgid "SMTP host"
 msgstr ""
 
-#: classes/Email/Mailers/Smtp.php:59
+#: classes/Email/Mailers/Smtp.php:63
 msgid "For example smtp.example.com"
 msgstr ""
 
-#: classes/Email/Mailers/Smtp.php:63
+#: classes/Email/Mailers/Smtp.php:67
 msgid "Port"
 msgstr ""
 
-#: classes/Email/Mailers/Smtp.php:69
+#: classes/Email/Mailers/Smtp.php:73
 msgid "Encryption"
 msgstr ""
 
-#: classes/Email/Mailers/Smtp.php:75
+#: classes/Email/Mailers/Smtp.php:79
 msgid "STARTTLS (port 587)"
 msgstr ""
 
-#: classes/Email/Mailers/Smtp.php:79
+#: classes/Email/Mailers/Smtp.php:83
 msgid "SSL/TLS (port 465)"
 msgstr ""
 
-#: classes/Email/Mailers/Smtp.php:83
+#: classes/Email/Mailers/Smtp.php:87
 msgid "None (not recommended)"
 msgstr ""
 
-#: classes/Email/Mailers/Smtp.php:89
+#: classes/Email/Mailers/Smtp.php:93
 msgid "Use authentication"
 msgstr ""
 
-#: classes/Email/Mailers/Smtp.php:95
+#: classes/Email/Mailers/Smtp.php:99
 msgid "Username"
 msgstr ""
 
-#: classes/Email/Mailers/Smtp.php:102
+#: classes/Email/Mailers/Smtp.php:106
 msgid "Password"
 msgstr ""
 
@@ -639,76 +666,79 @@ msgstr ""
 msgid "The email could not be sent."
 msgstr ""
 
-#: classes/Rest/Controller.php:26
+#: classes/Rest/Controller.php:28
 msgid "You are not allowed to manage VuloMail."
 msgstr ""
 
-#: classes/Rest/Logs.php:107
-#: classes/Rest/Logs.php:158
+#: classes/Rest/Logs.php:113
+#: classes/Rest/Logs.php:162
 msgid "That log entry no longer exists."
 msgstr ""
 
-#: classes/Rest/Logs.php:141
+#: classes/Rest/Logs.php:145
 msgid "No log entries were selected."
 msgstr ""
 
-#: classes/Rest/Logs.php:162
+#: classes/Rest/Logs.php:166
 msgid "This message can't be resent because its content or recipients were not stored."
 msgstr ""
 
-#: classes/Rest/Logs.php:199
+#: classes/Rest/Logs.php:203
 msgid "Message resent."
 msgstr ""
 
-#: classes/Rest/Settings.php:101
+#: classes/Rest/Settings.php:105
 msgid "Settings saved."
 msgstr ""
 
-#: classes/Rest/Settings.php:114
+#: classes/Rest/Settings.php:118
 msgid "The sender email is not a valid email address, so it was not saved."
 msgstr ""
 
-#: classes/Rest/Settings.php:126
+#: classes/Rest/Settings.php:130
 msgid "That connection does not exist."
 msgstr ""
 
-#: classes/Rest/Tools.php:64
+#: classes/Rest/Tools.php:66
 msgid "Enter a valid email address to send the test to."
 msgstr ""
 
 #. translators: %s: site name.
-#: classes/Rest/Tools.php:70
+#: classes/Rest/Tools.php:72
+#, php-format
 msgid "VuloMail test email from %s"
 msgstr ""
 
-#: classes/Rest/Tools.php:73
+#: classes/Rest/Tools.php:75
 msgid "This is a test email sent by VuloMail."
 msgstr ""
 
-#: classes/Rest/Tools.php:74
+#: classes/Rest/Tools.php:76
 msgid "If you are reading it, your email connection is working."
 msgstr ""
 
 #. translators: %s: field names.
-#: classes/Rest/Tools.php:110
-#: classes/Rest/Tools.php:169
+#: classes/Rest/Tools.php:112
+#: classes/Rest/Tools.php:171
+#, php-format
 msgid "This connection is incomplete. Missing: %s."
 msgstr ""
 
-#: classes/Rest/Tools.php:142
+#: classes/Rest/Tools.php:144
 msgid "Enter a phone number in international format, for example +14155550123."
 msgstr ""
 
 #. translators: %s: site name.
-#: classes/Rest/Tools.php:147
+#: classes/Rest/Tools.php:149
+#, php-format
 msgid "VuloMail test message from %s. Your SMS connection is working."
 msgstr ""
 
-#: classes/Rest/Tools.php:202
+#: classes/Rest/Tools.php:208
 msgid "Test sent. Check the inbox or phone to confirm it arrived."
 msgstr ""
 
-#: classes/Rest/Tools.php:203
+#: classes/Rest/Tools.php:209
 msgid "The test could not be sent."
 msgstr ""
 
@@ -717,35 +747,36 @@ msgid "Provider endpoints must use HTTPS."
 msgstr ""
 
 #. translators: 1: HTTP status code, 2: gateway error message.
-#: classes/Sms/AbstractGateway.php:76
+#: classes/Sms/AbstractGateway.php:84
+#, php-format
 msgid "The gateway rejected the message (HTTP %1$d): %2$s"
 msgstr ""
 
-#: classes/Sms/Dispatcher.php:110
+#: classes/Sms/Dispatcher.php:122
 msgid "SMS sending is switched off."
 msgstr ""
 
-#: classes/Sms/Dispatcher.php:114
+#: classes/Sms/Dispatcher.php:126
 msgid "The recipient is not a valid phone number. Use international format, or set a default country code."
 msgstr ""
 
-#: classes/Sms/Dispatcher.php:116
+#: classes/Sms/Dispatcher.php:128
 msgid "The message is empty."
 msgstr ""
 
-#: classes/Sms/Dispatcher.php:118
+#: classes/Sms/Dispatcher.php:130
 msgid "The message is too long to send as an SMS."
 msgstr ""
 
-#: classes/Sms/Dispatcher.php:120
+#: classes/Sms/Dispatcher.php:132
 msgid "No SMS connection is configured."
 msgstr ""
 
-#: classes/Sms/Dispatcher.php:172
+#: classes/Sms/Dispatcher.php:184
 msgid "This connection uses a gateway that is no longer available."
 msgstr ""
 
-#: classes/Sms/Dispatcher.php:177
+#: classes/Sms/Dispatcher.php:189
 msgid "The SMS gateway adapter failed unexpectedly."
 msgstr ""
 
@@ -837,217 +868,217 @@ msgstr ""
 msgid "Unexpected response from Vonage."
 msgstr ""
 
-#: classes/Sms/Triggers.php:90
+#: classes/Sms/Triggers.php:96
 msgid "New user registered"
 msgstr ""
 
-#: classes/Sms/Triggers.php:91
+#: classes/Sms/Triggers.php:97
 msgid "Text the site admin when someone creates an account."
 msgstr ""
 
-#: classes/Sms/Triggers.php:92
+#: classes/Sms/Triggers.php:98
 msgid "New user {username} registered on {site_name}."
 msgstr ""
 
-#: classes/Sms/Triggers.php:96
+#: classes/Sms/Triggers.php:102
 msgid "Administrator logged in"
 msgstr ""
 
-#: classes/Sms/Triggers.php:97
+#: classes/Sms/Triggers.php:103
 msgid "Text the site admin whenever an administrator account logs in, so an unexpected login is noticed straight away."
 msgstr ""
 
-#: classes/Sms/Triggers.php:98
+#: classes/Sms/Triggers.php:104
 msgid "Administrator {username} logged in to {site_name} from {user_ip}."
 msgstr ""
 
-#: classes/Sms/Triggers.php:102
+#: classes/Sms/Triggers.php:108
 msgid "New comment"
 msgstr ""
 
-#: classes/Sms/Triggers.php:103
+#: classes/Sms/Triggers.php:109
 msgid "Text the site admin when a visitor comments on a post. Comments marked as spam are ignored."
 msgstr ""
 
-#: classes/Sms/Triggers.php:104
+#: classes/Sms/Triggers.php:110
 msgid "New comment by {comment_author} on \"{post_title}\" at {site_name}."
 msgstr ""
 
-#: classes/Sms/Triggers.php:108
+#: classes/Sms/Triggers.php:114
 msgid "An email failed to send"
 msgstr ""
 
-#: classes/Sms/Triggers.php:109
+#: classes/Sms/Triggers.php:115
 msgid "Text the site admin when an email could not be delivered by any connection. At most one text every 15 minutes, however many emails fail."
 msgstr ""
 
-#: classes/Sms/Triggers.php:110
+#: classes/Sms/Triggers.php:116
 msgid "An email from {site_name} failed to send: \"{subject}\". {error}"
 msgstr ""
 
-#: classes/Sms/Triggers.php:117
+#: classes/Sms/Triggers.php:123
 msgid "New order"
 msgstr ""
 
-#: classes/Sms/Triggers.php:118
+#: classes/Sms/Triggers.php:124
 msgid "Text the site admin when a new order is placed."
 msgstr ""
 
-#: classes/Sms/Triggers.php:119
+#: classes/Sms/Triggers.php:125
 msgid "New order #{order_number} for {order_total} on {site_name}."
 msgstr ""
 
-#: classes/Sms/Triggers.php:123
+#: classes/Sms/Triggers.php:129
 msgid "Order payment failed"
 msgstr ""
 
-#: classes/Sms/Triggers.php:124
+#: classes/Sms/Triggers.php:130
 msgid "Text the site admin when an order moves to \"Failed\", usually a declined payment."
 msgstr ""
 
-#: classes/Sms/Triggers.php:125
+#: classes/Sms/Triggers.php:131
 msgid "Payment failed for order #{order_number} ({order_total}) on {site_name}."
 msgstr ""
 
-#: classes/Sms/Triggers.php:129
-#: classes/Sms/Triggers.php:187
+#: classes/Sms/Triggers.php:135
+#: classes/Sms/Triggers.php:193
 msgid "Order cancelled"
 msgstr ""
 
-#: classes/Sms/Triggers.php:130
+#: classes/Sms/Triggers.php:136
 msgid "Text the site admin when an order is cancelled."
 msgstr ""
 
-#: classes/Sms/Triggers.php:131
+#: classes/Sms/Triggers.php:137
 msgid "Order #{order_number} ({order_total}) on {site_name} was cancelled."
 msgstr ""
 
-#: classes/Sms/Triggers.php:135
-#: classes/Sms/Triggers.php:181
+#: classes/Sms/Triggers.php:141
+#: classes/Sms/Triggers.php:187
 msgid "Order refunded"
 msgstr ""
 
-#: classes/Sms/Triggers.php:136
+#: classes/Sms/Triggers.php:142
 msgid "Text the site admin when a full or partial refund is issued."
 msgstr ""
 
-#: classes/Sms/Triggers.php:137
+#: classes/Sms/Triggers.php:143
 msgid "A refund was issued on order #{order_number} at {site_name}."
 msgstr ""
 
-#: classes/Sms/Triggers.php:141
+#: classes/Sms/Triggers.php:147
 msgid "Product low in stock"
 msgstr ""
 
-#: classes/Sms/Triggers.php:142
+#: classes/Sms/Triggers.php:148
 msgid "Text the site admin when a product reaches its low stock threshold."
 msgstr ""
 
-#: classes/Sms/Triggers.php:143
+#: classes/Sms/Triggers.php:149
 msgid "{product_name} is low in stock on {site_name}: {stock_quantity} left."
 msgstr ""
 
-#: classes/Sms/Triggers.php:147
+#: classes/Sms/Triggers.php:153
 msgid "Product out of stock"
 msgstr ""
 
-#: classes/Sms/Triggers.php:148
+#: classes/Sms/Triggers.php:154
 msgid "Text the site admin when a product sells out."
 msgstr ""
 
-#: classes/Sms/Triggers.php:149
+#: classes/Sms/Triggers.php:155
 msgid "{product_name} is out of stock on {site_name}."
 msgstr ""
 
-#: classes/Sms/Triggers.php:153
+#: classes/Sms/Triggers.php:159
 msgid "Product backordered"
 msgstr ""
 
-#: classes/Sms/Triggers.php:154
+#: classes/Sms/Triggers.php:160
 msgid "Text the site admin when a customer orders a product that is on backorder."
 msgstr ""
 
-#: classes/Sms/Triggers.php:155
+#: classes/Sms/Triggers.php:161
 msgid "{product_name} was backordered in order #{order_number} on {site_name}."
 msgstr ""
 
-#: classes/Sms/Triggers.php:159
+#: classes/Sms/Triggers.php:165
 msgid "New product review"
 msgstr ""
 
-#: classes/Sms/Triggers.php:160
+#: classes/Sms/Triggers.php:166
 msgid "Text the site admin when a customer reviews a product."
 msgstr ""
 
-#: classes/Sms/Triggers.php:161
+#: classes/Sms/Triggers.php:167
 msgid "{comment_author} left a {rating}-star review on {product_name} at {site_name}."
 msgstr ""
 
-#: classes/Sms/Triggers.php:169
+#: classes/Sms/Triggers.php:175
 msgid "Order confirmed (processing)"
 msgstr ""
 
-#: classes/Sms/Triggers.php:170
+#: classes/Sms/Triggers.php:176
 msgid "Text the customer when payment is received and the order is being prepared."
 msgstr ""
 
-#: classes/Sms/Triggers.php:171
+#: classes/Sms/Triggers.php:177
 msgid "Hi {customer_name}, thanks for your order #{order_number} at {site_name}. We are getting it ready."
 msgstr ""
 
-#: classes/Sms/Triggers.php:175
+#: classes/Sms/Triggers.php:181
 msgid "Order completed"
 msgstr ""
 
-#: classes/Sms/Triggers.php:176
+#: classes/Sms/Triggers.php:182
 msgid "Text the customer when their order is marked complete."
 msgstr ""
 
-#: classes/Sms/Triggers.php:177
+#: classes/Sms/Triggers.php:183
 msgid "Hi {customer_name}, your order #{order_number} from {site_name} is complete. Thank you!"
 msgstr ""
 
-#: classes/Sms/Triggers.php:182
+#: classes/Sms/Triggers.php:188
 msgid "Text the customer when their order is fully refunded."
 msgstr ""
 
-#: classes/Sms/Triggers.php:183
+#: classes/Sms/Triggers.php:189
 msgid "Hi {customer_name}, your order #{order_number} at {site_name} has been refunded."
 msgstr ""
 
-#: classes/Sms/Triggers.php:188
+#: classes/Sms/Triggers.php:194
 msgid "Text the customer when their order is cancelled."
 msgstr ""
 
-#: classes/Sms/Triggers.php:189
+#: classes/Sms/Triggers.php:195
 msgid "Hi {customer_name}, your order #{order_number} at {site_name} has been cancelled."
 msgstr ""
 
-#: classes/Sms/Triggers.php:193
+#: classes/Sms/Triggers.php:199
 msgid "Any other order status change"
 msgstr ""
 
-#: classes/Sms/Triggers.php:194
+#: classes/Sms/Triggers.php:200
 msgid "Text the customer on every status change that has no alert of its own switched on above, including custom statuses."
 msgstr ""
 
-#: classes/Sms/Triggers.php:195
+#: classes/Sms/Triggers.php:201
 msgid "Hi {customer_name}, your order #{order_number} at {site_name} is now {order_status}."
 msgstr ""
 
-#: classes/Sms/Triggers.php:199
+#: classes/Sms/Triggers.php:205
 msgid "Note added to an order"
 msgstr ""
 
-#: classes/Sms/Triggers.php:200
+#: classes/Sms/Triggers.php:206
 msgid "Text the customer when you add a \"note to customer\" on their order, for example a tracking number."
 msgstr ""
 
-#: classes/Sms/Triggers.php:201
+#: classes/Sms/Triggers.php:207
 msgid "Update on your order #{order_number} at {site_name}: {note}"
 msgstr ""
 
-#: classes/Sms/Triggers.php:326
+#: classes/Sms/Triggers.php:336
 msgid "an unknown address"
 msgstr ""
 
@@ -1209,6 +1240,7 @@ msgstr ""
 
 #. translators: %s: provider name.
 #: assets/js/index.js:1
+#, js-format
 msgid "Accepted by %s"
 msgstr ""
 
@@ -1314,6 +1346,7 @@ msgstr ""
 
 #. translators: %s: comma-separated field names.
 #: assets/js/index.js:1
+#, js-format
 msgid "Missing: %s"
 msgstr ""
 
@@ -1383,6 +1416,7 @@ msgstr ""
 
 #. translators: %s: connection name.
 #: assets/js/index.js:1
+#, js-format
 msgid "\"%s\" and its saved credentials will be removed. Messages will stop going through it straight away."
 msgstr ""
 
@@ -1628,16 +1662,19 @@ msgstr ""
 
 #. translators: %s: plugin name.
 #: assets/js/index.js:1
+#, js-format
 msgid "Requires %s"
 msgstr ""
 
 #. translators: %s: plugin name.
 #: assets/js/index.js:1
+#, js-format
 msgid "This setting only works when %s is installed and active."
 msgstr ""
 
 #. translators: %s: plugin name.
 #: assets/js/index.js:1
+#, js-format
 msgid "Get %s"
 msgstr ""
 
@@ -1651,11 +1688,13 @@ msgstr ""
 
 #. translators: 1: primary connection name, 2: backup connection name.
 #: assets/js/index.js:1
+#, js-format
 msgid "Sending through %1$s, with %2$s as backup."
 msgstr ""
 
 #. translators: %s: connection name.
 #: assets/js/index.js:1
+#, js-format
 msgid "Sending through %s. No backup connection is set."
 msgstr ""
 
@@ -1709,6 +1748,7 @@ msgstr ""
 
 #. translators: 1: email delivery rate, 2: SMS delivery rate.
 #: assets/js/index.js:1
+#, js-format
 msgid "Delivered: %1$s of emails, %2$s of text messages."
 msgstr ""
 
@@ -1762,6 +1802,7 @@ msgstr ""
 
 #. translators: 1: alerts switched on, 2: alerts available.
 #: assets/js/index.js:1
+#, js-format
 msgid "%1$d of %2$d on"
 msgstr ""
 
@@ -1815,11 +1856,13 @@ msgstr ""
 
 #. translators: %s: recipient addresses or numbers.
 #: assets/js/index.js:1
+#, js-format
 msgid "To %s"
 msgstr ""
 
 #. translators: %s: provider name.
 #: assets/js/index.js:1
+#, js-format
 msgid "via %s"
 msgstr ""
 
@@ -1865,11 +1908,13 @@ msgstr ""
 
 #. translators: 1: attempt number, 2: provider name.
 #: assets/js/index.js:1
+#, js-format
 msgid "Attempt %1$d: %2$s accepted the message."
 msgstr ""
 
 #. translators: 1: attempt number, 2: provider name, 3: error message.
 #: assets/js/index.js:1
+#, js-format
 msgid "Attempt %1$d: %2$s failed. %3$s"
 msgstr ""
 
