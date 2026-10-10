@@ -28,6 +28,8 @@ abstract class TestCase extends PHPUnitTestCase {
 	protected $options = array();
 
 	/**
+	 * Sets up Brain Monkey and a fresh test container before each test.
+	 *
 	 * @return void
 	 */
 	protected function setUp(): void {
@@ -134,6 +136,8 @@ abstract class TestCase extends PHPUnitTestCase {
 	}
 
 	/**
+	 * Tears down Brain Monkey after each test.
+	 *
 	 * @return void
 	 */
 	protected function tearDown(): void {

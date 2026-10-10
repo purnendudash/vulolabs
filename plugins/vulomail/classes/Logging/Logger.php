@@ -26,16 +26,22 @@ class Logger {
 	const RETENTION_HOOK = 'vulomail_prune_logs';
 
 	/**
+	 * Log storage.
+	 *
 	 * @var LogRepository
 	 */
 	private $logs;
 
 	/**
+	 * Plugin settings.
+	 *
 	 * @var Settings
 	 */
 	private $settings;
 
 	/**
+	 * Constructor.
+	 *
 	 * @param LogRepository $logs     Log storage.
 	 * @param Settings      $settings Plugin settings.
 	 */
@@ -122,6 +128,8 @@ class Logger {
 	}
 
 	/**
+	 * Writes a log row for a delivery attempt.
+	 *
 	 * @param string   $channel       Channel.
 	 * @param string[] $recipients    Recipient addresses or numbers.
 	 * @param string   $subject       Subject (email only).

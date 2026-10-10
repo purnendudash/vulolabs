@@ -14,8 +14,16 @@ use VuloMail\Email\Mailers\SendGrid;
 use VuloMail\Email\Mailers\Smtp;
 use VuloMail\Email\Message;
 
+/**
+ * Tests the email provider adapters.
+ */
 class TestEmailProviders extends TestCase {
 
+	/**
+	 * Builds a message exercising every address and header kind.
+	 *
+	 * @return Message
+	 */
 	private function message() {
 		$message               = new Message();
 		$message->to           = array(
@@ -46,6 +54,11 @@ class TestEmailProviders extends TestCase {
 		return $message;
 	}
 
+	/**
+	 * SendGrid builds the request and reads the message id.
+	 *
+	 * @return void
+	 */
 	public function test_sendgrid_builds_the_request_and_reads_the_message_id() {
 		$http = new FakeHttp();
 		$http->queue( 202, array(), array( 'x-message-id' => 'sg-123' ) );
@@ -65,6 +78,11 @@ class TestEmailProviders extends TestCase {
 		$this->assertSame( array( 'X-Tag' => 'order' ), $payload['headers'] );
 	}
 
+	/**
+	 * A SendGrid rejection is reported without leaking the key.
+	 *
+	 * @return void
+	 */
 	public function test_sendgrid_rejection_is_reported_without_leaking_the_key() {
 		$http = new FakeHttp();
 		$http->queue( 401, array( 'errors' => array( array( 'message' => 'The provided authorization grant SG.secretsecret is invalid' ) ) ) );
@@ -77,6 +95,11 @@ class TestEmailProviders extends TestCase {
 		$this->assertStringNotContainsString( 'SG.secretsecret', $result->error_message );
 	}
 
+	/**
+	 * Network errors become failed results.
+	 *
+	 * @return void
+	 */
 	public function test_network_errors_become_failed_results() {
 		$http = new FakeHttp();
 		$http->queue_error( new \WP_Error( 'http_request_failed', 'cURL error 28: Operation timed out' ) );
@@ -88,6 +111,11 @@ class TestEmailProviders extends TestCase {
 		$this->assertStringContainsString( 'timed out', $result->error_message );
 	}
 
+	/**
+	 * Brevo builds the request.
+	 *
+	 * @return void
+	 */
 	public function test_brevo_builds_the_request() {
 		$http = new FakeHttp();
 		$http->queue( 201, array( 'messageId' => '<brevo-1@example>' ) );
@@ -105,6 +133,11 @@ class TestEmailProviders extends TestCase {
 		$this->assertSame( array( 'email' => 'help@example.com' ), $payload['replyTo'] );
 	}
 
+	/**
+	 * Postmark treats an error code in a 200 response as failure.
+	 *
+	 * @return void
+	 */
 	public function test_postmark_treats_an_error_code_in_a_200_response_as_failure() {
 		$http = new FakeHttp();
 		$http->queue(
@@ -121,6 +154,11 @@ class TestEmailProviders extends TestCase {
 		$this->assertStringContainsString( 'Inactive recipient', $result->error_message );
 	}
 
+	/**
+	 * Postmark builds the request.
+	 *
+	 * @return void
+	 */
 	public function test_postmark_builds_the_request() {
 		$http = new FakeHttp();
 		$http->queue(
@@ -158,6 +196,11 @@ class TestEmailProviders extends TestCase {
 		);
 	}
 
+	/**
+	 * Mailgun uses the selected region and form fields.
+	 *
+	 * @return void
+	 */
 	public function test_mailgun_uses_the_selected_region_and_form_fields() {
 		$http = new FakeHttp();
 		$http->queue( 200, array( 'id' => '<mg-1@mg.example.com>' ) );
@@ -181,6 +224,11 @@ class TestEmailProviders extends TestCase {
 		$this->assertSame( 'order', $request['body']['h:X-Tag'] );
 	}
 
+	/**
+	 * Mailgun refuses a domain that would change the endpoint.
+	 *
+	 * @return void
+	 */
 	public function test_mailgun_refuses_a_domain_that_would_change_the_endpoint() {
 		$http   = new FakeHttp();
 		$result = ( new Mailgun(
@@ -196,6 +244,11 @@ class TestEmailProviders extends TestCase {
 		$this->assertSame( array(), $http->requests );
 	}
 
+	/**
+	 * Mailgun sends attachments as multipart.
+	 *
+	 * @return void
+	 */
 	public function test_mailgun_sends_attachments_as_multipart() {
 		$file = tempnam( sys_get_temp_dir(), 'vm' );
 		file_put_contents( $file, 'attachment-bytes' ); // phpcs:ignore
@@ -224,6 +277,11 @@ class TestEmailProviders extends TestCase {
 		$this->assertStringContainsString( 'name="subject"', $request['body'] );
 	}
 
+	/**
+	 * API attachments are base64-encoded.
+	 *
+	 * @return void
+	 */
 	public function test_api_attachments_are_base64_encoded() {
 		$file = tempnam( sys_get_temp_dir(), 'vm' );
 		file_put_contents( $file, 'attachment-bytes' ); // phpcs:ignore
@@ -244,6 +302,11 @@ class TestEmailProviders extends TestCase {
 		$this->assertSame( 'attachment-bytes', base64_decode( $payload['attachments'][0]['content'] ) ); // phpcs:ignore
 	}
 
+	/**
+	 * SMTP applies the connection after other plugins touch PHPMailer.
+	 *
+	 * @return void
+	 */
 	public function test_smtp_applies_the_connection_after_other_plugins_touch_phpmailer() {
 		$mailer = new FakePhpMailer();
 
@@ -283,6 +346,11 @@ class TestEmailProviders extends TestCase {
 		$this->assertSame( array( array( 'X-Tag', 'order' ) ), $mailer->calls_to( 'addCustomHeader' ) );
 	}
 
+	/**
+	 * SMTP without auth sends no credentials.
+	 *
+	 * @return void
+	 */
 	public function test_smtp_without_auth_sends_no_credentials() {
 		$mailer = new FakePhpMailer();
 
@@ -308,6 +376,11 @@ class TestEmailProviders extends TestCase {
 		$this->assertFalse( $mailer->SMTPAutoTLS ); // phpcs:ignore
 	}
 
+	/**
+	 * SMTP failure is returned with the password removed.
+	 *
+	 * @return void
+	 */
 	public function test_smtp_failure_is_returned_with_the_password_removed() {
 		$mailer            = new FakePhpMailer();
 		$mailer->fail_with = new \Exception( 'SMTP Error: Could not authenticate. Password p4ssw0rd! rejected' );

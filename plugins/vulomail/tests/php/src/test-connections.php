@@ -12,12 +12,25 @@ use VuloMail\Connections\ProviderRegistry;
 use VuloMail\Security\Secrets;
 use VuloMail\Settings\Settings;
 
+/**
+ * Tests ConnectionRepository and Settings.
+ */
 class TestConnections extends TestCase {
 
+	/**
+	 * Builds a repository backed by a fake HTTP client.
+	 *
+	 * @return ConnectionRepository
+	 */
 	private function repository() {
 		return new ConnectionRepository( new Secrets(), new ProviderRegistry( new FakeHttp() ) );
 	}
 
+	/**
+	 * Secret fields are encrypted at rest and masked for display.
+	 *
+	 * @return void
+	 */
 	public function test_secret_fields_are_encrypted_at_rest_and_masked_for_display() {
 		$repository = $this->repository();
 		$saved      = $repository->save(
@@ -29,7 +42,7 @@ class TestConnections extends TestCase {
 			)
 		);
 
-		$this->assertStringNotContainsString( 'SG.abcdefghijklmnop', (string) json_encode( $this->options['vulomail_connections'] ) );
+		$this->assertStringNotContainsString( 'SG.abcdefghijklmnop', (string) wp_json_encode( $this->options['vulomail_connections'] ) );
 		$this->assertSame( 'SG.abcdefghijklmnop', $repository->config( $saved )['api_key'] );
 
 		$display = $repository->for_display( $saved );
@@ -38,6 +51,11 @@ class TestConnections extends TestCase {
 		$this->assertSame( array(), $display['missing'] );
 	}
 
+	/**
+	 * Saving with the mask or an empty value keeps the stored secret.
+	 *
+	 * @return void
+	 */
 	public function test_saving_with_the_mask_or_an_empty_value_keeps_the_stored_secret() {
 		$repository = $this->repository();
 		$saved      = $repository->save(
@@ -71,6 +89,11 @@ class TestConnections extends TestCase {
 		}
 	}
 
+	/**
+	 * The provider cannot be changed on an existing connection.
+	 *
+	 * @return void
+	 */
 	public function test_provider_cannot_be_changed_on_an_existing_connection() {
 		$repository = $this->repository();
 		$saved      = $repository->save(
@@ -92,6 +115,11 @@ class TestConnections extends TestCase {
 		$this->assertSame( 'sendgrid', $updated['provider'] );
 	}
 
+	/**
+	 * An unknown provider and an unknown id are both rejected.
+	 *
+	 * @return void
+	 */
 	public function test_unknown_provider_and_unknown_id_are_rejected() {
 		$repository = $this->repository();
 
@@ -107,6 +135,11 @@ class TestConnections extends TestCase {
 		$this->assertInstanceOf( \WP_Error::class, $repository->save( array( 'id' => 'cmissing' ) ) );
 	}
 
+	/**
+	 * Missing fields respects conditional requirements.
+	 *
+	 * @return void
+	 */
 	public function test_missing_fields_respects_conditional_requirements() {
 		$repository = $this->repository();
 		$with_auth  = $repository->save(
@@ -136,6 +169,11 @@ class TestConnections extends TestCase {
 		$this->assertTrue( $repository->is_usable( $no_auth ) );
 	}
 
+	/**
+	 * Field values are validated against the schema.
+	 *
+	 * @return void
+	 */
 	public function test_field_values_are_validated_against_the_schema() {
 		$repository = $this->repository();
 		$saved      = $repository->save(
@@ -155,6 +193,11 @@ class TestConnections extends TestCase {
 		$this->assertSame( 'tls', $saved['settings']['encryption'] );
 	}
 
+	/**
+	 * Delete removes the connection.
+	 *
+	 * @return void
+	 */
 	public function test_delete_removes_the_connection() {
 		$repository = $this->repository();
 		$saved      = $repository->save(
@@ -170,6 +213,11 @@ class TestConnections extends TestCase {
 		$this->assertFalse( $repository->delete( $saved['id'] ) );
 	}
 
+	/**
+	 * Settings drop unknown keys and validate values.
+	 *
+	 * @return void
+	 */
 	public function test_settings_drop_unknown_keys_and_validate_values() {
 		$settings = new Settings();
 		$updated  = $settings->update(

@@ -10,12 +10,14 @@ namespace VuloMail\Rest;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * vulomail/v1/connections - list, create/update and delete. Responses never contain a credential:
- * secret fields come back masked.
+ * REST controller for vulomail/v1/connections - list, create/update and delete. Responses never
+ * contain a credential: secret fields come back masked.
  */
 class Connections extends Controller {
 
 	/**
+	 * REST base for this controller.
+	 *
 	 * @var string
 	 */
 	protected $rest_base = 'connections';
@@ -57,6 +59,8 @@ class Connections extends Controller {
 	}
 
 	/**
+	 * Lists every connection plus the routing slots.
+	 *
 	 * @param \WP_REST_Request $request Request.
 	 * @return \WP_REST_Response
 	 */
@@ -65,6 +69,8 @@ class Connections extends Controller {
 	}
 
 	/**
+	 * Creates or updates a connection.
+	 *
 	 * @param \WP_REST_Request $request Request.
 	 * @return \WP_REST_Response|\WP_Error
 	 */
@@ -86,6 +92,8 @@ class Connections extends Controller {
 	}
 
 	/**
+	 * Deletes a connection and clears any routing slot pointing at it.
+	 *
 	 * @param \WP_REST_Request $request Request.
 	 * @return \WP_REST_Response|\WP_Error
 	 */

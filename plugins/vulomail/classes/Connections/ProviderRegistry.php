@@ -20,11 +20,15 @@ defined( 'ABSPATH' ) || exit;
 class ProviderRegistry {
 
 	/**
+	 * HTTP client handed to every API adapter.
+	 *
 	 * @var HttpClient
 	 */
 	private $http;
 
 	/**
+	 * Constructor.
+	 *
 	 * @param HttpClient|null $http HTTP client handed to every API adapter.
 	 */
 	public function __construct( $http = null ) {
@@ -104,6 +108,8 @@ class ProviderRegistry {
 	}
 
 	/**
+	 * Get every provider definition.
+	 *
 	 * @return array<int, array> Every provider definition, both channels.
 	 */
 	public function definitions() {

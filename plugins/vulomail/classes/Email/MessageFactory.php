@@ -18,11 +18,15 @@ defined( 'ABSPATH' ) || exit;
 class MessageFactory {
 
 	/**
+	 * Plugin settings (sender overrides).
+	 *
 	 * @var Settings
 	 */
 	private $settings;
 
 	/**
+	 * Constructor.
+	 *
 	 * @param Settings $settings Plugin settings (sender overrides).
 	 */
 	public function __construct( Settings $settings ) {
@@ -30,6 +34,8 @@ class MessageFactory {
 	}
 
 	/**
+	 * Build a Message from wp_mail() arguments.
+	 *
 	 * @param array $atts wp_mail() arguments: to, subject, message, headers, attachments.
 	 * @return Message
 	 */
@@ -197,6 +203,8 @@ class MessageFactory {
 	}
 
 	/**
+	 * Parse wp_mail() headers into a name => values map.
+	 *
 	 * @param string|array $headers wp_mail() headers.
 	 * @return array<string, string[]> Header name => values, names as first written.
 	 */
@@ -236,6 +244,8 @@ class MessageFactory {
 	}
 
 	/**
+	 * Parse wp_mail() attachments into a file name => path map.
+	 *
 	 * @param string|array $attachments wp_mail() attachments.
 	 * @return array<string, string> File name => readable absolute path.
 	 */

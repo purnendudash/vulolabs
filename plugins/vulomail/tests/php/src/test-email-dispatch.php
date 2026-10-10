@@ -17,28 +17,44 @@ use VuloMail\Logging\Logger;
 use VuloMail\Security\Secrets;
 use VuloMail\Settings\Settings;
 
+/**
+ * Tests the email Dispatcher, wp_mail() interception and delivery logging.
+ */
 class TestEmailDispatch extends TestCase {
 
 	/**
+	 * In-memory delivery log.
+	 *
 	 * @var FakeLogs
 	 */
 	private $logs;
 
 	/**
+	 * Plugin settings.
+	 *
 	 * @var Settings
 	 */
 	private $settings;
 
 	/**
+	 * Saved connections.
+	 *
 	 * @var ConnectionRepository
 	 */
 	private $connections;
 
 	/**
+	 * Registry exposing only the scripted adapters.
+	 *
 	 * @var ScriptedRegistry
 	 */
 	private $registry;
 
+	/**
+	 * Baseline wp_mail() arguments used by the interceptor tests.
+	 *
+	 * @var array
+	 */
 	const ATTS = array(
 		'to'          => 'jane@example.com',
 		'subject'     => 'Password reset',
@@ -88,6 +104,11 @@ class TestEmailDispatch extends TestCase {
 		return new Dispatcher( $this->settings, $this->connections, $this->registry, new Logger( $this->logs, $this->settings ) );
 	}
 
+	/**
+	 * Builds a simple outgoing message.
+	 *
+	 * @return Message
+	 */
 	private function message() {
 		$message             = new Message();
 		$message->to         = array(
@@ -103,6 +124,11 @@ class TestEmailDispatch extends TestCase {
 		return $message;
 	}
 
+	/**
+	 * The primary connection delivers when healthy.
+	 *
+	 * @return void
+	 */
 	public function test_primary_connection_delivers_when_healthy() {
 		Actions\expectDone( 'vulomail_email_sent' )->once();
 
@@ -114,6 +140,11 @@ class TestEmailDispatch extends TestCase {
 		$this->assertSame( 'sent', $this->logs->rows[0]['status'] );
 	}
 
+	/**
+	 * The backup connection delivers when the primary fails.
+	 *
+	 * @return void
+	 */
 	public function test_backup_connection_delivers_when_the_primary_fails() {
 		$result = $this->dispatcher( array( 'fail', 'ok' ) )->send( $this->message() );
 
@@ -125,6 +156,11 @@ class TestEmailDispatch extends TestCase {
 		$this->assertStringContainsString( 'Provider said no', $this->logs->rows[0]['attempts'] );
 	}
 
+	/**
+	 * Failure is logged when every connection fails.
+	 *
+	 * @return void
+	 */
 	public function test_failure_is_logged_when_every_connection_fails() {
 		Actions\expectDone( 'vulomail_email_failed' )->once();
 
@@ -135,6 +171,11 @@ class TestEmailDispatch extends TestCase {
 		$this->assertSame( 'Provider said no', $this->logs->rows[0]['error_message'] );
 	}
 
+	/**
+	 * An adapter that throws is contained and the backup still runs.
+	 *
+	 * @return void
+	 */
 	public function test_an_adapter_that_throws_is_contained_and_the_backup_still_runs() {
 		$result = $this->dispatcher( array( 'throw', 'ok' ) )->send( $this->message() );
 
@@ -142,6 +183,11 @@ class TestEmailDispatch extends TestCase {
 		$this->assertSame( 'adapter_exception', $result->attempts[0]['error_code'] );
 	}
 
+	/**
+	 * Disabled and incomplete connections are skipped.
+	 *
+	 * @return void
+	 */
 	public function test_disabled_and_incomplete_connections_are_skipped() {
 		$dispatcher = $this->dispatcher( array( 'ok', 'ok' ) );
 		$ids        = array_keys( $this->connections->all() );
@@ -167,6 +213,11 @@ class TestEmailDispatch extends TestCase {
 		$this->assertSame( 'not_configured', $dispatcher->send( $this->message() )->error_code );
 	}
 
+	/**
+	 * Message content is only stored when opted in.
+	 *
+	 * @return void
+	 */
 	public function test_message_content_is_only_stored_when_opted_in() {
 		$this->dispatcher( array( 'ok' ) )->send( $this->message() );
 		$this->assertNull( $this->logs->rows[0]['body'] );
@@ -186,27 +237,54 @@ class TestEmailDispatch extends TestCase {
 		$this->assertSame( array(), $this->logs->rows );
 	}
 
+	/**
+	 * Builds a WpMailInterceptor backed by a scripted dispatcher.
+	 *
+	 * @param string[] $outcomes 'ok' / 'fail' / 'throw' for the primary and, optionally, the backup.
+	 * @param array    $settings Extra settings.
+	 * @return WpMailInterceptor
+	 */
 	private function interceptor( array $outcomes, array $settings = array() ) {
 		$dispatcher = $this->dispatcher( $outcomes, $settings );
 
 		return new WpMailInterceptor( $this->settings, $dispatcher, new Logger( $this->logs, $this->settings ) );
 	}
 
+	/**
+	 * `wp_mail()` is left alone when nothing is configured.
+	 *
+	 * @return void
+	 */
 	public function test_wp_mail_is_left_alone_when_nothing_is_configured() {
 		$this->assertNull( $this->interceptor( array() )->maybe_send( null, self::ATTS ) );
 		$this->assertSame( array(), ScriptedMailer::$sent );
 	}
 
+	/**
+	 * `wp_mail()` is left alone when email routing is switched off.
+	 *
+	 * @return void
+	 */
 	public function test_wp_mail_is_left_alone_when_email_routing_is_switched_off() {
 		$this->assertNull( $this->interceptor( array( 'ok' ), array( 'email_enabled' => false ) )->maybe_send( null, self::ATTS ) );
 		$this->assertSame( array(), ScriptedMailer::$sent );
 	}
 
+	/**
+	 * Another plugin's short-circuit is respected.
+	 *
+	 * @return void
+	 */
 	public function test_another_plugins_short_circuit_is_respected() {
 		$this->assertFalse( $this->interceptor( array( 'ok' ) )->maybe_send( false, self::ATTS ) );
 		$this->assertSame( array(), ScriptedMailer::$sent );
 	}
 
+	/**
+	 * `wp_mail()` is delivered through the connection and core is told.
+	 *
+	 * @return void
+	 */
 	public function test_wp_mail_is_delivered_through_the_connection_and_core_is_told() {
 		Actions\expectDone( 'wp_mail_succeeded' )->once()->with( self::ATTS );
 
@@ -218,6 +296,11 @@ class TestEmailDispatch extends TestCase {
 		$this->assertSame( 'core', $this->logs->rows[0]['source'] );
 	}
 
+	/**
+	 * A failed message is handed back to WordPress when fallback is on.
+	 *
+	 * @return void
+	 */
 	public function test_failed_message_is_handed_back_to_wordpress_when_fallback_is_on() {
 		$interceptor = $this->interceptor( array( 'fail' ) );
 
@@ -234,6 +317,11 @@ class TestEmailDispatch extends TestCase {
 		$this->assertStringContainsString( 'Provider said no', $this->logs->rows[0]['attempts'] );
 	}
 
+	/**
+	 * A failed message is reported as failed when fallback is off.
+	 *
+	 * @return void
+	 */
 	public function test_failed_message_is_reported_as_failed_when_fallback_is_off() {
 		Actions\expectDone( 'wp_mail_failed' )->once()->with( \Mockery::type( \WP_Error::class ) );
 
@@ -245,6 +333,11 @@ class TestEmailDispatch extends TestCase {
 		$this->assertSame( 'Provider said no', $interceptor->last_result()->error_message );
 	}
 
+	/**
+	 * Default mailer sends are logged when no connection exists.
+	 *
+	 * @return void
+	 */
 	public function test_default_mailer_sends_are_logged_when_no_connection_exists() {
 		$interceptor = $this->interceptor( array() );
 
@@ -256,6 +349,11 @@ class TestEmailDispatch extends TestCase {
 		$this->assertSame( 'Could not instantiate mail function.', $this->logs->rows[1]['error_message'] );
 	}
 
+	/**
+	 * The handle filter can exempt a message.
+	 *
+	 * @return void
+	 */
 	public function test_the_handle_filter_can_exempt_a_message() {
 		$interceptor = $this->interceptor( array( 'ok' ) );
 
@@ -269,6 +367,11 @@ class TestEmailDispatch extends TestCase {
 		$this->assertSame( array(), ScriptedMailer::$sent );
 	}
 
+	/**
+	 * The public API returns the provider error.
+	 *
+	 * @return void
+	 */
 	public function test_public_api_returns_the_provider_error() {
 		$interceptor                 = $this->interceptor( array( 'fail' ), array( 'fallback_to_default' => false ) );
 		$container                   = VuloMail();
@@ -276,6 +379,7 @@ class TestEmailDispatch extends TestCase {
 		$GLOBALS['vulomail_wp_mail'] = array();
 
 		Functions\when( 'wp_mail' )->alias(
+			// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- every parameter is read through compact() below.
 			static function ( $to, $subject, $message, $headers = '', $attachments = array() ) use ( $interceptor ) {
 				return (bool) $interceptor->maybe_send( null, compact( 'to', 'subject', 'message', 'headers', 'attachments' ) );
 			}

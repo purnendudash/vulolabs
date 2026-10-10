@@ -19,6 +19,8 @@ defined( 'ABSPATH' ) || exit;
 class Settings {
 
 	/**
+	 * Default value for every known setting key.
+	 *
 	 * @var array<string, mixed>
 	 */
 	const DEFAULTS = array(
@@ -48,11 +50,15 @@ class Settings {
 	);
 
 	/**
+	 * Cached merged settings.
+	 *
 	 * @var array|null
 	 */
 	private $cache = null;
 
 	/**
+	 * Get every setting, merged with its defaults.
+	 *
 	 * @return array<string, mixed>
 	 */
 	public function all() {
@@ -65,6 +71,8 @@ class Settings {
 	}
 
 	/**
+	 * Get one setting value.
+	 *
 	 * @param string $key Setting key.
 	 * @return mixed
 	 */
@@ -96,6 +104,8 @@ class Settings {
 	}
 
 	/**
+	 * Sanitize a raw value for a given setting key.
+	 *
 	 * @param string $key   Setting key.
 	 * @param mixed  $value Raw value.
 	 * @return mixed

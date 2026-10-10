@@ -15,6 +15,8 @@ defined( 'ABSPATH' ) || exit;
 class Settings extends Controller {
 
 	/**
+	 * REST base for this controller.
+	 *
 	 * @var string
 	 */
 	protected $rest_base = 'settings';
@@ -44,6 +46,8 @@ class Settings extends Controller {
 	}
 
 	/**
+	 * Gets every stored setting.
+	 *
 	 * @param \WP_REST_Request $request Request.
 	 * @return \WP_REST_Response
 	 */

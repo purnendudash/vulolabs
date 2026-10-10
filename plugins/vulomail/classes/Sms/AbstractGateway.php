@@ -19,16 +19,22 @@ defined( 'ABSPATH' ) || exit;
 abstract class AbstractGateway implements GatewayInterface {
 
 	/**
+	 * Connection settings, secrets decrypted.
+	 *
 	 * @var array
 	 */
 	protected $config;
 
 	/**
+	 * HTTP client.
+	 *
 	 * @var HttpClient
 	 */
 	protected $http;
 
 	/**
+	 * Constructor.
+	 *
 	 * @param array      $config Connection settings, secrets decrypted.
 	 * @param HttpClient $http   HTTP client.
 	 */
@@ -38,6 +44,8 @@ abstract class AbstractGateway implements GatewayInterface {
 	}
 
 	/**
+	 * Get a trimmed config value.
+	 *
 	 * @param string $key Config key.
 	 * @return string
 	 */

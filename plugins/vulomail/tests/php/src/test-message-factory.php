@@ -10,14 +10,28 @@ namespace VuloMail\Tests;
 use VuloMail\Email\MessageFactory;
 use VuloMail\Settings\Settings;
 
+/**
+ * Tests MessageFactory.
+ */
 class TestMessageFactory extends TestCase {
 
+	/**
+	 * Builds a factory backed by the given settings.
+	 *
+	 * @param array $settings Stored settings.
+	 * @return MessageFactory
+	 */
 	private function factory( array $settings = array() ) {
 		$this->options['vulomail_settings'] = $settings;
 
 		return new MessageFactory( new Settings() );
 	}
 
+	/**
+	 * Parses recipients in every wp_mail() format.
+	 *
+	 * @return void
+	 */
 	public function test_parses_recipients_in_every_wp_mail_format() {
 		$message = $this->factory()->from_wp_mail(
 			array(
@@ -31,6 +45,11 @@ class TestMessageFactory extends TestCase {
 		$this->assertSame( 'Doe, Jane', $message->to[1]['name'] );
 	}
 
+	/**
+	 * Parses string headers.
+	 *
+	 * @return void
+	 */
 	public function test_parses_string_headers() {
 		$message = $this->factory()->from_wp_mail(
 			array(
@@ -52,6 +71,11 @@ class TestMessageFactory extends TestCase {
 		$this->assertSame( array( 'a@example.com', 'c@example.com', 'b@example.com' ), $message->all_recipients() );
 	}
 
+	/**
+	 * Parses array and associative headers.
+	 *
+	 * @return void
+	 */
 	public function test_parses_array_and_associative_headers() {
 		$message = $this->factory()->from_wp_mail(
 			array(
@@ -69,6 +93,11 @@ class TestMessageFactory extends TestCase {
 		$this->assertSame( 'two@example.com', $message->reply_to[0]['email'] );
 	}
 
+	/**
+	 * Defaults match core.
+	 *
+	 * @return void
+	 */
 	public function test_defaults_match_core() {
 		$message = $this->factory()->from_wp_mail(
 			array(
@@ -84,6 +113,11 @@ class TestMessageFactory extends TestCase {
 		$this->assertSame( 'UTF-8', $message->charset );
 	}
 
+	/**
+	 * A configured sender replaces only the core default.
+	 *
+	 * @return void
+	 */
 	public function test_configured_sender_replaces_only_the_core_default() {
 		$factory = $this->factory(
 			array(
@@ -114,6 +148,11 @@ class TestMessageFactory extends TestCase {
 		$this->assertSame( 'Orders', $custom->from_name );
 	}
 
+	/**
+	 * A forced sender overrides a plugin-supplied From header.
+	 *
+	 * @return void
+	 */
 	public function test_forced_sender_overrides_a_plugin_supplied_from_header() {
 		$message = $this->factory(
 			array(
@@ -135,6 +174,11 @@ class TestMessageFactory extends TestCase {
 		$this->assertSame( 'Example Shop', $message->from_name );
 	}
 
+	/**
+	 * Header injection attempts are dropped.
+	 *
+	 * @return void
+	 */
 	public function test_header_injection_attempts_are_dropped() {
 		$message = $this->factory()->from_wp_mail(
 			array(
@@ -154,6 +198,11 @@ class TestMessageFactory extends TestCase {
 		$this->assertSame( array( 'X-Ok' => 'fine' ), $message->headers );
 	}
 
+	/**
+	 * Only readable attachments are kept.
+	 *
+	 * @return void
+	 */
 	public function test_only_readable_attachments_are_kept() {
 		$file = tempnam( sys_get_temp_dir(), 'vm' );
 		file_put_contents( $file, 'data' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents

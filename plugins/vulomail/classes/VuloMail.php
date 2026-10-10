@@ -129,6 +129,8 @@ final class VuloMail {
 	}
 
 	/**
+	 * Instantiate the plugin's core classes.
+	 *
 	 * @return void
 	 */
 	public function init_classes() {

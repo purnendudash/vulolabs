@@ -22,26 +22,36 @@ defined( 'ABSPATH' ) || exit;
 class Dispatcher {
 
 	/**
+	 * Plugin settings.
+	 *
 	 * @var Settings
 	 */
 	private $settings;
 
 	/**
+	 * Saved connections.
+	 *
 	 * @var ConnectionRepository
 	 */
 	private $connections;
 
 	/**
+	 * Provider adapters.
+	 *
 	 * @var ProviderRegistry
 	 */
 	private $providers;
 
 	/**
+	 * Delivery log.
+	 *
 	 * @var Logger
 	 */
 	private $logger;
 
 	/**
+	 * Constructor.
+	 *
 	 * @param Settings             $settings    Plugin settings.
 	 * @param ConnectionRepository $connections Saved connections.
 	 * @param ProviderRegistry     $providers   Provider adapters.

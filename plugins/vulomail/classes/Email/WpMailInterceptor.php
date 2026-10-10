@@ -27,21 +27,29 @@ class WpMailInterceptor {
 	const DEFAULT_PROVIDER = 'default';
 
 	/**
+	 * Plugin settings.
+	 *
 	 * @var Settings
 	 */
 	private $settings;
 
 	/**
+	 * Email dispatcher.
+	 *
 	 * @var Dispatcher
 	 */
 	private $dispatcher;
 
 	/**
+	 * Delivery log.
+	 *
 	 * @var Logger
 	 */
 	private $logger;
 
 	/**
+	 * Builds Message objects from wp_mail() arguments.
+	 *
 	 * @var MessageFactory
 	 */
 	private $factory;
@@ -75,6 +83,8 @@ class WpMailInterceptor {
 	private $last_result = null;
 
 	/**
+	 * Constructor.
+	 *
 	 * @param Settings   $settings   Plugin settings.
 	 * @param Dispatcher $dispatcher Email dispatcher.
 	 * @param Logger     $logger     Delivery log.
@@ -106,6 +116,8 @@ class WpMailInterceptor {
 	}
 
 	/**
+	 * Get the outcome of the most recent wp_mail() call.
+	 *
 	 * @return Result|null Outcome of the most recent wp_mail() call.
 	 */
 	public function last_result() {
@@ -224,6 +236,8 @@ class WpMailInterceptor {
 	}
 
 	/**
+	 * Logs mail sent or failed through WordPress's own mailer.
+	 *
 	 * @param array  $atts    Mail data.
 	 * @param Result $outcome Outcome of WordPress's own mailer.
 	 * @return void
@@ -254,6 +268,8 @@ class WpMailInterceptor {
 	}
 
 	/**
+	 * Builds a Message from wp_mail() arguments, filtered and labeled with its source.
+	 *
 	 * @param array $atts wp_mail() arguments.
 	 * @return Message
 	 */

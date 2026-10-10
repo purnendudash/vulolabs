@@ -19,6 +19,8 @@ defined( 'ABSPATH' ) || exit;
 abstract class Controller extends \WP_REST_Controller {
 
 	/**
+	 * Checks that the current user may manage VuloMail.
+	 *
 	 * @return bool|\WP_Error
 	 */
 	public function check_permission() {
