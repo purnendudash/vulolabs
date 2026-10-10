@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { __ } from '@wordpress/i18n';
 import { HeaderComponent } from '@zyra/components';
 import { scrollToId } from '@zyra/core';
-import Brand from './assets/images/brand-logo.svg';
+import Brand from './assets/images/brand-logo.png';
 import { routes } from './routes';
 import { searchIndex, SearchItem } from './searchIndex';
 

@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { __ } from '@wordpress/i18n';
 import { HeaderComponent } from '@zyra/components';
-import Brand from './assets/images/brand-logo.svg';
+import Brand from './assets/images/brand-logo.png';
 import Forms from './pages/Forms';
 import Builder from './builder/Builder';
 import Submissions from './pages/Submissions';
