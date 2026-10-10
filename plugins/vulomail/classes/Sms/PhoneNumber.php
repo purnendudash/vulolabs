@@ -46,27 +46,4 @@ class PhoneNumber {
 
 		return $length >= 8 && $length <= 15 ? '+' . $digits : '';
 	}
-
-	/**
-	 * Number of SMS segments a text will be billed as.
-	 *
-	 * @param string $body Message text.
-	 * @return int
-	 */
-	public static function segments( $body ) {
-		$body = (string) $body;
-
-		if ( '' === $body ) {
-			return 0;
-		}
-
-		// Anything outside basic Latin forces UCS-2, which fits far fewer characters per segment. This
-		// is a close approximation of the GSM 03.38 alphabet, good enough for an estimate.
-		$unicode = (bool) preg_match( '/[^\x0A\x0D\x20-\x7E£¥èéùìòÇØøÅåÆæßÉÄÖÑÜ§¿äöñüà€]/u', $body );
-		$length  = mb_strlen( $body );
-		$single  = $unicode ? 70 : 160;
-		$multi   = $unicode ? 67 : 153;
-
-		return $length <= $single ? 1 : (int) ceil( $length / $multi );
-	}
 }

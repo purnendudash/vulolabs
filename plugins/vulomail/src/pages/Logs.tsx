@@ -44,7 +44,6 @@ interface LogDetail extends LogRow {
 	error_code: string;
 	attempts: Attempt[];
 	headers: Record<string, string>;
-	sms_segment: number;
 }
 
 interface LogList {
