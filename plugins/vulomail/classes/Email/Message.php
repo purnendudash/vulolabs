@@ -97,15 +97,6 @@ class Message {
 	}
 
 	/**
-	 * Plain-text version of the body, for providers that want both parts.
-	 *
-	 * @return string
-	 */
-	public function text_body() {
-		return $this->is_html() ? wp_strip_all_tags( $this->body ) : $this->body;
-	}
-
-	/**
 	 * Formats an address as `Name <email>`.
 	 *
 	 * @param array{email: string, name: string} $address Address.

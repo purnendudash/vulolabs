@@ -115,8 +115,6 @@ class Logs extends Controller {
 		$row['headers']            = is_array( $headers ) ? $headers : array();
 		$row['has_body']           = null !== $row['body'];
 		$row['can_resend']         = $this->can_resend( $row );
-		$row['is_html']            = 'text/html' === ( $row['headers']['Content-Type'] ?? '' );
-		$row['sms_segment']        = Utill::CHANNEL_SMS === $row['channel'] && null !== $row['body'] ? \VuloMail\Sms\PhoneNumber::segments( $row['body'] ) : 0;
 
 		return rest_ensure_response( $row );
 	}
