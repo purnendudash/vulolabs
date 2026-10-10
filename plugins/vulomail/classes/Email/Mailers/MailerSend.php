@@ -36,7 +36,7 @@ class MailerSend extends AbstractApiMailer {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
-					'help'     => __( 'Needs the "Email: full access" or "Email: send" permission.', 'vulomail' ),
+					'help'     => __( 'Needs the "Email: full access" or "Email: send" permission. <a href="https://app.mailersend.com" target="_blank" rel="noopener noreferrer">Create one in MailerSend</a>, under Settings → API Tokens.', 'vulomail' ),
 				),
 			),
 		);

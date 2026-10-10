@@ -36,7 +36,7 @@ class Resend extends AbstractApiMailer {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
-					'help'     => __( 'A sending-only key is enough.', 'vulomail' ),
+					'help'     => __( 'A sending-only key is enough. <a href="https://resend.com/api-keys" target="_blank" rel="noopener noreferrer">Create one in Resend</a>.', 'vulomail' ),
 				),
 			),
 		);

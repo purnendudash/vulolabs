@@ -59,7 +59,7 @@ class ZohoSmtp extends Smtp {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
-					'help'     => __( 'An app-specific password if two-factor authentication is on.', 'vulomail' ),
+					'help'     => __( 'An app-specific password if two-factor authentication is on. <a href="https://accounts.zoho.com/home" target="_blank" rel="noopener noreferrer">Open your Zoho account</a>, under Security → App Passwords.', 'vulomail' ),
 				),
 			),
 		);

@@ -10,10 +10,12 @@ namespace VuloMail\Email\Mailers;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Gmail and Google Workspace over SMTP, with the host, port and encryption fixed to Google's own -
- * only the address and an app password are asked for. Needs 2-Step Verification switched on and an
- * app password generated at myaccount.google.com/apppasswords; the normal account password will not
- * authenticate here.
+ * Gmail over SMTP, with the host, port and encryption fixed to Google's own - only the address and
+ * an app password are asked for. Needs 2-Step Verification switched on and an app password generated
+ * at myaccount.google.com/apppasswords; the normal account password will not authenticate here.
+ *
+ * GoogleWorkspaceSmtp extends this with the same host and fields under its own, separate provider
+ * entry, since Gmail and Google Workspace are listed as two distinct options.
  */
 class GmailSmtp extends Smtp {
 
@@ -47,7 +49,7 @@ class GmailSmtp extends Smtp {
 	 */
 	public static function definition() {
 		return array(
-			'label'  => __( 'Gmail / Google Workspace', 'vulomail' ),
+			'label'  => __( 'Gmail', 'vulomail' ),
 			'desc'   => __( 'Sends through Google\'s SMTP server using an app password.', 'vulomail' ),
 			'fields' => array(
 				array(
@@ -62,7 +64,7 @@ class GmailSmtp extends Smtp {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
-					'help'     => __( 'Create one at myaccount.google.com/apppasswords. Needs 2-Step Verification switched on; your normal password will not work here.', 'vulomail' ),
+					'help'     => __( 'Needs 2-Step Verification switched on; your normal password will not work here. <a href="https://myaccount.google.com/apppasswords" target="_blank" rel="noopener noreferrer">Create an app password</a>.', 'vulomail' ),
 				),
 			),
 		);

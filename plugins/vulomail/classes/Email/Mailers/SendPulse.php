@@ -37,7 +37,7 @@ class SendPulse extends AbstractApiMailer {
 					'label'    => __( 'Client ID', 'vulomail' ),
 					'type'     => 'text',
 					'required' => true,
-					'help'     => __( 'From Account → API, under Client credentials.', 'vulomail' ),
+					'help'     => __( 'From Account → API, under Client credentials. <a href="https://login.sendpulse.com/settings/#api" target="_blank" rel="noopener noreferrer">Open it in SendPulse</a>.', 'vulomail' ),
 				),
 				array(
 					'key'      => 'client_secret',

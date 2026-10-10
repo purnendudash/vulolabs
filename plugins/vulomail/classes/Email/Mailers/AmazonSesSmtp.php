@@ -64,7 +64,7 @@ class AmazonSesSmtp extends Smtp {
 					'label'    => __( 'SMTP username', 'vulomail' ),
 					'type'     => 'text',
 					'required' => true,
-					'help'     => __( 'From SES → SMTP settings → Create SMTP credentials - not your AWS access key.', 'vulomail' ),
+					'help'     => __( 'Not your AWS access key. <a href="https://console.aws.amazon.com/ses/home#/smtp" target="_blank" rel="noopener noreferrer">Create SMTP credentials</a> in the SES console.', 'vulomail' ),
 				),
 				array(
 					'key'      => 'password',

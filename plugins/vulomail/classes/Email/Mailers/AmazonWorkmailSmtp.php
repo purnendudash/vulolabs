@@ -55,7 +55,7 @@ class AmazonWorkmailSmtp extends Smtp {
 					'type'     => 'text',
 					'default'  => 'us-east-1',
 					'required' => true,
-					'help'     => __( 'Must match the region your WorkMail organization is in.', 'vulomail' ),
+					'help'     => __( 'Must match the region your WorkMail organization is in. <a href="https://console.aws.amazon.com/workmail/home" target="_blank" rel="noopener noreferrer">Open the WorkMail console</a>.', 'vulomail' ),
 				),
 				array(
 					'key'      => 'username',

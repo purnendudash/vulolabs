@@ -34,6 +34,7 @@ class Bird extends AbstractApiMailer {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
+					'help'     => __( '<a href="https://bird.com/dashboard/w/api-keys" target="_blank" rel="noopener noreferrer">Create one in Bird</a>, under Developers → API keys.', 'vulomail' ),
 				),
 				array(
 					'key'     => 'region',

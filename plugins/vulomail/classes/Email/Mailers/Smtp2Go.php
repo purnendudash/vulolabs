@@ -36,6 +36,7 @@ class Smtp2Go extends AbstractApiMailer {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
+					'help'     => __( 'Make sure Email Send is enabled for the key. <a href="https://app.smtp2go.com" target="_blank" rel="noopener noreferrer">Create one in SMTP2GO</a>, under Sending → API Keys.', 'vulomail' ),
 				),
 			),
 		);

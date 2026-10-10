@@ -59,7 +59,7 @@ class YahooSmtp extends Smtp {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
-					'help'     => __( 'Generate one in Yahoo Account Security; your normal password will not work here.', 'vulomail' ),
+					'help'     => __( 'Your normal password will not work here. <a href="https://help.yahoo.com/kb/account/sln15241.html" target="_blank" rel="noopener noreferrer">Generate an app password</a>, under Account Security → External connections.', 'vulomail' ),
 				),
 			),
 		);

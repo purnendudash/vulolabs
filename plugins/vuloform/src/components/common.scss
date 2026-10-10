@@ -1097,9 +1097,10 @@
 }
 
 .vuloform-preview {
-	max-height: 70vh;
+	// The lightbox popup around this already scrolls (PopupComponent.scss's
+	// `[data-position="lightbox"]`); a second scrollable max-height here nested
+	// a scrollbar inside a scrollbar.
 	padding: 1.5rem;
-	overflow-y: auto;
 
 	// wp-admin caps the width of a select; the public site does not.
 	select.vuloform-input {

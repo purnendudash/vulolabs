@@ -36,7 +36,7 @@ class Brevo extends AbstractApiMailer {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
-					'help'     => __( 'A v3 API key from SMTP & API in your Brevo account.', 'vulomail' ),
+					'help'     => __( 'A v3 API key from SMTP & API in your Brevo account. <a href="https://app.brevo.com/settings/keys/api" target="_blank" rel="noopener noreferrer">Create one in Brevo</a>.', 'vulomail' ),
 				),
 			),
 		);

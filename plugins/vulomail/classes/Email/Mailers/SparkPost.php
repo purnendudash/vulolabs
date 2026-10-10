@@ -39,6 +39,7 @@ class SparkPost extends AbstractApiMailer {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
+					'help'     => __( 'Shown only once when created. <a href="https://app.sparkpost.com/account/api-keys" target="_blank" rel="noopener noreferrer">Create one in SparkPost</a>.', 'vulomail' ),
 				),
 				array(
 					'key'     => 'region',

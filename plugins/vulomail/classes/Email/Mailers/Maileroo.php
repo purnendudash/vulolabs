@@ -36,7 +36,7 @@ class Maileroo extends AbstractApiMailer {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
-					'help'     => __( 'From the sending domain\'s page, under Sending Keys.', 'vulomail' ),
+					'help'     => __( '<a href="https://app.maileroo.com/login" target="_blank" rel="noopener noreferrer">Open your domain in Maileroo</a>, then its Sending Keys page.', 'vulomail' ),
 				),
 			),
 		);

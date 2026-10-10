@@ -35,6 +35,7 @@ class Mailjet extends AbstractApiMailer {
 					'label'    => __( 'API key', 'vulomail' ),
 					'type'     => 'text',
 					'required' => true,
+					'help'     => __( '<a href="https://app.mailjet.com/account/apikeys" target="_blank" rel="noopener noreferrer">Find both keys in Mailjet</a>, under Account Settings → API Key Management.', 'vulomail' ),
 				),
 				array(
 					'key'      => 'secret_key',

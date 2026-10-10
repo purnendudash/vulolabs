@@ -59,6 +59,7 @@ class NamecheapSmtp extends Smtp {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
+					'help'     => __( 'Your Private Email mailbox password. <a href="https://privateemail.com" target="_blank" rel="noopener noreferrer">Manage your mailbox</a>.', 'vulomail' ),
 				),
 			),
 		);

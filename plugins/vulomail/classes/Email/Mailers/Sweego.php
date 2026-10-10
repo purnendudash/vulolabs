@@ -36,7 +36,7 @@ class Sweego extends AbstractApiMailer {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
-					'help'     => __( 'From the Email section of your dashboard. Shown only once.', 'vulomail' ),
+					'help'     => __( 'From the Email section of your dashboard. Shown only once. <a href="https://app.sweego.io" target="_blank" rel="noopener noreferrer">Open Sweego</a>.', 'vulomail' ),
 				),
 			),
 		);

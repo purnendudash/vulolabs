@@ -114,11 +114,6 @@ export const schema = {
 				'Optional. Create a site key and secret key for the version you choose here, then switch reCAPTCHA on in each form, at the bottom of its Fields tab.',
 				'vuloform'
 			),
-			rightContent: (
-				<a className="link-item" href="https://www.google.com/recaptcha/admin" target="_blank" rel="noopener noreferrer">
-					{__('Get reCAPTCHA keys', 'vuloform')} <i className="adminfont-external-link" />
-				</a>
-			),
 		},
 		{
 			key: 'recaptcha_type',
@@ -148,7 +143,11 @@ export const schema = {
 			type: 'text',
 			size: 30,
 			label: __('Site key', 'vuloform'),
-			settingDescription: __('Keys only work for the version they were created for. Empty this to switch reCAPTCHA off everywhere.', 'vuloform'),
+			settingDescription:
+				__('Keys only work for the version they were created for. Empty this to switch reCAPTCHA off everywhere.', 'vuloform') +
+				' <a href="https://www.google.com/recaptcha/admin" target="_blank" rel="noopener noreferrer" style="color: var(--color-primary); text-decoration: underline;">' +
+				__('Get reCAPTCHA keys', 'vuloform') +
+				'</a>',
 		},
 		{
 			key: 'recaptcha_secret_key',

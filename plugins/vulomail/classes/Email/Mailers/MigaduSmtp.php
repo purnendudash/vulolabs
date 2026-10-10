@@ -59,6 +59,7 @@ class MigaduSmtp extends Smtp {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
+					'help'     => __( 'Your Migadu account password. <a href="https://admin.migadu.com" target="_blank" rel="noopener noreferrer">Manage your account</a>.', 'vulomail' ),
 				),
 			),
 		);

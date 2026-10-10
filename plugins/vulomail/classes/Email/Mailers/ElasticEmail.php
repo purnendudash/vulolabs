@@ -36,6 +36,7 @@ class ElasticEmail extends AbstractApiMailer {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
+					'help'     => __( '<a href="https://elasticemail.com/account#/settings/new/manage-api" target="_blank" rel="noopener noreferrer">Create one in Elastic Email</a>, under Settings → API.', 'vulomail' ),
 				),
 			),
 		);

@@ -59,7 +59,7 @@ class AolSmtp extends Smtp {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
-					'help'     => __( 'Generate one in AOL Account Security; your normal password will not work here.', 'vulomail' ),
+					'help'     => __( 'Your normal password will not work here. <a href="https://help.aol.co.uk/articles/Create-and-manage-app-password" target="_blank" rel="noopener noreferrer">Generate an app password</a>, from your AOL Account Security page.', 'vulomail' ),
 				),
 			),
 		);

@@ -59,7 +59,7 @@ class Microsoft365Smtp extends Smtp {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
-					'help'     => __( 'An app password if multi-factor authentication is on. Your tenant must also allow SMTP AUTH.', 'vulomail' ),
+					'help'     => __( 'An app password if multi-factor authentication is on; your admin must also allow it and allow SMTP AUTH. <a href="https://mysignins.microsoft.com/security-info" target="_blank" rel="noopener noreferrer">Manage sign-in security</a>, under Add method → App password.', 'vulomail' ),
 				),
 			),
 		);

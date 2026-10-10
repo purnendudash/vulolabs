@@ -36,6 +36,7 @@ class Mailtrap extends AbstractApiMailer {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
+					'help'     => __( 'Needs admin permission on the sending domain. <a href="https://mailtrap.io/api-tokens" target="_blank" rel="noopener noreferrer">Create one in Mailtrap</a>, under Settings → API Tokens.', 'vulomail' ),
 				),
 			),
 		);

@@ -36,6 +36,7 @@ class Netcore extends AbstractApiMailer {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
+					'help'     => __( '<a href="https://email.netcorecloud.com" target="_blank" rel="noopener noreferrer">Log in to Netcore</a>, then Settings → Integrations → API.', 'vulomail' ),
 				),
 			),
 		);

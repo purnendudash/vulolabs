@@ -36,7 +36,7 @@ class SendGrid extends AbstractApiMailer {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
-					'help'     => __( 'Needs the "Mail Send" permission.', 'vulomail' ),
+					'help'     => __( 'Needs the "Mail Send" permission. <a href="https://app.sendgrid.com/settings/api_keys" target="_blank" rel="noopener noreferrer">Create one in SendGrid</a>.', 'vulomail' ),
 				),
 			),
 		);

@@ -299,6 +299,7 @@ const Connections = () => {
 				width={36}
 				height="auto"
 				position="lightbox"
+				className="vulomail-connection-popup"
 			>
 				{editing && (
 					<ConnectionForm

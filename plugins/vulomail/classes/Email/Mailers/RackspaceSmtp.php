@@ -59,6 +59,7 @@ class RackspaceSmtp extends Smtp {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
+					'help'     => __( 'Your Rackspace Email mailbox password. <a href="https://login.rackspace.com" target="_blank" rel="noopener noreferrer">Manage your account</a>.', 'vulomail' ),
 				),
 			),
 		);

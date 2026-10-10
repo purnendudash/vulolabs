@@ -36,6 +36,7 @@ class SendLayer extends AbstractApiMailer {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
+					'help'     => __( '<a href="https://sendlayer.com/docs/managing-api-keys/" target="_blank" rel="noopener noreferrer">Find it in SendLayer</a>, under Settings → API Keys.', 'vulomail' ),
 				),
 			),
 		);

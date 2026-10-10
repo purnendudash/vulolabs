@@ -59,7 +59,7 @@ class OutlookSmtp extends Smtp {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
-					'help'     => __( 'An app password if 2-step verification is on.', 'vulomail' ),
+					'help'     => __( 'An app password if 2-step verification is on. <a href="https://account.microsoft.com/security" target="_blank" rel="noopener noreferrer">Manage security settings</a>, under Advanced security options → App passwords.', 'vulomail' ),
 				),
 			),
 		);

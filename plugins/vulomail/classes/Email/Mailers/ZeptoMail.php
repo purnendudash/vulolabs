@@ -36,7 +36,7 @@ class ZeptoMail extends AbstractApiMailer {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
-					'help'     => __( 'Generated in your Mail Agent once a verified domain is added.', 'vulomail' ),
+					'help'     => __( 'Generated in your Mail Agent once a verified domain is added. <a href="https://www.zoho.com/zeptomail/help/dashboard.html" target="_blank" rel="noopener noreferrer">Find it in ZeptoMail</a>, under the Mail Agent\'s Setup Info → API tab.', 'vulomail' ),
 				),
 			),
 		);

@@ -59,6 +59,7 @@ class TitanSmtp extends Smtp {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
+					'help'     => __( 'Your Titan Email account password. <a href="https://app.titan.email" target="_blank" rel="noopener noreferrer">Manage your account</a>.', 'vulomail' ),
 				),
 			),
 		);

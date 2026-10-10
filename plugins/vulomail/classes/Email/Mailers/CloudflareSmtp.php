@@ -56,6 +56,7 @@ class CloudflareSmtp extends Smtp {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
+					'help'     => __( '<a href="https://dash.cloudflare.com/" target="_blank" rel="noopener noreferrer">Open the Cloudflare dashboard</a>, under Email → Email Routing → Email Sending.', 'vulomail' ),
 				),
 			),
 		);

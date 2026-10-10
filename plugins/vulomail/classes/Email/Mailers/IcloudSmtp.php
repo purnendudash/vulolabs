@@ -59,7 +59,7 @@ class IcloudSmtp extends Smtp {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
-					'help'     => __( 'Generate one at appleid.apple.com; your normal Apple ID password will not work here.', 'vulomail' ),
+					'help'     => __( 'Your normal Apple ID password will not work here. <a href="https://appleid.apple.com" target="_blank" rel="noopener noreferrer">Generate an app-specific password</a>, under Sign-In and Security.', 'vulomail' ),
 				),
 			),
 		);

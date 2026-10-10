@@ -36,6 +36,7 @@ class Postmark extends AbstractApiMailer {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
+					'help'     => __( '<a href="https://account.postmarkapp.com/servers" target="_blank" rel="noopener noreferrer">Open your server in Postmark</a>, then its API Tokens tab.', 'vulomail' ),
 				),
 				array(
 					'key'     => 'message_stream',

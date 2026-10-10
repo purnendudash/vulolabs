@@ -59,7 +59,7 @@ class FastmailSmtp extends Smtp {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
-					'help'     => __( 'Generate one under Settings → Password & Security → App passwords.', 'vulomail' ),
+					'help'     => __( '<a href="https://app.fastmail.com/settings/security/devicekeys" target="_blank" rel="noopener noreferrer">Generate one in Fastmail</a>, under Settings → Password & Security → App passwords.', 'vulomail' ),
 				),
 			),
 		);

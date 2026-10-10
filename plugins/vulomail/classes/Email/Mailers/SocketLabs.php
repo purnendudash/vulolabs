@@ -35,7 +35,7 @@ class SocketLabs extends AbstractApiMailer {
 					'label'    => __( 'Server ID', 'vulomail' ),
 					'type'     => 'text',
 					'required' => true,
-					'help'     => __( 'The 4 or 5 digit number shown on your server dashboard.', 'vulomail' ),
+					'help'     => __( 'The 4 or 5 digit number shown on your server dashboard. <a href="https://cp.socketlabs.com/login" target="_blank" rel="noopener noreferrer">Log in to SocketLabs</a>.', 'vulomail' ),
 				),
 				array(
 					'key'      => 'api_key',
@@ -43,6 +43,7 @@ class SocketLabs extends AbstractApiMailer {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
+					'help'     => __( 'Under Configuration → Key Manager.', 'vulomail' ),
 				),
 			),
 		);

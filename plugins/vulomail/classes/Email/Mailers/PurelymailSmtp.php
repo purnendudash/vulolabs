@@ -59,6 +59,7 @@ class PurelymailSmtp extends Smtp {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
+					'help'     => __( 'Your Purelymail account password. <a href="https://purelymail.com/manage" target="_blank" rel="noopener noreferrer">Manage your account</a>.', 'vulomail' ),
 				),
 			),
 		);

@@ -59,7 +59,7 @@ class YandexSmtp extends Smtp {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
-					'help'     => __( 'Yandex requires an app password for third-party mail clients.', 'vulomail' ),
+					'help'     => __( 'Yandex requires an app password for third-party mail clients. <a href="https://id.yandex.com/security" target="_blank" rel="noopener noreferrer">Create one</a>, under App passwords. New passwords take 2-3 hours to become active.', 'vulomail' ),
 				),
 			),
 		);

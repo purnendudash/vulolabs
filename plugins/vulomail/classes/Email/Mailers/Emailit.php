@@ -36,7 +36,7 @@ class Emailit extends AbstractApiMailer {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
-					'help'     => __( 'Create an API-type credential in your workspace.', 'vulomail' ),
+					'help'     => __( 'Create an API-type credential in your workspace. <a href="https://app.emailit.com" target="_blank" rel="noopener noreferrer">Open Emailit</a>.', 'vulomail' ),
 				),
 			),
 		);

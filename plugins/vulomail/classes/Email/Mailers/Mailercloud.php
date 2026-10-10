@@ -36,7 +36,7 @@ class Mailercloud extends AbstractApiMailer {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
-					'help'     => __( 'From Account → API Integrations.', 'vulomail' ),
+					'help'     => __( '<a href="https://app.mailercloud.com" target="_blank" rel="noopener noreferrer">Open Mailercloud</a>, under Account → API Integrations.', 'vulomail' ),
 				),
 			),
 		);

@@ -36,6 +36,7 @@ class Mandrill extends AbstractApiMailer {
 					'type'     => 'password',
 					'secret'   => true,
 					'required' => true,
+					'help'     => __( 'Requires a paid Mailchimp plan with Transactional Email enabled. <a href="https://mandrillapp.com/settings" target="_blank" rel="noopener noreferrer">Create one in Mandrill</a>, under SMTP & API Info.', 'vulomail' ),
 				),
 			),
 		);
