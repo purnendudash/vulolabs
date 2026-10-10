@@ -19,6 +19,11 @@
             "classes/"
         ]
     },
+    "autoload-dev": {
+        "classmap": [
+            "tests/php/src/"
+        ]
+    },
     "require": {
         "php": ">=7.4"
     },

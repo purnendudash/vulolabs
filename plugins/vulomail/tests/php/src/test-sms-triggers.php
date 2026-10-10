@@ -12,13 +12,25 @@ use VuloMail\Settings\Settings;
 use VuloMail\Sms\Dispatcher;
 use VuloMail\Sms\Triggers;
 
+/**
+ * Tests which SMS alert an event sends, to whom, and with what text.
+ */
 class TestSmsTriggers extends TestCase {
 
 	/**
+	 * Records every send() call instead of dispatching.
+	 *
 	 * @var Dispatcher
 	 */
 	private $dispatcher;
 
+	/**
+	 * Builds a Triggers instance with the given alerts enabled.
+	 *
+	 * @param array $enabled   Trigger ids to enable.
+	 * @param array $templates Trigger id => template override.
+	 * @return Triggers
+	 */
 	private function triggers( array $enabled, array $templates = array() ) {
 		$saved = array();
 
@@ -35,14 +47,35 @@ class TestSmsTriggers extends TestCase {
 		);
 
 		$this->dispatcher = new class() extends Dispatcher {
+			/**
+			 * Every call made to send(), as [to, body, source].
+			 *
+			 * @var array
+			 */
 			public $sent = array();
 
+			/**
+			 * Constructor; skips the parent's, which needs real collaborators.
+			 */
 			public function __construct() {}
 
+			/**
+			 * Always ready in tests.
+			 *
+			 * @return bool
+			 */
 			public function is_ready() {
 				return true;
 			}
 
+			/**
+			 * Records the call instead of dispatching.
+			 *
+			 * @param string $to     Recipient number.
+			 * @param string $body   Message text.
+			 * @param string $source Sender slug.
+			 * @return void
+			 */
 			public function send( $to, $body, $source = '' ) {
 				$this->sent[] = array( $to, $body, $source );
 			}
@@ -51,32 +84,73 @@ class TestSmsTriggers extends TestCase {
 		return new Triggers( new Settings(), $this->dispatcher );
 	}
 
+	/**
+	 * Builds a minimal order double.
+	 *
+	 * @param string $phone Billing phone number.
+	 * @return object
+	 */
 	private function order( $phone = '+14155550123' ) {
 		return new class( $phone ) {
+			/**
+			 * Billing phone number.
+			 *
+			 * @var string
+			 */
 			private $phone;
 
+			/**
+			 * Constructor.
+			 *
+			 * @param string $phone Billing phone number.
+			 */
 			public function __construct( $phone ) {
 				$this->phone = $phone;
 			}
 
+			/**
+			 * Get the billing phone number.
+			 *
+			 * @return string
+			 */
 			public function get_billing_phone() {
 				return $this->phone;
 			}
 
+			/**
+			 * Get the order number.
+			 *
+			 * @return string
+			 */
 			public function get_order_number() {
 				return '1042';
 			}
 
+			/**
+			 * Get the formatted order total.
+			 *
+			 * @return string
+			 */
 			public function get_formatted_order_total() {
 				return '<span>$59.00</span>';
 			}
 
+			/**
+			 * Get the billing first name.
+			 *
+			 * @return string
+			 */
 			public function get_billing_first_name() {
 				return 'Jane';
 			}
 		};
 	}
 
+	/**
+	 * Stubs wp_strip_all_tags() on top of the base test setup.
+	 *
+	 * @return void
+	 */
 	protected function setUp(): void {
 		parent::setUp();
 
@@ -87,6 +161,11 @@ class TestSmsTriggers extends TestCase {
 		);
 	}
 
+	/**
+	 * Every trigger has a template and a recipient.
+	 *
+	 * @return void
+	 */
 	public function test_every_trigger_has_a_template_and_a_recipient() {
 		foreach ( Triggers::definitions() as $id => $trigger ) {
 			$this->assertNotSame( '', $trigger['template'], $id );
@@ -95,6 +174,11 @@ class TestSmsTriggers extends TestCase {
 		}
 	}
 
+	/**
+	 * A status with its own alert sends only that alert.
+	 *
+	 * @return void
+	 */
 	public function test_a_status_with_its_own_alert_sends_only_that_alert() {
 		$triggers = $this->triggers( array( 'wc_customer_completed', 'wc_order_status_changed' ) );
 
@@ -106,6 +190,11 @@ class TestSmsTriggers extends TestCase {
 		$this->assertStringContainsString( 'order #1042', $this->dispatcher->sent[0][1] );
 	}
 
+	/**
+	 * A status whose own alert is off falls back to the general alert.
+	 *
+	 * @return void
+	 */
 	public function test_a_status_whose_own_alert_is_off_falls_back_to_the_general_alert() {
 		$triggers = $this->triggers( array( 'wc_order_status_changed' ) );
 
@@ -115,6 +204,11 @@ class TestSmsTriggers extends TestCase {
 		$this->assertSame( 'Hi Jane, your order #1042 at Example Shop is now completed.', $this->dispatcher->sent[0][1] );
 	}
 
+	/**
+	 * A failed order alerts the admin even without a customer phone.
+	 *
+	 * @return void
+	 */
 	public function test_a_failed_order_alerts_the_admin_even_without_a_customer_phone() {
 		$triggers = $this->triggers( array( 'wc_order_failed', 'wc_order_status_changed' ) );
 
@@ -125,6 +219,11 @@ class TestSmsTriggers extends TestCase {
 		$this->assertSame( 'Payment failed for order #1042 ($59.00) on Example Shop.', $this->dispatcher->sent[0][1] );
 	}
 
+	/**
+	 * Nothing is sent for an alert that is switched off.
+	 *
+	 * @return void
+	 */
 	public function test_nothing_is_sent_for_an_alert_that_is_switched_off() {
 		$triggers = $this->triggers( array() );
 
@@ -134,6 +233,11 @@ class TestSmsTriggers extends TestCase {
 		$this->assertSame( array(), $this->dispatcher->sent );
 	}
 
+	/**
+	 * Administrator logins alert and other logins do not.
+	 *
+	 * @return void
+	 */
 	public function test_administrator_logins_alert_and_other_logins_do_not() {
 		Functions\when( 'sanitize_text_field' )->returnArg();
 		Functions\when( 'wp_unslash' )->returnArg();
@@ -155,6 +259,11 @@ class TestSmsTriggers extends TestCase {
 		$this->assertSame( 'Administrator boss logged in to Example Shop from 203.0.113.9.', $this->dispatcher->sent[0][1] );
 	}
 
+	/**
+	 * Spam comments are ignored and reviews use the review alert.
+	 *
+	 * @return void
+	 */
 	public function test_spam_comments_are_ignored_and_reviews_use_the_review_alert() {
 		Functions\when( 'get_the_title' )->justReturn( 'Blue Mug' );
 		Functions\when( 'get_comment_meta' )->justReturn( '4' );
@@ -179,6 +288,11 @@ class TestSmsTriggers extends TestCase {
 		$this->assertSame( 'Sam left a 4-star review on Blue Mug at Example Shop.', $this->dispatcher->sent[1][1] );
 	}
 
+	/**
+	 * Email failure alerts are spaced out and skip test emails.
+	 *
+	 * @return void
+	 */
 	public function test_email_failure_alerts_are_spaced_out_and_skip_test_emails() {
 		$transients = array();
 
@@ -219,6 +333,11 @@ class TestSmsTriggers extends TestCase {
 		$this->assertSame( 'An email from Example Shop failed to send: "Your order". SMTP Error: Could not authenticate.', $this->dispatcher->sent[0][1] );
 	}
 
+	/**
+	 * A customer note is sent to the billing phone as plain text.
+	 *
+	 * @return void
+	 */
 	public function test_a_customer_note_is_sent_to_the_billing_phone_as_plain_text() {
 		$order = $this->order();
 
@@ -237,16 +356,36 @@ class TestSmsTriggers extends TestCase {
 		$this->assertSame( 'Update on your order #1042 at Example Shop: Tracking: ZX123', $this->dispatcher->sent[0][1] );
 	}
 
+	/**
+	 * Stock alerts use the product details.
+	 *
+	 * @return void
+	 */
 	public function test_stock_alerts_use_the_product_details() {
 		$product = new class() {
+			/**
+			 * Get the product name.
+			 *
+			 * @return string
+			 */
 			public function get_name() {
 				return 'Blue Mug';
 			}
 
+			/**
+			 * Get the product SKU.
+			 *
+			 * @return string
+			 */
 			public function get_sku() {
 				return 'MUG-1';
 			}
 
+			/**
+			 * Get the stock quantity.
+			 *
+			 * @return int
+			 */
 			public function get_stock_quantity() {
 				return 2;
 			}

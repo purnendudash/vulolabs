@@ -14,11 +14,13 @@ use VuloMail\Utill;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * vulomail/v1/tools - test sends and diagnostics.
+ * REST controller for vulomail/v1/tools - test sends and diagnostics.
  */
 class Tools extends Controller {
 
 	/**
+	 * REST base for this controller.
+	 *
 	 * @var string
 	 */
 	protected $rest_base = 'tools';
@@ -178,6 +180,8 @@ class Tools extends Controller {
 	}
 
 	/**
+	 * Runs and returns the mail diagnostics report.
+	 *
 	 * @param \WP_REST_Request $request Request.
 	 * @return \WP_REST_Response
 	 */
@@ -186,6 +190,8 @@ class Tools extends Controller {
 	}
 
 	/**
+	 * Builds the response shape shared by the test-send endpoints.
+	 *
 	 * @param bool   $success  Whether the test was accepted for delivery.
 	 * @param string $error    Error message on failure.
 	 * @param string $provider Provider that handled the final attempt.

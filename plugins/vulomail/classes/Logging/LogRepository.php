@@ -22,6 +22,8 @@ class LogRepository {
 	const SORTABLE = array( 'id', 'created_at', 'status', 'provider', 'channel' );
 
 	/**
+	 * Get the fully prefixed log table name.
+	 *
 	 * @return string
 	 */
 	private function table() {
@@ -31,6 +33,8 @@ class LogRepository {
 	}
 
 	/**
+	 * Insert a log row.
+	 *
 	 * @param array $row Column => value.
 	 * @return int Inserted row id, 0 on failure.
 	 */
@@ -44,6 +48,8 @@ class LogRepository {
 	}
 
 	/**
+	 * Get one log row by id.
+	 *
 	 * @param int $id Row id.
 	 * @return array|null
 	 */
@@ -161,6 +167,8 @@ class LogRepository {
 	}
 
 	/**
+	 * Delete specific log rows.
+	 *
 	 * @param int[] $ids Row ids.
 	 * @return int Rows deleted.
 	 */
@@ -180,6 +188,8 @@ class LogRepository {
 	}
 
 	/**
+	 * Delete every log row.
+	 *
 	 * @return int Rows deleted.
 	 */
 	public function delete_all() {
@@ -190,6 +200,8 @@ class LogRepository {
 	}
 
 	/**
+	 * Delete log rows older than a given timestamp.
+	 *
 	 * @param string $before UTC `Y-m-d H:i:s`; older rows are removed.
 	 * @return int Rows deleted.
 	 */

@@ -1,149 +1,177 @@
-=== VuloMail ===
-
-Contributors: vulolabs
-Tags: smtp, email, sms, email log, wp mail
+=== VuloMail – SMTP, Email Logs & SMS Notifications ===
+Contributors: [WordPress.org username]
+Tags: smtp, email logs, sms, woocommerce, email
 Requires at least: 6.4
-Tested up to: 7.1
+Tested up to: [Latest tested WordPress version]
 Requires PHP: 7.4
-Stable tag: 1.0.0
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Stable tag: [Current plugin version]
+License: [Plugin license]
+License URI: [Plugin license URL]
 
-One plugin. Email and SMS. One delivery control center.
+WordPress SMTP, email logs and SMS notifications for WooCommerce, with backup email connections and tools to troubleshoot sending failures.
 
 == Description ==
 
-VuloMail delivers your WordPress email through an email service you choose and sends text messages through an SMS provider you choose. It adds a backup connection for when the first one fails, a log of every message, SMS alerts for site and store events, and diagnostics that tell you what to fix.
+VuloMail is a WordPress SMTP, email logging and SMS notification plugin that helps you send website emails, troubleshoot sending failures and keep customers updated about their WooCommerce orders.
 
-It needs no VuloLabs account, no subscription and no other plugin. You connect providers you already have.
+Connect WordPress to an SMTP server or a supported email service for password resets, order emails, contact form notifications and other transactional emails. Add a backup email connection, see what happened to each message and receive SMS alerts for important website and store activity.
 
-**Activating VuloMail changes nothing.** WordPress keeps sending email as before until you add a connection and set it as primary.
+WordPress not sending emails? VuloMail helps you check your email settings, send a test email and find the provider’s error message so you know what needs attention.
 
-= Email =
+No VuloLabs account, subscription or additional plugin is required for core email functionality. You connect your own email or SMS provider. Provider charges and sending limits may apply.
 
-* Delivers every email sent with WordPress's standard `wp_mail()` function: WordPress itself, WooCommerce, contact forms and other plugins. Nothing to change in those plugins.
-* Providers: any SMTP server (your host, Google Workspace, Microsoft 365, Amazon SES, Zoho and others), SendGrid, Mailgun (US and EU), Brevo and Postmark.
-* Primary and backup: if the primary connection fails, the backup is tried.
-* Last resort: optionally hand the email to the WordPress default mailer when the primary and backup both fail, instead of dropping it.
-* Sender email and sender name, with an option to use them even when a plugin sets its own.
-* One switch turns email routing off and returns the site to WordPress's own behaviour, keeping your connections.
+= WordPress SMTP and email providers =
 
-= SMS =
+Send WordPress emails through your chosen email service. Use SMTP or connect directly to SendGrid, Mailgun, Brevo or Postmark.
 
-* Gateways: Twilio, Vonage, Plivo and Clickatell.
-* Primary and backup gateways with the same failover as email.
-* Phone numbers are accepted in international format, or in national format once you set a default country code.
+- **SMTP:** Configure your SMTP host, port, authentication and SSL/TLS or STARTTLS encryption.
+- **SendGrid:** Send emails using your SendGrid API key.
+- **Mailgun:** Connect your sending domain and select its US or EU region.
+- **Brevo:** Send transactional emails through the Brevo API.
+- **Postmark:** Connect your server API token and message stream.
+- **Sender settings:** Set your sender email address and sender name, with optional overrides for values supplied by other plugins.
 
-= SMS alerts =
+SMTP connections can use services such as Google Workspace, Microsoft 365, Amazon SES and Zoho, subject to the provider’s SMTP authentication requirements.
 
-Eighteen optional text alerts, each off until you switch it on, each with a message you can rewrite using placeholders such as `{order_number}` and `{customer_name}`.
+VuloMail works with emails sent through the standard WordPress wp_mail() function, including WooCommerce emails and contact form notifications. Plugins that send directly through their own email service are not affected.
 
-* Site alerts, sent to you: new user registered, administrator logged in, new comment, an email failed to send.
-* Store alerts, sent to you (need WooCommerce): new order, payment failed, order cancelled, order refunded, product low in stock, out of stock, backordered, new product review.
-* Customer alerts, sent to the order's billing phone (need WooCommerce): order confirmed, completed, refunded, cancelled, any other status change, and a note you add to the order.
+= Backup email connections and automatic failover =
 
-A customer receives one text per order status change. The "email failed" alert is limited to one text every 15 minutes. Without WooCommerce the store and customer alerts are listed but locked.
+Give important emails another sending route when your primary connection fails.
 
-= Delivery control center =
+- **Choose a primary email connection** and a backup connection.
+- **Automatically try the backup** if the primary connection reports a failure.
+- Optionally use the **WordPress default mailer** as a final fallback.
+- See **every sending attempt** within a single log entry.
+- Identify **messages sent through your backup connection**.
 
-* Dashboard: sent and failed totals for 7, 30 or 90 days, what each channel is sending through, and the most recent failures.
-* Logs: every email and text message with recipient, time, provider and status. Filter by channel, status and date range, search by recipient or subject, open an entry to see each delivery attempt and the provider's error, and resend it.
-* Tools: send a test email or SMS through the live routing or through one specific connection.
-* Diagnostics: checks email routing, what actually handles email on the site, recent delivery, the sender address, SPF and DMARC records, other email plugins, SMS routing, incomplete connections, the server and the log. A finding that needs action says what to do.
-* Settings save by themselves as you change them. A search box finds any screen or setting.
-* Dates follow the date format, time format and timezone set in WordPress.
+= Email logs and SMS logs =
 
-= Privacy and security =
+See which messages were sent, which failed and what went wrong. Review email and SMS activity together in your WordPress dashboard.
 
-* Passwords and API keys are encrypted in the database and are never shown again or sent back to the browser.
-* Message content is not stored unless you turn that on. Recipients can be masked in the log.
-* Log entries are deleted automatically after a number of days you choose.
-* Every screen and every request is limited to administrators.
-* No tracking. VuloMail contacts no server other than the providers you connect.
-* Deleting the plugin keeps your data unless you choose "Delete everything" first.
+- **Search logs** by recipient or email subject.
+- **Filter messages** by channel, status and date range.
+- View the **recipient, sender, provider, time and sending source**.
+- Read **provider error messages** and inspect individual sending attempts.
+- Find the **provider’s message ID** for further investigation.
+- Optionally **store message content** and resend eligible messages.
+- Choose **how long logs are kept**, with automatic cleanup of older entries.
 
-= For developers =
+Resending requires stored message content and unmasked recipients. A “Sent” status means the provider accepted the message; it does not confirm delivery to an inbox or phone.
 
-* `vulomail_send_email()` and `vulomail_send_sms()` send through the site's connections and return `true` or a `WP_Error`.
-* `vulomail_is_email_ready()` and `vulomail_is_sms_ready()` report whether a connection is set up.
-* Filters add your own email provider, SMS gateway, SMS alert or diagnostics check; actions fire when a message is sent or fails.
-* Any plugin can hand its own email and SMS delivery to VuloMail this way, with no code in VuloMail that knows about that plugin.
+= WordPress SMS notifications =
 
-The API is versioned (`vulomail_api_version()`). Full documentation is in `docs/developer/` in the plugin's source repository.
+Receive text alerts for important activity without checking your dashboard. Connect Twilio, Vonage, Plivo or Clickatell and choose which SMS alerts to enable.
 
-== External services ==
+- **New user registrations**.
+- **Administrator logins**.
+- **New comments**, excluding spam.
+- **Email sending failures**, limited to one alert every 15 minutes.
 
-VuloMail only contacts a service after you add a connection for it and a message is sent through that connection. It then sends that message (recipients, sender, subject, body, attachments, or the phone number and text) and your credentials for that service.
+Customize alert messages with supported placeholders, such as your site name, username or email subject.
 
-* SendGrid, api.sendgrid.com - [Terms](https://www.twilio.com/en-us/legal/tos), [Privacy](https://www.twilio.com/en-us/legal/privacy)
-* Mailgun, api.mailgun.net / api.eu.mailgun.net - [Terms](https://www.mailgun.com/legal/terms/), [Privacy](https://www.mailgun.com/legal/privacy-policy/)
-* Brevo, api.brevo.com - [Terms](https://www.brevo.com/legal/termsofuse/), [Privacy](https://www.brevo.com/legal/privacypolicy/)
-* Postmark, api.postmarkapp.com - [Terms](https://postmarkapp.com/terms-of-service), [Privacy](https://postmarkapp.com/privacy-policy)
-* Twilio, api.twilio.com - [Terms](https://www.twilio.com/en-us/legal/tos), [Privacy](https://www.twilio.com/en-us/legal/privacy)
-* Vonage, rest.nexmo.com - [Terms](https://www.vonage.com/legal/), [Privacy](https://www.vonage.com/legal/privacy-policy/)
-* Plivo, api.plivo.com - [Terms](https://www.plivo.com/legal/tos/), [Privacy](https://www.plivo.com/legal/privacy/)
-* Clickatell, platform.clickatell.com - [Terms](https://www.clickatell.com/legal/), [Privacy](https://www.clickatell.com/legal/privacy-notice/)
-* Your own SMTP server, at the host you enter.
+= WooCommerce SMS alerts and order notifications =
 
-The Diagnostics screen looks up the public DNS TXT records (SPF and DMARC) of your sender domain through your server's DNS resolver. No data about your site is sent.
+Keep your store team and customers informed about order activity.
+
+- **Store alerts:** Receive SMS notifications for new orders, failed payments, cancellations and refunds.
+- **Stock alerts:** Get notified about low stock, out-of-stock products and backorders.
+- **Review alerts:** Receive a text when a new product review is submitted.
+- **Customer order notifications:** Send SMS updates for processing, completed, refunded and cancelled orders.
+- **Additional order updates:** Notify customers about other order status changes, including custom statuses, and customer-facing order notes.
+- **Editable messages:** Personalize notifications with supported order, customer and product details.
+
+Store and customer alerts require WooCommerce. All SMS alerts are off by default. Enable customer notifications only for customers who have consented to receive texts. Your SMS provider’s charges apply.
+
+= Test emails and troubleshoot sending problems =
+
+Find configuration problems with built-in email tests and diagnostics.
+
+- **Send a test email** through your live routing or a specific connection.
+- **Test an SMS connection** using an international phone number.
+- Check **primary and backup email routing**.
+- Identify **missing connection details and conflicting email plugins**.
+- Review sender settings and sender-domain **SPF and DMARC records**.
+- Check **recent sending failures, logging, server requirements and scheduled tasks**.
+- Follow relevant **troubleshooting hints** from the diagnostics screen.
+
+DKIM verification is handled through your email provider’s dashboard.
+
+= Privacy controls and local log storage =
+
+Control what VuloMail stores on your website.
+
+- Keep email and SMS logs in **your own WordPress database**.
+- Leave **message content storage** off, or enable it when needed.
+- **Mask recipient details** in logs.
+- Set **log retention** and delete entries.
+- Store provider **passwords and API keys encrypted** in the database.
+- Choose whether plugin data is **kept or removed when uninstalling**.
+
+VuloMail makes no tracking calls and does not contact VuloLabs servers. Sending messages requires sharing the necessary message data with the providers you connect.
 
 == Installation ==
 
 1. Install and activate VuloMail.
-2. Go to VuloMail → Settings. In the Email section click "Add email connection", choose your provider and enter its details.
-3. Click "Set as primary" on the new connection. Until you do, WordPress keeps using its default mailer.
-4. Open the Email sub-tab and set the sender email to an address your provider has verified.
-5. Go to VuloMail → Tools and send a test email.
+2. Open Settings → Connections and add an email connection.
+3. Set the connection as primary.
+4. Configure a sender email address verified with your provider.
+5. Send a test email from Tools.
 
-For text messages: add an SMS connection on the same Connections screen, set your admin phone number under Settings → SMS, then switch on the alerts you want under VuloMail → SMS Alerts.
+You can then add a backup email connection, connect an SMS provider and enable the alerts you need.
+
+Requires WordPress 6.4 or later and PHP 7.4 or later.
 
 == Frequently Asked Questions ==
 
-= Does activating VuloMail change how my site sends email? =
+= What does VuloMail do? =
 
-No. Nothing changes until you add an email connection and set it as primary. You can switch routing off again at any time under Settings → Email without losing your connections.
+VuloMail sends WordPress emails through your chosen SMTP or email API connection, records sending results and supports SMS notifications for website and WooCommerce activity.
 
-= Which emails does it cover? =
+= Can VuloMail help when WordPress is not sending emails? =
 
-Every email sent with WordPress's standard `wp_mail()` function, which is how WordPress, WooCommerce and most plugins send. A plugin that talks to an email service directly is not affected.
+Yes. Connect an email provider, set it as primary and send a test email. The diagnostics and logs help identify configuration problems and provider-reported errors.
 
-= What happens if my email provider is down? =
+= Which email providers are supported? =
 
-VuloMail tries the backup connection. If that also fails and "Fall back to the WordPress default mailer" is on, WordPress sends the message itself. The log shows the message once, with every attempt.
+VuloMail supports SMTP, SendGrid, Mailgun, Brevo and Postmark. Other services can be connected through SMTP where their authentication requirements allow it.
 
-= The log says "Sent". Was the email delivered? =
+= Does VuloMail work with WooCommerce and contact forms? =
 
-"Sent" means your provider accepted the message. Whether it reached the inbox is reported in your provider's own dashboard; the log entry shows the provider's ID for the message so you can look it up.
+Yes. It handles emails sent through the standard WordPress wp_mail() function, including WooCommerce order emails and contact form notifications. Plugins that send directly through another service are not affected.
 
-= Why does my email go to spam? =
+= What happens if my primary email connection fails? =
 
-Usually the sending domain is missing SPF, DKIM or DMARC records, or the sender address is not on your own domain. Tools → Diagnostics checks SPF and DMARC. DKIM is set up with your email provider.
+VuloMail tries your configured backup connection. If enabled, the WordPress default mailer acts as a final fallback. Sending attempts appear together in one log entry.
 
-= Where are my passwords and API keys stored? =
+= Does Sent mean the email reached the inbox? =
 
-In your WordPress database, encrypted with a key derived from your site's security keys and a random per-site value. If the security keys in wp-config.php change, saved credentials can no longer be read and must be entered again; the connection is marked "Incomplete" and Diagnostics reports it.
+No. Sent means the provider accepted the message. It does not confirm delivery to an inbox or phone.
 
-= Does the log store the content of my emails? =
+= Which SMS providers can I connect? =
 
-Not by default. Turn on "Store message content" under Settings → Logging & Privacy if you want to read or resend messages.
+Twilio, Vonage, Plivo and Clickatell. You need your own provider account, and provider charges apply.
 
-= Do the SMS alerts cost money? =
+= Can I send WooCommerce order notifications by SMS? =
 
-VuloMail is free. Your SMS provider charges you for each text message, which is why every alert is off until you switch it on.
+Yes. Enable supported customer order alerts and customize their messages. WooCommerce is required for store and customer alerts. All SMS alerts are off by default.
 
-= Can I text my customers? =
+= Can I resend a logged message? =
 
-Yes, with WooCommerce: order confirmed, completed, refunded, cancelled, other status changes and order notes. Only switch these on if your customers have agreed to receive text messages. You are responsible for the rules that apply in your country.
+Yes, if its content was stored and its recipients were not masked. Resending uses your current routing settings.
 
-= I already use another SMTP plugin. Can I run both? =
+= Where are logs stored? =
 
-Use one. Two plugins delivering email compete for the same messages, and Diagnostics warns when it finds another. Add the same account to VuloMail, set it as primary, send a test, then deactivate the other plugin.
+Logs are stored in your own WordPress database. Message content storage is off by default. You can enable recipient masking and choose a retention period.
 
-= What is removed when I delete the plugin? =
+= Do I need a VuloLabs account? =
 
-Nothing, unless you first choose "Delete everything" under Settings → Data. Deactivating never deletes anything.
+No. VuloMail does not require a VuloLabs account or subscription. Connect your own email or SMS provider to send messages.
 
-== Changelog ==
+= Does activation change my email routing immediately? =
 
-= 1.0.0 =
-* Initial release.
+No. Add an email connection and set it as primary to route WordPress emails through that connection.
+
+= Will uninstalling delete my data? =
+
+Data is kept by default. You can choose Delete everything before deleting the plugin to remove its connections, settings and logs. Deactivation does not delete data.

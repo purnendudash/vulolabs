@@ -29,6 +29,8 @@ class Secrets {
 	const PREFIX = 'vm1:';
 
 	/**
+	 * Cached derived encryption key.
+	 *
 	 * @var string|null
 	 */
 	private $key = null;
@@ -96,6 +98,8 @@ class Secrets {
 	}
 
 	/**
+	 * Derives and caches the site's encryption key.
+	 *
 	 * @return string 32-byte key.
 	 */
 	private function key() {

@@ -27,26 +27,36 @@ class Dispatcher {
 	const MAX_LENGTH = 1530;
 
 	/**
+	 * Plugin settings.
+	 *
 	 * @var Settings
 	 */
 	private $settings;
 
 	/**
+	 * Saved connections.
+	 *
 	 * @var ConnectionRepository
 	 */
 	private $connections;
 
 	/**
+	 * Provider adapters.
+	 *
 	 * @var ProviderRegistry
 	 */
 	private $providers;
 
 	/**
+	 * Delivery log.
+	 *
 	 * @var Logger
 	 */
 	private $logger;
 
 	/**
+	 * Constructor.
+	 *
 	 * @param Settings             $settings    Plugin settings.
 	 * @param ConnectionRepository $connections Saved connections.
 	 * @param ProviderRegistry     $providers   Provider adapters.
@@ -79,6 +89,8 @@ class Dispatcher {
 	}
 
 	/**
+	 * Whether VuloMail can send an SMS right now.
+	 *
 	 * @return bool Whether an SMS can be sent right now.
 	 */
 	public function is_ready() {
